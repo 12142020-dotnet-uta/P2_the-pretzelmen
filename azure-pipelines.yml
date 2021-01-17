@@ -1,0 +1,75 @@
+trigger:
+- main
+
+pr:
+- main
+
+pool:
+  vmImage: windows-latest
+
+variables:
+  buildConfiguration: Release
+
+stages:
+  - stage: build
+    displayName: Build
+    jobs:
+      - job: build
+        steps:
+          - script: dotnet build
+  - stage: test
+    displayName: Test
+    jobs:
+      - job: test
+        steps:
+          - script: dotnet test
+  - stage: analyze
+    displayName: Analyze
+    jobs:
+      - job: analyze
+        steps:
+          - task: SonarCloudPrepare@1
+            inputs:
+              SonarCloud: sonarcloud-srv-0
+              organization: P2the-pretzelmen
+              scannerMode: MSBuild
+              projectKey: P2the-pretzelmen_P2the-pretzelmen
+              projectName: P2the-pretzelmen
+              extraProperties: |
+                sonar.exclusions=**/obj/**,**/lib/**,**/*.dll
+          - script: dotnet build --configuration $(buildConfiguration)
+            displayName: Analyze Build
+          - task: DotNetCoreCLI@2
+            displayName: Analyze Tests
+            inputs:
+              command: test
+              projects: '*Test/*.csproj'
+              arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
+          - task: PublishCodeCoverageResults@1
+            displayName: Publish Code Coverage
+            inputs:
+              codeCoverageTool: Cobertura
+              summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
+          - task: SonarCloudAnalyze@1
+            displayName: Run Code Analysis
+          - task: SonarCloudPublish@1
+            displayName: Publish Code Analysis
+  - stage: deploy
+    displayName: Deploy
+    jobs:
+      - job: Deploy
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: Publish
+            inputs:
+              command: publish
+              publishWebProjects: true
+              zipAfterPublish: true
+          - task: AzureRmWebAppDeployment@4
+            displayName: Deploy
+            inputs:
+              ConnectionType: AzureRM
+              azureSubscription: $(Team.AzureSubscription)
+              appType: webApp
+              WebAppName: $(Team.WebAppName)
+              packageForLinux: $(System.DefaultWorkingDirectory)/**/*.zip
