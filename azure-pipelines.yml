@@ -7,9 +7,6 @@ pr:
 pool:
   vmImage: windows-latest
 
-variables:
-  buildConfiguration: Release
-
 stages:
   - stage: build
     displayName: Build
@@ -37,14 +34,14 @@ stages:
               projectName: P2the-pretzelmen
               extraProperties: |
                 sonar.exclusions=**/obj/**,**/lib/**,**/*.dll
-          - script: dotnet build --configuration $(buildConfiguration)
+          - script: dotnet build --configuration Release
             displayName: Analyze Build
           - task: DotNetCoreCLI@2
             displayName: Analyze Tests
             inputs:
               command: test
               projects: '*Test/*.csproj'
-              arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
+              arguments: --configuration Release --collect "Code Coverage"
           - task: PublishCodeCoverageResults@1
             displayName: Publish Code Coverage
             inputs:
@@ -54,22 +51,22 @@ stages:
             displayName: Run Code Analysis
           - task: SonarCloudPublish@1
             displayName: Publish Code Analysis
-  - stage: deploy
-    displayName: Deploy
-    jobs:
-      - job: Deploy
-        steps:
-          - task: DotNetCoreCLI@2
-            displayName: Publish
-            inputs:
-              command: publish
-              publishWebProjects: true
-              zipAfterPublish: true
-          - task: AzureRmWebAppDeployment@4
-            displayName: Deploy
-            inputs:
-              ConnectionType: AzureRM
-              azureSubscription: $(Team.AzureSubscription)
-              appType: webApp
-              WebAppName: $(Team.WebAppName)
-              packageForLinux: $(System.DefaultWorkingDirectory)/**/*.zip
+  # - stage: deploy
+  #   displayName: Deploy
+  #   jobs:
+  #     - job: Deploy
+  #       steps:
+  #         - task: DotNetCoreCLI@2
+  #           displayName: Publish
+  #           inputs:
+  #             command: publish
+  #             publishWebProjects: true
+  #             zipAfterPublish: true
+  #         - task: AzureRmWebAppDeployment@4
+  #           displayName: Deploy
+  #           inputs:
+  #             ConnectionType: AzureRM
+  #             azureSubscription: $(Team.AzureSubscription)
+  #             appType: webApp
+  #             WebAppName: $(Team.WebAppName)
+  #             packageForLinux: $(System.DefaultWorkingDirectory)/**/*.zip
