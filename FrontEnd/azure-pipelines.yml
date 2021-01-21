@@ -1,0 +1,80 @@
+trigger:
+- main
+
+pr:
+- main
+
+pool:
+  vmImage: ubuntu-18.04
+
+stages:
+  - stage: build
+    displayName: Build
+    jobs:
+      - job: build
+        steps:
+          - task: Npm@1
+            displayName: Install Dependencies
+            inputs:
+              command: install
+          - task: Npm@1
+            displayName: Build Application
+            inputs:
+              command: custom
+              customCommand: run build
+  - stage: test
+    displayName: Test
+    jobs:
+      - job: test
+        steps:
+          - task: Npm@1
+            displayName: Test
+            inputs:
+              command: custom
+              customCommand: run test
+          - task: Npm@1
+            displayName: Lint
+            inputs:
+              command: custom
+              customCommand: run lint -- --format=stylish
+          - task: Npm@1
+            displayName: E2E
+            inputs:
+              command: custom
+              customCommand: run e2e
+  - stage: analyze
+    displayName: Analyze
+    jobs:
+      - job: analyze
+        steps:
+          - task: SonarCloudPrepare@1
+            inputs:
+              SonarCloud: sonarcloud-srv-0
+              organization: P2the-pretzelmen
+              projectKey: $(Team.FrontEndSonarProject.Key)
+              projectName: $(Team.FrontEndSonarProject.Name)
+          - task: Npm@1
+            displayName: Install Dependencies
+            inputs:
+              command: install
+          - task: Npm@1
+            displayName: Analyze Build
+            inputs:
+              command: custom
+              customCommand: run build -- --prod
+          - task: Npm@1
+            displayName: Analyze Tests
+            inputs:
+              command: custom
+              customCommand: run test -- --watch=false --code-coverage
+          - task: PublishCodeCoverageResults@1
+            displayName: Publish Code Coverage
+            inputs:
+              codeCoverageTool: Cobertura
+              reportDirectory: coverage/
+              summaryFileLocation: coverage/coburtura/coverage.xml
+              failIfCoverageEmpty: true
+          - task: SonarCloudAnalyze@1
+            displayName: Run Code Analysis
+          - task: SonarCloudPublish@1
+            displayName: Publish Code Analysis
