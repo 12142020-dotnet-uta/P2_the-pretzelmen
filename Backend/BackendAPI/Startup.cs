@@ -7,10 +7,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RepositoryLayer;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLayer;
 
 namespace BackenAPI
 {
@@ -28,10 +31,11 @@ namespace BackenAPI
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BackenAPI", Version = "v1" });
-            });
+            //services.AddDbContext<GameContext>(opt =>
+                                               //opt.UseInMemoryDatabase("TodoList"));
+            services.AddScoped<GameContext>();
+            services.AddScoped<GameRepositoryLayer>();
+            services.AddScoped<BusinessLayerClass>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,8 +44,6 @@ namespace BackenAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BackenAPI v1"));
             }
 
             app.UseHttpsRedirection();
