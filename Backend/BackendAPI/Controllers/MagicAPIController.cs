@@ -69,5 +69,12 @@ namespace BackendAPI.Controllers
 
             return card;
         }
+
+        [HttpGet]
+        [Route("BoosterPack")]
+        public async Task<ActionResult<Card>> GetBoosterPack()
+        {
+            return null;
+        }
     }
 }
