@@ -27,7 +27,8 @@ namespace ModelLayer
         public int losses { get; set; }
         //public int cardsLost { get; set;}
         //public int cardsWon { get; set; }
-        [ForeignKey("playerId")]
-        public Collection Collection { get; set; }
+        //public Collection Collection { get; set; }
+        public int Tokens { get; set; }
+        public bool login { get; set; }
     }
 }

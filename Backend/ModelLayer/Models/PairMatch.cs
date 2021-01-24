@@ -9,7 +9,7 @@ namespace ModelLayer
     {
         [Key]
         public int pairId { get; set; }
-        public Match matchId { get; set; }
+        public int matchId { get; set; }
         public Player player { get; set; }
         public int cardId { get; set; }
     }

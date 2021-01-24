@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ModelLayer;
+using ModelLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +16,8 @@ namespace RepositoryLayer
         public DbSet<PairMatch> pairs { get; set; }
         public DbSet<Trade> trades { get; set; }
 
+        public DbSet<TodoItem> TodoItems { get; set; }
+
         public GameContext() { }
         public GameContext(DbContextOptions options) : base(options) { }
 
@@ -22,7 +25,7 @@ namespace RepositoryLayer
         {
             if (!options.IsConfigured)
             {
-                options.UseSqlServer("Server=LocalHost\\SQLEXPRESS01;Database=Project_1_StoreApp;Trusted_Connection=True;");
+                options.UseSqlServer("Server=LocalHost\\SQLEXPRESS01;Database=Project_2_StoreApp;Trusted_Connection=True;");
             }
         }
     }

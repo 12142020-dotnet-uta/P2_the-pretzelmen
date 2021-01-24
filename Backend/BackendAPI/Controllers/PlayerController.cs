@@ -1,87 +1,79 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using ModelLayer;
+using BusinessLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ModelLayer.ModelViews;
+using Microsoft.AspNetCore.Authorization;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BackendAPI.Controllers
 {
-    public class PlayerController : Controller
+    [Route("api/player")]
+    [ApiController]
+    public class PlayerController : ControllerBase
     {
-        // GET: PlayerController
-        public ActionResult Index()
+        private readonly BusinessLayerClass _businessLayer;
+
+        public PlayerController(BusinessLayerClass businessLayer)
         {
-            return View();
+            _businessLayer = businessLayer;
         }
 
-        // GET: PlayerController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        [Route("GetPlayers")]
+       // [Authorize]
+        public async Task<IEnumerable<Player>> GetPlayers()
         {
-            return View();
+            return await _businessLayer.GetAllPlayers();
+
         }
 
-        // GET: PlayerController/Create
-        public ActionResult Create()
+        [HttpGet]
+        [Route("Login")]
+        public async Task<ActionResult<Player>> Login(PlayerViewModel playerViewModel)
         {
-            return View();
+            var check = await _businessLayer.LoginPlayer(playerViewModel.userName,playerViewModel.password);
+            if(check == null)
+            {
+                return CreatedAtAction("CreatePlayer", playerViewModel);
+            }
+            return check;
+
         }
 
-        // POST: PlayerController/Create
+        [HttpPut]
+        [Route("Logout")]
+        public async Task<ActionResult<Player>> Logout(Player player)
+        {
+            var temp = await _businessLayer.LogoutPlayer(player.playerId);
+            if(temp == null)
+            {
+                return CreatedAtAction("Login", temp);
+            }
+            return NoContent();
+        }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        [Route("CreatePlayer")]
+        public async Task<ActionResult<Player>> CreatePlayer(PlayerViewModel player)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var temp2 = await _businessLayer.CreatePlayer(player);
+
+            return CreatedAtAction("Login", new { username = player.userName, pass = player.password },temp2);
         }
 
-        // GET: PlayerController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: PlayerController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpDelete]
+        [Route("DeletePlayer")]
+        public async Task<IActionResult> DeletePlayer(Player id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            var isDone = await _businessLayer.DeletePlayer(id.playerId);
 
-        // GET: PlayerController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: PlayerController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return NoContent();
         }
     }
 }

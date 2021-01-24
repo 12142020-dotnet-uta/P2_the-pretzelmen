@@ -25,8 +25,9 @@ namespace ModelLayer
         [Display(Name = "Defence")]
         public int defenceNumber { get; set; }
         [Required]
+        public string imageURL { get; set; }
+        [Required]
         public bool inDeck { get; set; }
-        [ForeignKey("Id")]
-        public Collection Collection { get; set; }
+        public int CollectionID { get; set; }
     }
 }

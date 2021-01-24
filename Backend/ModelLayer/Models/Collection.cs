@@ -10,10 +10,8 @@ namespace ModelLayer
     {
         [Key]
         public Guid collectionId { get; set; } = new Guid();
-        [ForeignKey("Card")]
         public ICollection<Card> cards { get; set; }
-        [ForeignKey("Player")]
-        public Player collectionHolder { get; set; }
+        public Guid collectionHolder { get; set; }
         [Range(1,int.MaxValue)]
         public int quantity { get; set; }
 
