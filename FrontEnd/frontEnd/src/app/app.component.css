@@ -25,3 +25,8 @@ h1 {
   nav a.active {
     color: #039be5;
   }
+  ul{
+      position: relative;
+      left: 40%; 
+   
+  }
