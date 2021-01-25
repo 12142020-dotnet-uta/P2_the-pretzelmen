@@ -68,6 +68,11 @@ stages:
               organization: p2the-pretzelmen
               projectKey: P2the-pretzelmen_frontend
               projectName: P2the-pretzelmen_frontend
+              extraProperties: |
+                sonar.sources=FrontEnd/frontEnd/src/
+                sonar.tests=FrontEnd/frontEnd/src/
+                sonar.test.inclusions=FrontEnd/frontEnd/src/**.spec.ts
+                sonar.typescript.tsconfigPath=tsconfig.json
           - task: Npm@1
             displayName: Analyze Build
             inputs:
