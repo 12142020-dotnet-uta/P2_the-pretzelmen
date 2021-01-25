@@ -30,10 +30,10 @@ stages:
           - task: SonarCloudPrepare@1
             inputs:
               SonarCloud: sonarcloud-srv-0
-              organization: P2the-pretzelmen
+              organization: p2the-pretzelmen
               scannerMode: MSBuild
               projectKey: P2the-pretzelmen_backend
-              projectName: P2the-pretzelmen
+              projectName: P2the-pretzelmen_backend
               extraProperties: |
                 sonar.exclusions=**/obj/**,**/lib/**,**/*.dll
           - script: dotnet build --configuration Release
