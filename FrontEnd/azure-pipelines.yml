@@ -75,6 +75,7 @@ stages:
                 sonar.sources=FrontEnd/frontEnd/src/
                 sonar.tests=FrontEnd/frontEnd/src/
                 sonar.test.inclusions=FrontEnd/frontEnd/src/**.spec.ts
+                sonar.projectKey=P2the-pretzelmen_frontend
           - task: Npm@1
             displayName: Analyze Build
             inputs:
