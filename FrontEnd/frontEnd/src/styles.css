@@ -21,16 +21,16 @@ body, html{
 */
 header{
     height: 130px;
-   background-image: url("./assets/images/1__HhnCWCrqDSt__s5wFrKqQ.jpg");
+    background-image: url("./assets/images/1__HhnCWCrqDSt__s5wFrKqQ.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
    
 }
 img{
-    width: 400px;
+    width: 350px;
     height: 130px;
-    margin-left: 35%;
+    margin-left: 40%;
 }
 
 html, body { height: 100%; }
