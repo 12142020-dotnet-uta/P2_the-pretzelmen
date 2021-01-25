@@ -12,7 +12,7 @@ import { PlayersComponent } from './players/players.component';
 import { CardDetailsComponent } from './card-details/card-details.component';
 import { CardCollectionComponent } from './card-collection/card-collection.component';
 import { MemoryGameComponent } from './memory-game/memory-game.component';
-import {NbCardModule} from '@nebular/theme';
+//import {NbCardModule} from '@nebular/theme';
 
 @NgModule({
   declarations: [
@@ -29,8 +29,8 @@ import {NbCardModule} from '@nebular/theme';
     BrowserModule,
     NgbModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    NbCardModule,
+    BrowserAnimationsModule
+    //NbCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
