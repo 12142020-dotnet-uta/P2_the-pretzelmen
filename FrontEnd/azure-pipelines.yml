@@ -16,10 +16,12 @@ stages:
           - task: Npm@1
             displayName: Install Dependencies
             inputs:
+              workingDir: FrontEnd/frontEnd/
               command: install
           - task: Npm@1
             displayName: Build Application
             inputs:
+              workingDir: FrontEnd/frontEnd/
               command: custom
               customCommand: run build
   - stage: test
@@ -30,16 +32,19 @@ stages:
           - task: Npm@1
             displayName: Test
             inputs:
+              workingDir: FrontEnd/frontEnd/
               command: custom
-              customCommand: run test
+              customCommand: run test-hl
           - task: Npm@1
             displayName: Lint
             inputs:
+              workingDir: FrontEnd/frontEnd/
               command: custom
               customCommand: run lint -- --format=stylish
           - task: Npm@1
             displayName: E2E
             inputs:
+              workingDir: FrontEnd/frontEnd/
               command: custom
               customCommand: run e2e
   - stage: analyze
@@ -50,29 +55,32 @@ stages:
           - task: SonarCloudPrepare@1
             inputs:
               SonarCloud: sonarcloud-srv-0
-              organization: P2the-pretzelmen
-              projectKey: $(Team.FrontEndSonarProject.Key)
-              projectName: $(Team.FrontEndSonarProject.Name)
+              organization: p2the-pretzelmen
+              projectKey: P2the-pretzelmen_frontend
+              projectName: P2the-pretzelmen_frontend
           - task: Npm@1
             displayName: Install Dependencies
             inputs:
+              workingDir: FrontEnd/frontEnd/
               command: install
           - task: Npm@1
             displayName: Analyze Build
             inputs:
+              workingDir: FrontEnd/frontEnd/
               command: custom
               customCommand: run build -- --prod
           - task: Npm@1
             displayName: Analyze Tests
             inputs:
+              workingDir: FrontEnd/frontEnd/
               command: custom
-              customCommand: run test -- --watch=false --code-coverage
+              customCommand: run test-hl -- --watch=false --code-coverage
           - task: PublishCodeCoverageResults@1
             displayName: Publish Code Coverage
             inputs:
               codeCoverageTool: Cobertura
-              reportDirectory: coverage/
-              summaryFileLocation: coverage/coburtura/coverage.xml
+              reportDirectory: FrontEnd/frontend/coverage/
+              summaryFileLocation: FrontEnd/frontEnd/coverage/coburtura/coverage.xml
               failIfCoverageEmpty: true
           - task: SonarCloudAnalyze@1
             displayName: Run Code Analysis
