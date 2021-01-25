@@ -79,13 +79,13 @@ stages:
             inputs:
               workingDir: FrontEnd/frontEnd/
               command: custom
-              customCommand: run test-hl -- --watch=false --code-coverage
+              customCommand: run test-hl -- --code-coverage
           - task: PublishCodeCoverageResults@1
             displayName: Publish Code Coverage
             inputs:
               codeCoverageTool: Cobertura
-              reportDirectory: FrontEnd/frontend/coverage/
-              summaryFileLocation: FrontEnd/frontEnd/coverage/coburtura/coverage.xml
+              reportDirectory: FrontEnd/frontend/dist/reports/
+              summaryFileLocation: FrontEnd/frontEnd/dist/reports/coverage/report-cobertura/cobertura-coverage.xml
               failIfCoverageEmpty: true
           - task: SonarCloudAnalyze@1
             displayName: Run Code Analysis
