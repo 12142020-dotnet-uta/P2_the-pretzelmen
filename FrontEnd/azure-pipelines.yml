@@ -30,6 +30,11 @@ stages:
       - job: test
         steps:
           - task: Npm@1
+            displayName: Install Dependencies
+            inputs:
+              workingDir: FrontEnd/frontEnd/
+              command: install
+          - task: Npm@1
             displayName: Test
             inputs:
               workingDir: FrontEnd/frontEnd/
