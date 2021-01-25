@@ -65,10 +65,12 @@ stages:
           - task: SonarCloudPrepare@1
             inputs:
               SonarCloud: sonarcloud-srv-0
+              scannerMode: CLI
               organization: p2the-pretzelmen
               projectKey: P2the-pretzelmen_frontend
               projectName: P2the-pretzelmen_frontend
               extraProperties: |
+                sonar.exclusions=FrontEnd/frontEnd/node_modules/
                 sonar.sources=FrontEnd/frontEnd/src/
                 sonar.tests=FrontEnd/frontEnd/src/
                 sonar.test.inclusions=FrontEnd/frontEnd/src/**.spec.ts
