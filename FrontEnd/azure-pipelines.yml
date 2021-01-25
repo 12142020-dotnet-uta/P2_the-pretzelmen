@@ -40,18 +40,18 @@ stages:
               workingDir: FrontEnd/frontEnd/
               command: custom
               customCommand: run test-hl
-          - task: Npm@1
-            displayName: Lint
-            inputs:
-              workingDir: FrontEnd/frontEnd/
-              command: custom
-              customCommand: run lint -- --format=stylish
-          - task: Npm@1
-            displayName: E2E
-            inputs:
-              workingDir: FrontEnd/frontEnd/
-              command: custom
-              customCommand: run e2e
+          # - task: Npm@1
+          #   displayName: Lint
+          #   inputs:
+          #     workingDir: FrontEnd/frontEnd/
+          #     command: custom
+          #     customCommand: run lint -- --format=stylish
+          # - task: Npm@1
+          #   displayName: E2E
+          #   inputs:
+          #     workingDir: FrontEnd/frontEnd/
+          #     command: custom
+          #     customCommand: run e2e
   - stage: analyze
     displayName: Analyze
     jobs:
