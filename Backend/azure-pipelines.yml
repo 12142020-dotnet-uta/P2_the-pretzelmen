@@ -14,12 +14,14 @@ stages:
       - job: build
         steps:
           - script: dotnet build
+            workingDirectory: Backend/
   - stage: test
     displayName: Test
     jobs:
       - job: test
         steps:
           - script: dotnet test
+            workingDirectory: Backend/
   - stage: analyze
     displayName: Analyze
     jobs:
@@ -28,25 +30,26 @@ stages:
           - task: SonarCloudPrepare@1
             inputs:
               SonarCloud: sonarcloud-srv-0
-              organization: P2the-pretzelmen
+              organization: p2the-pretzelmen
               scannerMode: MSBuild
-              projectKey: P2the-pretzelmen_P2the-pretzelmen
-              projectName: P2the-pretzelmen
+              projectKey: P2the-pretzelmen_backend
+              projectName: P2the-pretzelmen_backend
               extraProperties: |
                 sonar.exclusions=**/obj/**,**/lib/**,**/*.dll
           - script: dotnet build --configuration Release
             displayName: Analyze Build
+            workingDirectory: Backend/
           - task: DotNetCoreCLI@2
             displayName: Analyze Tests
             inputs:
               command: test
-              projects: '*Test/*.csproj'
+              projects: Backend/*Test/*.csproj
               arguments: --configuration Release --collect "Code Coverage"
           - task: PublishCodeCoverageResults@1
             displayName: Publish Code Coverage
             inputs:
               codeCoverageTool: Cobertura
-              summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
+              summaryFileLocation: $(Agent.TempDirectory)/*/coburtura/coverage.xml
           - task: SonarCloudAnalyze@1
             displayName: Run Code Analysis
           - task: SonarCloudPublish@1
