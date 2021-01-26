@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 using ModelLayer;
+using ModelLayer.ModelViews;
 
 // 'int' is not nullable by default so some instances of Required cannot be tested.
 
@@ -71,6 +72,33 @@ namespace UnitTest
             bool valid = Validator.TryValidateObject(player, context, results, true);
             Assert.False(valid);
             Assert.Equal(4, results.Count);
+            Assert.Equal("The user name must be within 3 to 25 characters", results[0].ErrorMessage);
+            Assert.Equal("The user name must be within 3 to 25 characters", results[1].ErrorMessage);
+        }
+        [Fact]
+        public void TestValidatePlayerViewModelRequired()
+        {
+            PlayerViewModel pvm = new PlayerViewModel();
+            ValidationContext context = new ValidationContext(pvm);
+            List<ValidationResult> results = new List<ValidationResult>();
+
+            bool valid = Validator.TryValidateObject(pvm, context, results, true);
+            Assert.False(valid);
+            Assert.Equal(2, results.Count);
+        }
+        [Fact]
+        public void TestValidatePlayerViewModelStringLength()
+        {
+            PlayerViewModel pvm = new PlayerViewModel() {
+                userName = "Supercalifragilisticexpialidocious",
+                password = "Supercalifragilisticexpialidocious",
+            };
+            ValidationContext context = new ValidationContext(pvm);
+            List<ValidationResult> results = new List<ValidationResult>();
+
+            bool valid = Validator.TryValidateObject(pvm, context, results, true);
+            Assert.False(valid);
+            Assert.Equal(2, results.Count);
             Assert.Equal("The user name must be within 3 to 25 characters", results[0].ErrorMessage);
             Assert.Equal("The user name must be within 3 to 25 characters", results[1].ErrorMessage);
         }
