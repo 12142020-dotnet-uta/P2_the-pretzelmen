@@ -18,11 +18,21 @@ namespace BusinessLayer
             _gameRepositoryLayer = gameRepositoryLayer;
         }
 
+        public async Task<ActionResult<Collection>> AddToCollection(CollectionViewModel collection)
+        {
+            return await _gameRepositoryLayer.AddToCollection(collection);
+        }
+
+        public async Task<IEnumerable<Collection>> GetCollection()
+        {
+            return await _gameRepositoryLayer.GetCollection();
+        }
 
         public async Task<IEnumerable<Player>> GetAllPlayers()
         {
             return await _gameRepositoryLayer.GetAllPlayers();
         }
+
         [HttpGet]
         public async Task<ActionResult<Player>> LoginPlayer(string username, string password)
         {

@@ -22,11 +22,57 @@ namespace RepositoryLayer
             _gameContext = game;
         }
 
+        /// <summary>
+        /// Adds a card specified by its int id to a collection with an existing
+        ///  player's playerId. The quantity of cards being added is also set.
+        /// </summary>
+        /// <param name="cardId"></param>
+        /// <param name="playerGuid"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
+        public async Task<ActionResult<Collection>> AddToCollection(CollectionViewModel collection)
+        {
+            var player = await _gameContext.players.Where(x => x.playerId == collection.playerId).FirstOrDefaultAsync();
+            var card = await _gameContext.cards.Where(x => x.cardId == collection.cardId).FirstOrDefaultAsync();
+
+            if (player == null || card == null)
+            {
+
+            }
+
+            Collection temp = new Collection()
+            {
+                collectionHolder = player.playerId,
+                //Get from API
+                //cards = ,
+                quantity = collection.quantity
+            };
+
+            return null;
+        }
+
+        //todo
+        public async Task<IEnumerable<Collection>> GetCollection()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Returns a list of all players.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<Player>> GetAllPlayers()
         {
             return await _gameContext.players.Select(x => x).ToListAsync();
         }
 
+        /// <summary>
+        /// Recieves a username and password. If the player exists changes
+        ///  their login status to true.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public async Task<ActionResult<Player>> LoginPlayer(string username,string password)
         {
             var player = await _gameContext.players.Where(x => x.userName == username && x.password == password).FirstOrDefaultAsync();
@@ -40,6 +86,11 @@ namespace RepositoryLayer
             return player;
         }
 
+        /// <summary>
+        /// Finds a player by their id, then sets their login status to false.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ActionResult> Logout(Guid id)
         {
             var logingOut =  await _gameContext.players.Where(x => x.playerId == id).FirstOrDefaultAsync();
@@ -48,6 +99,13 @@ namespace RepositoryLayer
             return null;
         }
 
+        /// <summary>
+        /// Adds a new player to the system. They will be defaulted with a 0/0
+        ///  win/loss record, and they recieve 10000 tokens. A new collection of
+        ///  cards is made as well.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         public async Task<ActionResult<Player>> CreatePlayer(PlayerViewModel player)
         {
             Player temp = new Player()
@@ -87,6 +145,11 @@ namespace RepositoryLayer
             return null;
         }
 
+        /// <summary>
+        /// Removes a player from the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> DeletePlayer(Guid id)
         {
             var tempCheck = await _gameContext.players.Where(x => x.playerId == id).FirstOrDefaultAsync();

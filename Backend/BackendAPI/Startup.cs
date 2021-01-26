@@ -31,8 +31,8 @@ namespace BackenAPI
         {
 
             services.AddControllers();
-            //services.AddDbContext<GameContext>(opt =>
-                                               //opt.UseInMemoryDatabase("TodoList"));
+            services.AddDbContext<GameContext>(opt =>
+                                               opt.UseInMemoryDatabase("TodoList"));
             services.AddScoped<GameContext>();
             services.AddScoped<GameRepositoryLayer>();
             services.AddScoped<BusinessLayerClass>();
