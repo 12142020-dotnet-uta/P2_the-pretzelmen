@@ -1,0 +1,30 @@
+<!--The content below is only a placeholder and can be replaced. -->
+
+<ul>
+  <li><a class="active" href="#home">Home</a></li>
+  <li><a routerLink="/players">Players</a></li>
+  <li> <a routerLink="/matchHistory"> Match History</a></li> <!-- link works -->
+  <li><a href="#contact">Contact</a></li>
+  <li><a href="#about">About</a></li>
+  <li *ngIf="!isAuthenticated" style="float:right"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+  <li *ngIf="!isAuthenticated" style="float:right"><a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+  <li *ngIf="isAuthenticated"  style="float:right">  <a id="logout-button" class="item" (click)="logout()">Logout</a><li>
+</ul>
+    
+
+
+<div class="action">
+    <nav>
+        <a class="action"  routerLink="/cardCollection">Card Collection </a>
+    </nav>
+    <nav>
+        <a class="action" routerLink="/cardDetails/1">Card Details</a>
+    </nav>
+    <nav>
+         <a class="action" routerLink="/memoryGame">Memory Game</a>
+    </nav>
+</div>
+<br>
+
+
+<router-outlet></router-outlet>
