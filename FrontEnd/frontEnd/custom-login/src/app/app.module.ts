@@ -36,7 +36,9 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AppRoutingModule } from './app-routing.module';
 
+/*
 const appRoutes: Routes = [
   {
     path: '',
@@ -62,6 +64,7 @@ const appRoutes: Routes = [
   },
 ];
 
+*/
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,8 +76,8 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes),
     OktaAuthModule,
+    AppRoutingModule,
   ],
   providers: [
     { provide: OKTA_CONFIG, useValue: oktaConfig },
