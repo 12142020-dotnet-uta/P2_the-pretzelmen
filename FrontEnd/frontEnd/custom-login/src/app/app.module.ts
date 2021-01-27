@@ -36,9 +36,12 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ProfileComponent } from './profile/profile.component';
-import { AppRoutingModule } from './app-routing.module';
+import { MemoryGameComponent } from './memory-game/memory-game.component';
+import { CardCollectionComponent } from './card-collection/card-collection.component';
+import { CardDetailsComponent } from './card-details/card-details.component';
+import { PlayersComponent } from './players/players.component';
+import { MatchHistoryComponent } from './match-history/match-history.component';
 
-/*
 const appRoutes: Routes = [
   {
     path: '',
@@ -64,7 +67,6 @@ const appRoutes: Routes = [
   },
 ];
 
-*/
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,12 +74,17 @@ const appRoutes: Routes = [
     ProfileComponent,
     MessagesComponent,
     LoginComponent,
+    MemoryGameComponent,
+    CardCollectionComponent,
+    CardDetailsComponent,
+    PlayersComponent,
+    MatchHistoryComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    RouterModule.forRoot(appRoutes),
     OktaAuthModule,
-    AppRoutingModule,
   ],
   providers: [
     { provide: OKTA_CONFIG, useValue: oktaConfig },
