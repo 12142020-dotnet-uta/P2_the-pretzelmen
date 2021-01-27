@@ -36,6 +36,13 @@ namespace BackenAPI
             services.AddScoped<GameContext>();
             services.AddScoped<GameRepositoryLayer>();
             services.AddScoped<BusinessLayerClass>();
+            //Add cors with any origin
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +63,8 @@ namespace BackenAPI
             {
                 endpoints.MapControllers();
             });
+            //Inject cors
+            app.UseCors(options => options.AllowAnyOrigin());
         }
     }
 }

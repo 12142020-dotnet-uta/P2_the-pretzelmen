@@ -54,5 +54,10 @@ namespace BusinessLayer
         {
             return await _gameRepositoryLayer.DeletePlayer(id);
         }
+
+        public async Task<IActionResult> TradeCards(TradeViewModel tradeViewModel)
+        {
+            return await _gameRepositoryLayer.TradeCards(tradeViewModel);
+        }
     }
 }

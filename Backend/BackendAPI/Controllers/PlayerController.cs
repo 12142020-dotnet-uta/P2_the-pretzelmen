@@ -57,6 +57,14 @@ namespace BackendAPI.Controllers
             return NoContent();
         }
 
+        //[HttpPut]
+        //[Route("EditPlayer")]
+        //public async Task<ActionResult<Player>> EditPlayer()
+        //{
+        //    var temp = await _businessLayer.LogoutPlayer(player.playerId);
+
+        //}
+
         [HttpPost]
         [Route("CreatePlayer")]
         public async Task<ActionResult<Player>> CreatePlayer(PlayerViewModel player)

@@ -8,18 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using ModelLayer.ModelViews;
-
+using Microsoft.Extensions.Logging;
 
 namespace RepositoryLayer
 {
-    
+
     public class GameRepositoryLayer
     {
         private readonly GameContext _gameContext;
+        private readonly ILogger<GameRepositoryLayer> _logger;
 
-        public GameRepositoryLayer(GameContext game)
+        public GameRepositoryLayer(GameContext game, ILogger<GameRepositoryLayer> logger)
         {
             _gameContext = game;
+            _logger = logger;
+
         }
 
         /// <summary>
@@ -73,15 +76,24 @@ namespace RepositoryLayer
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public async Task<ActionResult<Player>> LoginPlayer(string username,string password)
+        public async Task<ActionResult<Player>> LoginPlayer(string username, string password)
         {
             var player = await _gameContext.players.Where(x => x.userName == username && x.password == password).FirstOrDefaultAsync();
-            if(player == null)
+            if (player == null)
             {
+                _logger.LogInformation($"The requested player {username} was not found.");
                 return null;
             }
-            player.login = true;
-            await _gameContext.SaveChangesAsync();
+            
+            try
+            {
+                player.login = true;
+                await _gameContext.SaveChangesAsync();               
+            }
+            catch(ArgumentNullException E)
+            {
+                _logger.LogInformation($"There was an issue with updating the db, {E}");
+            }
 
             return player;
         }
@@ -93,8 +105,8 @@ namespace RepositoryLayer
         /// <returns></returns>
         public async Task<ActionResult> Logout(Guid id)
         {
-            var logingOut =  await _gameContext.players.Where(x => x.playerId == id).FirstOrDefaultAsync();
-            logingOut.login = false;
+            var loggingOut = await _gameContext.players.Where(x => x.playerId == id).FirstOrDefaultAsync();
+            loggingOut.login = false;
             await _gameContext.SaveChangesAsync();
             return null;
         }
@@ -116,10 +128,12 @@ namespace RepositoryLayer
                 losses = 0,
                 Tokens = 10000
             };
+
             _gameContext.players.Add(temp);
             await _gameContext.SaveChangesAsync();
+
             var check = await _gameContext.players.Where(x => x.playerId == temp.playerId).FirstOrDefaultAsync();
-            if(check != null)
+            if (check != null)
             {
                 Collection collection = new Collection()
                 {
@@ -141,7 +155,11 @@ namespace RepositoryLayer
                 await _gameContext.SaveChangesAsync();
                 return check;
             }
-            
+            else
+            {
+                _logger.LogInformation("There was an issue with adding a new player.");
+            }
+
             return null;
         }
 
@@ -153,14 +171,28 @@ namespace RepositoryLayer
         public async Task<IActionResult> DeletePlayer(Guid id)
         {
             var tempCheck = await _gameContext.players.Where(x => x.playerId == id).FirstOrDefaultAsync();
-            if(tempCheck == null)
+            if (tempCheck == null)
             {
+                _logger.LogInformation($"There was an issue with finding player by id: {id}");
                 return NotFoundResult();
             }
-            
-            Player temp = tempCheck;
-            _gameContext.players.Remove(temp);
-            await _gameContext.SaveChangesAsync();
+
+            try
+            {
+                Player temp = tempCheck;
+                _gameContext.players.Remove(temp);
+                await _gameContext.SaveChangesAsync();
+            }
+            catch(Exception E)
+            {
+                _logger.LogInformation($"There was an issue with updating the db, {E}");
+            }
+
+            return null;
+        }
+        //todo
+        public async Task<IActionResult> TradeCards(TradeViewModel tradeViewModel)
+        {
             return null;
         }
 
