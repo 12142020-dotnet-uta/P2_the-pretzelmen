@@ -41,6 +41,8 @@ import { CardCollectionComponent } from './card-collection/card-collection.compo
 import { CardDetailsComponent } from './card-details/card-details.component';
 import { PlayersComponent } from './players/players.component';
 import { MatchHistoryComponent } from './match-history/match-history.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { SignupComponent } from './signup/signup.component';
 
 const appRoutes: Routes = [
   {
@@ -65,7 +67,9 @@ const appRoutes: Routes = [
     component: MessagesComponent,
     canActivate: [ OktaAuthGuard ],
   },
+  { path: 'memoryGame', component: MemoryGameComponent}
 ];
+
 
 @NgModule({
   declarations: [
@@ -79,6 +83,8 @@ const appRoutes: Routes = [
     CardDetailsComponent,
     PlayersComponent,
     MatchHistoryComponent,
+    NavBarComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
