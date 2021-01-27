@@ -10,29 +10,43 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { OktaAuthService } from '@okta/okta-angular';
 
+interface ResourceServerExample {
+  label: string;
+  url: string;
+}
+
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class AppComponent implements OnInit {
-  title = 'app';
+export class HomeComponent implements OnInit {
   isAuthenticated: boolean;
+  resourceServerExamples: Array<ResourceServerExample>;
+  userName: string;
 
   constructor(public oktaAuth: OktaAuthService) {
+    this.resourceServerExamples = [
+      {
+        label: 'Node/Express Resource Server Example',
+        url: 'https://github.com/okta/samples-nodejs-express-4/tree/master/resource-server',
+      },
+      {
+        label: 'Java/Spring MVC Resource Server Example',
+        url: 'https://github.com/okta/samples-java-spring-mvc/tree/master/resource-server',
+      },
+    ];
     this.oktaAuth.$authenticationState.subscribe(isAuthenticated => this.isAuthenticated = isAuthenticated);
   }
 
   async ngOnInit() {
     this.isAuthenticated = await this.oktaAuth.isAuthenticated();
-  }
-
-  logout() {
-    this.oktaAuth.isLoginRedirect();
-    //this.oktaAuth.logout('/');
+    if (this.isAuthenticated) {
+      const userClaims = await this.oktaAuth.getUser();
+      this.userName = userClaims.name;
+    }
   }
 }

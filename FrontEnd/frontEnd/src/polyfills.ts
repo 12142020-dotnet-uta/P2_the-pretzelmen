@@ -65,3 +65,15 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+import * as process from 'process';
+window['process'] = process;
+
+import { TextEncoder } from 'text-encoding';
+if (typeof (window as any).TextEncoder === 'undefined') {
+  (window as any).TextEncoder = TextEncoder;
+}
+
+(window as any).process = {
+  env: { DEBUG: undefined },
+};
