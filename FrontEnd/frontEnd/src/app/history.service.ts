@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HistoryService {
-  readonly aipUrl = "https://jsonplaceholder.typicode.com/posts";
+  //https://localhost:44301/api/player/CreatePlayer  
+  readonly aipUrl = "https://localhost:44301/api/player/getplayers";
 
   constructor(  private http: HttpClient,) { }
   getMatchHistory(): Observable<any[]> {

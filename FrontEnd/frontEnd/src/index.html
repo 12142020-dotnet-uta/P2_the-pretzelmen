@@ -19,11 +19,15 @@
 
 </head>
 <body>
-    <div id="wrapper">
+   
     <header >
-      <img src="./assets/images/download.png">
+      <img src="./assets/images/download.png" alt="web logo">
     </header>
     <app-root></app-root>
-  </div>
+    <p>Search for magic Card By Id:</p>
+    <form ngNoForm  [action]="url" method="GET">
+      <input type="text" placeholder="Search.." name="search2">
+      <button type="submit">Search</button>
+    </form>
 </body>
 </html>

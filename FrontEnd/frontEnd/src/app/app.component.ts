@@ -8,3 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'frontEnd';
 }
+
+export class CardInfoFromSearch{
+  url = 'https://localhost:44301/api/MagicAPI/cardById?${search2}'
+}
