@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* You can add global styles to this file, and also import other style files */
+body, html{
+    max-width: 100%;
+    margin: 0;
+    overflow-x: hidden;
+   
+
+
+}
+
+#wrapper{
+    margin: 0;
+    background-image: url("./assets/images/1__HhnCWCrqDSt__s5wFrKqQ.jpg");
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+*/
+header{
+    height: 130px;
+    background-image: url("./assets/images/1__HhnCWCrqDSt__s5wFrKqQ.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+   
+}
+img{
+    width: auto;
+    height: 130px;
+    margin-left: 40%;
+}
+
+
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
