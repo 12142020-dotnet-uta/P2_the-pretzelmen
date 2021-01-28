@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Core;
 using ModelLayer;
 using ModelLayer.ModelViews;
 using RepositoryLayer;
@@ -23,9 +24,9 @@ namespace BusinessLayer
             return await _gameRepositoryLayer.AddToCollection(collection);
         }
 
-        public async Task<IEnumerable<Collection>> GetCollection()
+        public async Task<IEnumerable<Collection>> GetCollection(Guid id)
         {
-            return await _gameRepositoryLayer.GetCollection();
+            return await _gameRepositoryLayer.GetCollection(id);
         }
 
         public async Task<IEnumerable<Player>> GetAllPlayers()
@@ -58,6 +59,12 @@ namespace BusinessLayer
         public async Task<IActionResult> TradeCards(TradeViewModel tradeViewModel)
         {
             return await _gameRepositoryLayer.TradeCards(tradeViewModel);
+        }
+
+        //todo
+        public async Task<ActionResult<Player>> EditPlayer(Player player)
+        {
+            return await _gameRepositoryLayer.EditPlayer(player);
         }
     }
 }

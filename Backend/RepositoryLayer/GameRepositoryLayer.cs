@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ModelLayer;
-using System;
+//using ModelLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using ModelLayer.ModelViews;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace RepositoryLayer
 {
@@ -54,10 +55,21 @@ namespace RepositoryLayer
             return null;
         }
 
-        //todo
-        public async Task<IEnumerable<Collection>> GetCollection()
+        //parameter needs to change
+        public async Task<IEnumerable<Collection>> GetCollection(Guid id)
         {
-            return null;
+            var player = await _gameContext.players.Where(x => x.playerId == id).FirstOrDefaultAsync();
+            if(player == null)
+            {
+                _logger.LogInformation($"The requested player {id} was not found.");
+                return null;
+            }
+
+            var playerCollection = from collection in _gameContext.collections
+                                   where collection.collectionHolder == id
+                                   select collection;
+
+            return playerCollection;
         }
 
         /// <summary>
@@ -193,6 +205,19 @@ namespace RepositoryLayer
         //todo
         public async Task<IActionResult> TradeCards(TradeViewModel tradeViewModel)
         {
+            return null;
+        }
+
+        //todo
+        public async Task<ActionResult<Player>> EditPlayer(Player player)
+        {
+            var temp = await _gameContext.players.Where(x => x.playerId == player.playerId).FirstOrDefaultAsync();
+
+            if(temp == null)
+            {
+                _logger.LogInformation($"There was an issue with finding player by id: {player.playerId}");
+            }
+
             return null;
         }
 
