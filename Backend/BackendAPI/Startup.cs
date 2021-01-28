@@ -37,7 +37,7 @@ namespace BackenAPI
                 options.AddPolicy("policy1",
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200")
+                        builder.WithOrigins("http://localhost:4200", "http://localhost:8080")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                     });
