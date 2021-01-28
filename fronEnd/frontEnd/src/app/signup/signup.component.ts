@@ -14,8 +14,10 @@ export class SignupComponent implements OnInit {
     firstName: "jim",
     lastName: "lake",
     email: "t@hotmail.com",
-    password: "*****",
+    password: "888888",
+  
   }
+ 
  
   
 
@@ -28,10 +30,18 @@ export class SignupComponent implements OnInit {
 
   onSubmit(){
     this.userService.getUsers();
-    console.log("firstName: " + this.user.firstName);
-    console.log("last Name: " + this.user.lastName);
-    console.log("Passwored: " + this.user.password);
-    console.log("email: " +this.user.email);
+    console.log("firstName: " + this.user.firstName.trim());
+    console.log("last Name: " + this.user.lastName.trim());
+    console.log("Passwored: " + this.user.password.trim());
+    console.log("email: " +this.user.email.trim());
+     var aUser = {
+      userName: "jimLake",
+      password: "lallll"
+    }
+    if(!this.user.firstName){ return;}
+     //add user to database by calling user service
+     console.log( "ADDED PLAYER:  " + this.userService.addUser(aUser));
+
   }
 
 }

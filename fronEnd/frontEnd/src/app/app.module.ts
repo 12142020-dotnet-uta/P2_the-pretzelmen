@@ -40,6 +40,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SignupComponent } from './signup/signup.component';
 import { AppRoutingModule } from './app-routing.module';
+import { UserComponent } from './user/user.component';
 
 
 const appRoutes: Routes = [
@@ -75,6 +76,7 @@ const appRoutes: Routes = [
     MessagesComponent,
     LoginComponent,
     SignupComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,

@@ -60,6 +60,7 @@
           "configurations": {
             "production": {
               "browserTarget": "custom-login:build:production"
+              
             }
           }
         },

@@ -26,9 +26,10 @@
   <li> <a routerLink="/matchHistory"> Match History</a></li> <!-- link works -->
   <li><a href="#contact">Contact</a></li>
   <li><a href="#about">About</a></li>
-  <li style="float:right"><a routerLink ="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-  <li style="float:right"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+  <li *ngIf="isAuthenticated" (click)="logout()" style="float:right"><a><span class="glyphicon glyphicon-log-out"></span> Logout </a></li>
+  <li *ngIf="!isAuthenticated" style="float:right"><a routerLink ="/signup"> <span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+  <li *ngIf="!isAuthenticated" style="float:right"> <a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 </ul>
     
-
+<app-user></app-user>
 <router-outlet></router-outlet>
