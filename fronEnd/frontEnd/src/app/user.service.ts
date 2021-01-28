@@ -16,7 +16,8 @@ export class UserService {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin':'*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-    'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
+    'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+    'Cookie': 'ARRAffinity=d2d8dfe6a8f933d8f5b67ea871c7205cafa75302a1e96ba34f62b19192ae5e36; ARRAffinitySameSite=d2d8dfe6a8f933d8f5b67ea871c7205cafa75302a1e96ba34f62b19192ae5e36'
     
    })
   };
@@ -26,7 +27,7 @@ export class UserService {
  /* Get users from the server */
  getUsers(): Observable<any[]> {
    console.log("get player:   " + this.http.get<any[]>(this.userUrl));
-   return this.http.get<any[]>(this.userUrl)
+   return this.http.get<any[]>('https://api.magicthegathering.io/v1/cards')
    .pipe(
      tap(_ => this.log('getched users')),
      catchError(this.handleError<any[]>('getUsers', []))
