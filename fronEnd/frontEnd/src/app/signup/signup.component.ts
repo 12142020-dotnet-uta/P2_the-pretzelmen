@@ -18,9 +18,6 @@ export class SignupComponent implements OnInit {
   
   }
  
- 
-  
-
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
@@ -40,7 +37,7 @@ export class SignupComponent implements OnInit {
     }
     if(!this.user.firstName){ return;}
      //add user to database by calling user service
-     console.log( "ADDED PLAYER:  " + this.userService.addUser(aUser));
+   //console.log( "ADDED PLAYER:  " + this.userService.addUser(this.user));
 
   }
 

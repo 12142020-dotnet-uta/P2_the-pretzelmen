@@ -9,14 +9,20 @@ import {Observable} from "rxjs"
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  users: Observable<any[]>;
+  users: any=[];
 
   constructor(private userService: UserService) { 
     
   }
 
   ngOnInit(): void  {
-    this.users = this.userService.getUsers();
+    this.getUsers();
   }
+  getUsers(){
+    this.userService.getUsers().subscribe(data =>{
+      this.users = data;
+    })
+  }
+ 
 
 }

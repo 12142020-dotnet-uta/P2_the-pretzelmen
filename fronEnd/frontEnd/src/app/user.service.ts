@@ -15,13 +15,16 @@ export class UserService {
   playerview :fullplayerview = new fullplayerview();
   private userUrl = "https://magic-match-api.azurewebsites.net/api/player/"
   
+  //private userUrl = "https://magic-match-api.azurewebsites.net/api/player/";
+  //private jsonUlr = "https://jsonplaceholder.typicode.com/posts";
+
   httpOptions = {
     headers: new HttpHeaders({ 
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin':'*',
     'Access-Control-Allow-Methods': 'POST',
     'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
-    
+  
    })
   };
   constructor( private messageService: MessageService, private http: HttpClient) {
@@ -29,10 +32,10 @@ export class UserService {
    }
  /* Get users from the server */
  getUsers(): Observable<any[]> {
-   console.log("get player:   " + this.http.get<any[]>(this.userUrl));
-   return this.http.get<any[]>(this.userUrl)
+   //console.log("get player:   " + this.http.get<any[]>(this.userUrl));
+   return this.http.get<any[]>(this.userUrl + "GetPlayers")
    .pipe(
-     tap(_ => this.log('getched users')),
+     tap(_ => this.log('get users')),
      catchError(this.handleError<any[]>('getUsers', []))
    );
  }
@@ -70,6 +73,7 @@ addUser(user: PlayerViewModel): void{
       //tap((newUser: User) => this.log(`added user w/ id=${newUser.id}`)),
  //     catchError(this.handleError<any>('add user'))
  // );
+
 }
 
  /**
