@@ -9,14 +9,15 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService {
-  private userUrl = "https://magic-match-api.azurewebsites.net/api/player/"
-  
+  private userUrl = "https://magic-match-api.azurewebsites.net/api/player/";
+  private jsonUlr = "https://jsonplaceholder.typicode.com/posts";
   httpOptions = {
     headers: new HttpHeaders({ 
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin':'*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-    'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
+    'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+    'Cookie': 'ARRAffinity=d2d8dfe6a8f933d8f5b67ea871c7205cafa75302a1e96ba34f62b19192ae5e36; ARRAffinitySameSite=d2d8dfe6a8f933d8f5b67ea871c7205cafa75302a1e96ba34f62b19192ae5e36'
     
    })
   };
@@ -25,10 +26,10 @@ export class UserService {
    }
  /* Get users from the server */
  getUsers(): Observable<any[]> {
-   console.log("get player:   " + this.http.get<any[]>(this.userUrl));
-   return this.http.get<any[]>(this.userUrl)
+   //console.log("get player:   " + this.http.get<any[]>(this.userUrl));
+   return this.http.get<any[]>(this.userUrl + "GetPlayers")
    .pipe(
-     tap(_ => this.log('getched users')),
+     tap(_ => this.log('get users')),
      catchError(this.handleError<any[]>('getUsers', []))
    );
  }
@@ -56,15 +57,18 @@ updateUser(user: User): Observable<any> {
   );
 }
 /** POST: add a new hero to the server */
-addUser(user: any): Observable<any> {
+addUser(user: User): Observable<any> {
   const headers ={ 'content-type': 'application/json'}
   const body = JSON.stringify(user);
   console.log(body);
-  return this.http.post<any>('https://magic-match-api.azurewebsites.net/api/player/CreatePlayer', body, this.httpOptions)
+  return this.http.post(this.userUrl + 'CreatePlayer', user)
+  /*
+  return this.http.post(this.userUrl + "CreatePlayer", body, this.httpOptions)
     .pipe(
       //tap((newUser: User) => this.log(`added user w/ id=${newUser.id}`)),
       catchError(this.handleError<any>('add user'))
   );
+  */
 }
 
  /**
