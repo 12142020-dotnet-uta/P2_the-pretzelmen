@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 using RepositoryLayer;
 using ModelLayer.ModelViews;
@@ -18,7 +19,7 @@ namespace UnitTest
                 .UseInMemoryDatabase(databaseName: $"{name}DB")
                 .Options;
             context = new GameContext(options);
-            return new GameRepositoryLayer(context);
+            return new GameRepositoryLayer(context, null);
         }
         [Fact]
         public async void TestRepositoryCreatePlayer()
