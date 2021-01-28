@@ -8,8 +8,6 @@ pool:
   vmImage: windows-latest
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
 steps:
@@ -44,16 +42,14 @@ steps:
 - task: SonarCloudAnalyze@1
   displayName: run code analysis
 
-
-
 - task: PublishCodeCoverageResults@1
   displayName: Publish Code Coverage
   inputs:
-    codeCoverageTool: Cobertura
-    summaryFileLocation: $(Agent.TempDirectory)/*/coburtura/coverage.xml
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
 
 - task: SonarCloudPublish@1
-  displayName: Publish Code Analysis
+  displayName: publish code analysis
 
 
 - task: DotNetCoreCLI@2
