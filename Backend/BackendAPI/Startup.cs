@@ -29,15 +29,20 @@ namespace BackenAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllers();
             services.AddDbContext<GameContext>(opt =>
                                                opt.UseInMemoryDatabase("TodoList"));
             //Add cors with any origin
-            services.AddCors(c =>
+            services.AddCors(options =>
             {
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+                options.AddPolicy("policy1",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
             });
+            services.AddControllers();
             services.AddScoped<GameContext>();
             services.AddScoped<GameRepositoryLayer>();
             services.AddScoped<BusinessLayerClass>();
@@ -56,7 +61,7 @@ namespace BackenAPI
 
             app.UseRouting();
             //Inject cors
-            app.UseCors(options => options.AllowAnyOrigin());
+            app.UseCors("policy1");
 
             app.UseAuthorization();
 
