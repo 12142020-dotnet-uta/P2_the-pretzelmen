@@ -31,9 +31,10 @@ steps:
 
 - task: DotNetCoreCLI@2
   inputs:
+    workingDirectory: Backend/
     command: 'build'
     projects: '$(solution)'
-    workingDirectory: Backend/
+
 - task: DotNetCoreCLI@2
   displayName: Analyze Tests
   inputs:
