@@ -31,7 +31,7 @@ steps:
 
 - script: dotnet build --configuration Release
   displayName: Analyze Build
-  workingDirectory: Backend/'
+  workingDirectory: Backend/
 
 - task: DotNetCoreCLI@2
   displayName: Analyze Tests
