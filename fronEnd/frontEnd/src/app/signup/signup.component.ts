@@ -32,12 +32,12 @@ export class SignupComponent implements OnInit {
     console.log("Passwored: " + this.user.password.trim());
     console.log("email: " +this.user.email.trim());
      let aUser = {
-      username: "jimLake",
-      password: "lallll"
+      username: this.user.firstName,
+      password: this.user.password
     }
     if(!this.user.firstName){ return;}
      //add user to database by calling user service
-   //console.log( "ADDED PLAYER:  " + this.userService.addUser(this.user));
+    console.log( "ADDED PLAYER:  " + this.userService.addUser(aUser));
 
   }
 
