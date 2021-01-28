@@ -33,15 +33,14 @@ namespace BackenAPI
             services.AddControllers();
             services.AddDbContext<GameContext>(opt =>
                                                opt.UseInMemoryDatabase("TodoList"));
-            services.AddScoped<GameContext>();
-            services.AddScoped<GameRepositoryLayer>();
-            services.AddScoped<BusinessLayerClass>();
             //Add cors with any origin
             services.AddCors(c =>
             {
                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
             });
-
+            services.AddScoped<GameContext>();
+            services.AddScoped<GameRepositoryLayer>();
+            services.AddScoped<BusinessLayerClass>();
 
         }
 
@@ -56,6 +55,8 @@ namespace BackenAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            //Inject cors
+            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseAuthorization();
 
@@ -63,8 +64,6 @@ namespace BackenAPI
             {
                 endpoints.MapControllers();
             });
-            //Inject cors
-            app.UseCors(options => options.AllowAnyOrigin());
         }
     }
 }
