@@ -60,6 +60,7 @@ namespace BackenAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
             //Inject cors
             app.UseCors("policy1");
 
