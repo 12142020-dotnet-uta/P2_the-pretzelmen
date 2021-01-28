@@ -59,8 +59,8 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "custom-login:build:production"
-              
+              "browserTarget": "custom-login:build:production",
+              "proxyConfig": "proxy.conf.json"
             }
           }
         },
