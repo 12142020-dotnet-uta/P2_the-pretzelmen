@@ -34,8 +34,8 @@ export class SignupComponent implements OnInit {
     console.log("last Name: " + this.user.lastName.trim());
     console.log("Passwored: " + this.user.password.trim());
     console.log("email: " +this.user.email.trim());
-     var aUser = {
-      userName: "jimLake",
+     let aUser = {
+      username: "jimLake",
       password: "lallll"
     }
     if(!this.user.firstName){ return;}

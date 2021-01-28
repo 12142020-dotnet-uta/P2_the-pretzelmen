@@ -4,18 +4,22 @@ import {from, Observable, of} from 'rxjs';
 import { MessageService} from './message.service'
 import { HttpClientModule, HttpClient, HttpHeaders} from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import { PlayerViewModel } from './playerViewModel';
+import { fullplayerview } from './fullplayerview';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+
+  playerview :fullplayerview = new fullplayerview();
   private userUrl = "https://magic-match-api.azurewebsites.net/api/player/"
   
   httpOptions = {
     headers: new HttpHeaders({ 
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin':'*',
-    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+    'Access-Control-Allow-Methods': 'POST',
     'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
     
    })
@@ -56,15 +60,16 @@ updateUser(user: User): Observable<any> {
   );
 }
 /** POST: add a new hero to the server */
-addUser(user: any): Observable<any> {
+addUser(user: PlayerViewModel): void{
   const headers ={ 'content-type': 'application/json'}
   const body = JSON.stringify(user);
   console.log(body);
-  return this.http.post<any>('https://magic-match-api.azurewebsites.net/api/player/CreatePlayer', body, this.httpOptions)
-    .pipe(
+  this.http.post<any>('https://magic-match-api.azurewebsites.net/api/player/CreatePlayer', body, this.httpOptions).subscribe(x => this.playerview= x);
+  console.log(this.playerview);
+    //.pipe(
       //tap((newUser: User) => this.log(`added user w/ id=${newUser.id}`)),
-      catchError(this.handleError<any>('add user'))
-  );
+ //     catchError(this.handleError<any>('add user'))
+ // );
 }
 
  /**
