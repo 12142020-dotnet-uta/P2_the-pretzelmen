@@ -32,18 +32,19 @@ steps:
 - script: dotnet build --configuration Release
   displayName: Analyze Build
   workingDirectory: Backend/
+
 - task: DotNetCoreCLI@2
   displayName: Analyze Tests
   inputs:
-    command: test
-    projects: Backend/*Test/*.csproj
-    arguments: --configuration Release --collect "Code Coverage"
+    command: 'test'
+    projects: 'Backend/*Test/*.csproj'
+    arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
 
 - task: SonarCloudAnalyze@1
   displayName: run code analysis
 
 - task: PublishCodeCoverageResults@1
-  displayName: Publish Code Coverage
+  displayName: publish code coverage
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
