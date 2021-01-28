@@ -15,6 +15,7 @@ import { OktaAuthService } from '@okta/okta-angular';
 import { HttpClient } from '@angular/common/http';
 
 import sampleConfig from '../app.config';
+import {MessageService} from '../message.service';
 
 interface Message {
   date: string;
@@ -30,7 +31,7 @@ export class MessagesComponent implements OnInit {
   failed: Boolean;
   messages: Array<Message> [];
 
-  constructor(public oktaAuth: OktaAuthService, private http: HttpClient) {
+  constructor(public oktaAuth: OktaAuthService, private http: HttpClient, private messageService: MessageService) {
     this.messages = [];
   }
 

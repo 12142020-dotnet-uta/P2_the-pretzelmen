@@ -12,7 +12,13 @@ export class UserService {
   private userUrl = "https://magic-match-api.azurewebsites.net/api/player/"
   
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin':'*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+    'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
+    
+   })
   };
   constructor( private messageService: MessageService, private http: HttpClient) {
 
@@ -54,7 +60,7 @@ addUser(user: any): Observable<any> {
   const headers ={ 'content-type': 'application/json'}
   const body = JSON.stringify(user);
   console.log(body);
-  return this.http.post('https://magic-match-api.azurewebsites.net/api/player/CreatePlayer', body, this.httpOptions)
+  return this.http.post<any>('https://magic-match-api.azurewebsites.net/api/player/CreatePlayer', body, this.httpOptions)
     .pipe(
       //tap((newUser: User) => this.log(`added user w/ id=${newUser.id}`)),
       catchError(this.handleError<any>('add user'))
