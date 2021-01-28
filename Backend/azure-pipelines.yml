@@ -29,11 +29,9 @@ steps:
 
 
 
-- task: DotNetCoreCLI@2
-  inputs:
-    workingDirectory: Backend/
-    command: 'build'
-    projects: '$(solution)'
+- script: dotnet build --configuration Release
+  displayName: Analyze Build
+  workingDirectory: Backend/'
 
 - task: DotNetCoreCLI@2
   displayName: Analyze Tests
