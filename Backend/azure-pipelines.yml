@@ -7,70 +7,64 @@ pr:
 pool:
   vmImage: windows-latest
 
-stages:
-  - stage: build
-    displayName: Build
-    jobs:
-      - job: build
-        steps:
-          - script: dotnet build
-            workingDirectory: Backend/
-  - stage: test
-    displayName: Test
-    jobs:
-      - job: test
-        steps:
-          - script: dotnet test
-            workingDirectory: Backend/
-  - stage: analyze
-    displayName: Analyze
-    jobs:
-      - job: analyze
-        steps:
-          - task: SonarCloudPrepare@1
-            inputs:
-              SonarCloud: sonarcloud-srv-0
-              organization: p2the-pretzelmen
-              scannerMode: MSBuild
-              projectKey: P2the-pretzelmen_backend
-              projectName: P2the-pretzelmen_backend
-              extraProperties: |
-                sonar.exclusions=**/obj/**,**/lib/**,**/*.dll
-          - script: dotnet build --configuration Release
-            displayName: Analyze Build
-            workingDirectory: Backend/
-          - task: DotNetCoreCLI@2
-            displayName: Analyze Tests
-            inputs:
-              command: test
-              projects: Backend/*Test/*.csproj
-              arguments: --configuration Release --collect "Code Coverage"
-          - task: PublishCodeCoverageResults@1
-            displayName: Publish Code Coverage
-            inputs:
-              codeCoverageTool: Cobertura
-              summaryFileLocation: $(Agent.TempDirectory)/*/coburtura/coverage.xml
-          - task: SonarCloudAnalyze@1
-            displayName: Run Code Analysis
-          - task: SonarCloudPublish@1
-            displayName: Publish Code Analysis
-  - stage: deploy
-    displayName: Deploy
-    jobs:
-      - job: Deploy
-        steps:
-          - task: DotNetCoreCLI@2
-            displayName: Publish
-            inputs:
-              command: publish
-              projects: Backend/BackendAPI/BackendAPI.csproj
-              publishWebProjects: false
-              zipAfterPublish: true
-          - task: AzureRmWebAppDeployment@4
-            displayName: Azure Web App
-            inputs:
-              ConnectionType: AzureRM
-              azureSubscription: azure-resource-group
-              appType: webApp
-              WebAppName: magic-match-api
-              packageForLinux: $(System.DefaultWorkingDirectory)/**/*.zip
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'sonarcloud-srv-0'
+    organization: 'p2the-pretzelmen'
+    scannerMode: 'MSBuild'
+    projectKey: 'P2the-pretzelmen_backend'
+    projectName: 'P2the-pretzelmen_backend'
+    extraProperties: |
+      sonar.exclusions=**/obj/**,**/lib/**,**/*.dll
+
+
+
+- script: dotnet build --configuration Release
+  displayName: Analyze Build
+  workingDirectory: Backend/
+
+- task: DotNetCoreCLI@2
+  displayName: Analyze Tests
+  inputs:
+    command: 'test'
+    projects: 'Backend/*Test/*.csproj'
+    arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
+
+- task: SonarCloudAnalyze@1
+  displayName: run code analysis
+
+- task: PublishCodeCoverageResults@1
+  displayName: publish code coverage
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
+
+- task: SonarCloudPublish@1
+  displayName: publish code analysis
+
+
+- task: DotNetCoreCLI@2
+  displayName: Publish
+  inputs:
+    command: publish
+    projects: Backend/BackendAPI/BackendAPI.csproj
+    publishWebProjects: false
+    zipAfterPublish: true
+- task: AzureRmWebAppDeployment@4
+  displayName: Azure Web App
+  inputs:
+    ConnectionType: AzureRM
+    azureSubscription: azure-resource-group
+    appType: webApp
+    WebAppName: magic-match-api
+    packageForLinux: $(System.DefaultWorkingDirectory)/**/*.zip
