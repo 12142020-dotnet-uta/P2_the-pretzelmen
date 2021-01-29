@@ -43,7 +43,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { UserComponent } from './user/user.component';
 import { AddEditUserComponent} from './add-edit-user/add-edit-user.component';
 import { MemoryGameComponent} from './memory-game/memory-game.component'
-
+import { NbThemeModule } from '@nebular/theme';
+import { NbCardModule} from '@nebular/theme';
 
 const appRoutes: Routes = [
   {
@@ -90,6 +91,8 @@ const appRoutes: Routes = [
     NgbModule,
     FormsModule,
     AppRoutingModule,
+    NbCardModule,
+    NbThemeModule.forRoot(),
   ],
   providers: [
     { provide: OKTA_CONFIG, useValue: oktaConfig },

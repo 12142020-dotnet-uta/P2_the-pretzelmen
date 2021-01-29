@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { from } from 'rxjs';
+
 import {User} from '../user'
 import {UserService} from '../user.service'
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -18,19 +20,18 @@ export class SignupComponent implements OnInit {
   
   }
  
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private location: Location) { }
 
   ngOnInit(): void {
-    
-
+    this.userService.getUsers();
   }
 
   onSubmit(){
-    this.userService.getUsers();
-    console.log("firstName: " + this.user.firstName.trim());
-    console.log("last Name: " + this.user.lastName.trim());
-    console.log("Passwored: " + this.user.password.trim());
-    console.log("email: " +this.user.email.trim());
+   
+    //console.log("firstName: " + this.user.firstName.trim());
+    //console.log("last Name: " + this.user.lastName.trim());
+   // console.log("Passwored: " + this.user.password.trim());
+   // console.log("email: " +this.user.email.trim());
      let aUser = {
       username: this.user.firstName,
       password: this.user.password,
@@ -39,7 +40,10 @@ export class SignupComponent implements OnInit {
     if(!this.user.firstName){ return;}
      //add user to database by calling user service
     console.log( "ADDED PLAYER:  " + this.userService.addUser(aUser));
+    this.gotBack();
 
   }
-
+  gotBack(): void{
+    this.location.back();
+  }
 }

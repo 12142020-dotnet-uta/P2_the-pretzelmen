@@ -17,9 +17,6 @@ export class UserComponent implements OnInit {
   ActivateAddEdit: boolean = false;
   user: any;
 
-<<<<<<< HEAD
-  @Input() selected: any
-  @Output() selectedChange: EventEmitter<any> = new EventEmitter();
 
 
   constructor(
@@ -27,11 +24,6 @@ export class UserComponent implements OnInit {
     private router: Router,
     private dataService : DataService
     ) { }
-=======
-  constructor(private userService: UserService) {
-
-  }
->>>>>>> ca33e07341325b00ee8f76469d7780e050c857c8
 
   ngOnInit(): void  {
     this.getUsers();
@@ -41,17 +33,7 @@ export class UserComponent implements OnInit {
       this.users = data;
     })
   }
-<<<<<<< HEAD
-  editClick(user){
-    console.log("clicked on edit" + user);
 
-    this.user = user;
-    this.ActivateAddEdit = true;
-  }
- 
-=======
-
->>>>>>> ca33e07341325b00ee8f76469d7780e050c857c8
   deleteClick(user: PlayerViewModel): void{
     console.log('call delet @ user');
     this.users = this.users.filter(u => u !== user);

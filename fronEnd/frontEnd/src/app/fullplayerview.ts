@@ -4,6 +4,7 @@ export class fullplayerview{
     password :number
     wins :number
     losses :number
-    Tokens : number
+    collection: {}
+    tokens : number
     login : boolean
 }

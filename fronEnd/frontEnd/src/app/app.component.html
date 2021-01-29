@@ -23,7 +23,7 @@
 <ul>
   <li><a class="active" href="#home">Home</a></li>
   <li><a routerLink="/players">Players</a></li>
-  <li> <a routerLink="/matchHistory"> Match History</a></li> <!-- link works -->
+  <li><a routerLink="/matchHistory"> Match History</a></li> <!-- link works -->
   <li><a href="#contact">Contact</a></li>
   <li><a href="#about">About</a></li>
   <li *ngIf="isAuthenticated" (click)="logout()" style="float:right"><a><span class="glyphicon glyphicon-log-out"></span> Logout </a></li>
@@ -33,5 +33,5 @@
 
 
 
-
+<app-memory-game></app-memory-game>
 <router-outlet></router-outlet>

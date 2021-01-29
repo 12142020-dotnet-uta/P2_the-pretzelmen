@@ -66,6 +66,7 @@ export class AddEditUserComponent implements OnInit {
 
   }
 
+  /* got back to previous page */
   goBack(): void{
     this.location.back();
   }
