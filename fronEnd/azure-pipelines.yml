@@ -26,6 +26,8 @@ stages:
               cliProjectKey: P2the-pretzelmen_frontend
               cliProjectName: P2the-pretzelmen_frontend
               cliSources: fronEnd/frontEnd/src/
+              extraProperties: |
+                sonar.projectKey=P2the-pretzelmen_frontend
           - task: Npm@1
             displayName: Analyze Build
             inputs:
