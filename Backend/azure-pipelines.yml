@@ -15,7 +15,7 @@ stages:
         steps:
           - task: SonarCloudPrepare@1
             inputs:
-              SonarCloud: sonarcloud-srv-0
+              SonarCloud: sonar-srv-0
               organization: p2the-pretzelmen
               scannerMode: MSBuild
               projectKey: P2the-pretzelmen_backend
@@ -56,7 +56,7 @@ stages:
             displayName: Azure Web App
             inputs:
               ConnectionType: AzureRM
-              azureSubscription: azure-resource-group
+              azureSubscription: azure-srv-2
               appType: webApp
               WebAppName: magic-match-api
               packageForLinux: $(System.DefaultWorkingDirectory)/**/*.zip

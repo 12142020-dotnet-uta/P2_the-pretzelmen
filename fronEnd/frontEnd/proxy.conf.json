@@ -1,0 +1,10 @@
+{
+    "/api": {
+      "target": "https://magic-match-api.azurewebsites.net/api/player/CreatePlayer",
+      "secure": true,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": ""
+      }
+    }
+  }
