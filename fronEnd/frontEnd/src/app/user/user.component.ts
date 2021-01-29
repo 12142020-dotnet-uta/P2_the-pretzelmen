@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output , EventEmitter} from '@angular/core';
 import { from } from 'rxjs';
 import {UserService} from '../user.service'
 import {Observable} from "rxjs"
 import {PlayerViewModel} from '../playerViewModel'
+import { Router } from '@angular/router';
+import { fullplayerview } from '../fullplayerview';
+import { DataService } from '../data.service'
 
 @Component({
   selector: 'app-user',
@@ -10,15 +13,19 @@ import {PlayerViewModel} from '../playerViewModel'
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  users: any=[];
+  users: any[];
   ActivateAddEdit: boolean = false;
   user: any;
 
+  @Input() selected: any
+  @Output() selectedChange: EventEmitter<any> = new EventEmitter();
 
 
-  constructor(private userService: UserService) { 
-    
-  }
+  constructor(
+    private userService: UserService, 
+    private router: Router,
+    private dataService : DataService
+    ) { }
 
   ngOnInit(): void  {
     this.getUsers();
@@ -39,6 +46,10 @@ export class UserComponent implements OnInit {
     console.log('call delet @ user');
     this.users = this.users.filter(u => u !== user);
     this.userService.deleteUser(user).subscribe();
+  }
+  setData(user: fullplayerview){
+    console.log("set data is called");
+    this.dataService.sharedData = user;
   }
 
 }

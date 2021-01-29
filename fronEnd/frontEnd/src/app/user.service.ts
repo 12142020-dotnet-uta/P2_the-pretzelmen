@@ -46,7 +46,7 @@ export class UserService {
  * @param operation - get user by id
  * @param result - return a user
  */
-getUser(id: string): Observable<any>{
+getUserById(id: string): Observable<any>{
   const url = `${this.userUrl}/{id}`;
   return this.http.get<any>(url)
       .pipe(
@@ -56,8 +56,9 @@ getUser(id: string): Observable<any>{
 }
 
  /** PUT: update the hero on the server */
-updateUser(user: User): Observable<any> {
-  return this.http.put(this.userUrl, user, this.httpOptions).pipe(
+updateUser(user: fullplayerview): Observable<any> {
+  const body = JSON.stringify(user);
+  return this.http.put(this.userUrl + "EditPlayer", user, this.httpOptions).pipe(
     //tap(_ => this.log(`updated user id=${user.id}`)),
     catchError(this.handleError<any>('updateHero'))
   );
@@ -67,7 +68,8 @@ addUser(user: PlayerViewModel): void{
   const headers ={ 'content-type': 'application/json'}
   const body = JSON.stringify(user);
   console.log(body);
-  this.http.post<any>('https://magic-match-api.azurewebsites.net/api/player/CreatePlayer', body, this.httpOptions).subscribe(x => this.playerview= x);
+  this.http.post<any>('https://magic-match-api.azurewebsites.net/api/player/CreatePlayer',
+  body, this.httpOptions).subscribe(x => this.playerview= x);
   console.log(this.playerview);
     //.pipe(
       //tap((newUser: User) => this.log(`added user w/ id=${newUser.id}`)),
@@ -86,6 +88,7 @@ addUser(user: PlayerViewModel): void{
     );
   }
 
+  
 
  /**
  * Handle Http operation that failed.

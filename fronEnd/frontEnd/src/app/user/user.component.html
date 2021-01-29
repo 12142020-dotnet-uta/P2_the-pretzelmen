@@ -35,12 +35,12 @@
       <tr *ngFor="let user of users">
           <td>{{user.playerId}}</td>
           <td>{{user.userName}}</td>
-          <td>{{user.win}}</td>
-          <td>default</td>
+          <td>{{user.password}}</td>
+          <td>{{user.tokens}}</td>
           <td>asscociate@revature.net</td>
           
           <td>
-             <a routerLink="/editUser/{data: {1,1,1,1,11,1,1,}}">
+             <a routerLink="/editUser/{data: {1,1}} " (click)="setData(user)">
               <button type="button" class="btn btn-light mr-1"
               data-toggle="modal" data-target="#exampleModal"
             
