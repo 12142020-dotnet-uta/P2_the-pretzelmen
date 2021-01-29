@@ -11,11 +11,9 @@ namespace ModelLayer
         [Key]
         public Guid collectionId { get; set; } = new Guid();
 
-        public ICollection<Card> cards { get; set; }
-
         public Guid collectionHolder { get; set; }
 
-        [Range(1,int.MaxValue)]
+        [Range(0,int.MaxValue)]
         public int quantity { get; set; }
 
     }

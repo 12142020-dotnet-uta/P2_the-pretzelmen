@@ -28,6 +28,8 @@ namespace ModelLayer
         public string imageURL { get; set; }
         [Required]
         public bool inDeck { get; set; }
-        public int CollectionID { get; set; }
+        [Range(0,int.MaxValue)]
+        public int qty { get; set;}
+        public Guid CollectionID { get; set; }
     }
 }

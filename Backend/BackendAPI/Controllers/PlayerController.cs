@@ -57,21 +57,23 @@ namespace BackendAPI.Controllers
             return NoContent();
         }
 
-        //[HttpPut]
-        //[Route("EditPlayer")]
-        //public async Task<ActionResult<Player>> EditPlayer()
-        //{
-        //    var temp = await _businessLayer.LogoutPlayer(player.playerId);
+        //todo
+        [HttpGet]
+        [Route("EditPlayer")]
+        public async Task<ActionResult<Player>> EditPlayer(Player player)
+        {
+            var temp = await _businessLayer.EditPlayer(player);
 
-        //}
+            return temp;
+        }
 
         [HttpPost]
         [Route("CreatePlayer")]
-        public async Task<ActionResult<Player>> CreatePlayer(PlayerViewModel player)
+        public async Task<ActionResult<Player>> CreatePlayer(PlayerViewModel playerViewModel)
         {
-            var temp2 = await _businessLayer.CreatePlayer(player);
+            var temp2 = await _businessLayer.CreatePlayer(playerViewModel);
 
-            return CreatedAtAction("Login", new { username = player.userName, pass = player.password },temp2);
+            return CreatedAtAction("Login", new { username = playerViewModel.userName, pass = playerViewModel.password },temp2);
         }
 
 

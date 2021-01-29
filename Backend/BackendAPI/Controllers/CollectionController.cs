@@ -24,9 +24,9 @@ namespace BackendAPI.Controllers
 
         [HttpGet]
         [Route("collection")]
-        public async Task<IEnumerable<Collection>> GetCollection()
+        public async Task<IEnumerable<Collection>> GetCollection(Guid playerId)
         {
-            return await _businessLayer.GetCollection();
+            return await _businessLayer.GetCollection(playerId);
         }
 
         [HttpPost]

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BusinessLayer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ModelLayer;
+using ModelLayer.ModelViews;
 using MtgApiManager.Lib.Model;
 using MtgApiManager.Lib.Service;
 using System;
@@ -14,67 +16,32 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class MagicAPIController : ControllerBase
     {
+        private readonly BusinessLayerClass _businessLayer;
 
-        IMtgServiceProvider serviceProvider = new MtgServiceProvider();
-        
+        public MagicAPIController(BusinessLayerClass businessLayer)
+        {
+            _businessLayer = businessLayer;
+        }
+
         [HttpGet]
         [Route("cardById")]
         public async Task<ActionResult<Card>> GetCardById(int id)
         {
-            ICardService service = serviceProvider.GetCardService();
-            var result = await service.FindAsync(id);
-            if (result.IsSuccess)
-            {
-                var value = result.Value;
-                Card card = new Card()
-                {
-                    cardId = (int)value.MultiverseId,
-                    cardName = value.Name,
-                    cardClass = value.Type,
-                    attackNumber = int.Parse(value.Power),
-                    defenceNumber = int.Parse(value.Toughness),
-                    imageURL = value.ImageUrl.ToString()
-                };
-
-                return card;
-            }
-            else
-            {
-                var exception = result.Exception;
-                return null;
-            }
+            return await _businessLayer.GetCardById(id);
         }
 
         [HttpGet]
         [Route("cardByName")]
         public async Task<ActionResult<Card>> GetCardById(string name)
         {
-            ICardService service = serviceProvider.GetCardService();
-            var result = await service.Where(x => x.Name,name).AllAsync();
-            var temp =  result.Value;
-            Card card = new Card();
-            foreach (var i in temp)
-            {
-                if (i.Name == name)
-                {
-                    card.cardId = (int)i.MultiverseId;
-                    card.cardName = i.Name;
-                    card.cardClass = i.Type;
-                    card.attackNumber = int.Parse(i.Power);
-                    card.defenceNumber = int.Parse(i.Toughness);
-                    card.imageURL = i.ImageUrl.ToString();
-                }
-                return card;
-            }
-
-            return card;
+            return await _businessLayer.GetCardById(name);
         }
 
         [HttpGet]
         [Route("BoosterPack")]
-        public async Task<ActionResult<Card>> GetBoosterPack()
+        public async Task<IEnumerable<Card>> GetBoosterPack(BoosterForPlayer boosterForPlayer)
         {
-            return null;
+            return await _businessLayer.GetBoosterPack(boosterForPlayer.setid,boosterForPlayer.playerBoughtPack);
         }
     }
 }
