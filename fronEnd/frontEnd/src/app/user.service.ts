@@ -82,7 +82,7 @@ addUser(user: PlayerViewModel): void{
     const url = `${this.userUrl +"DeletePlayer"}/${body}`;
 
     return this.http.delete<PlayerViewModel>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`deleted user id=${user.username}`)),
+      tap(_ => this.log(`deleted user id=${user.playerId}`)),
       catchError(this.handleError<PlayerViewModel>('deleteHero'))
     );
   }

@@ -25,10 +25,10 @@ export class UserComponent implements OnInit {
     })
   }
 
-  /*deleteClick(user: PlayerViewModel): void{
+  deleteClick(user: PlayerViewModel): void{
     console.log('call delet @ user');
     this.users = this.users.filter(u => u !== user);
     this.userService.deleteUser(user).subscribe();
-  }*/
+  }
 
 }
