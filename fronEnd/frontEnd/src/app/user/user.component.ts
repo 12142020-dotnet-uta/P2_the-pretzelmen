@@ -11,6 +11,10 @@ import {PlayerViewModel} from '../playerViewModel'
 })
 export class UserComponent implements OnInit {
   users: any=[];
+  ActivateAddEdit: boolean = false;
+  user: any;
+
+
 
   constructor(private userService: UserService) { 
     
@@ -23,6 +27,12 @@ export class UserComponent implements OnInit {
     this.userService.getUsers().subscribe(data =>{
       this.users = data;
     })
+  }
+  editClick(user){
+    console.log("clicked on edit" + user);
+
+    this.user = user;
+    this.ActivateAddEdit = true;
   }
  
   deleteClick(user: PlayerViewModel): void{

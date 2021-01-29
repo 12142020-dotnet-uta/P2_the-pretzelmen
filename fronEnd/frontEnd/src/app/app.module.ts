@@ -41,6 +41,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SignupComponent } from './signup/signup.component';
 import { AppRoutingModule } from './app-routing.module';
 import { UserComponent } from './user/user.component';
+import { AddEditUserComponent} from './add-edit-user/add-edit-user.component';
+import { MemoryGameComponent} from './memory-game/memory-game.component'
 
 
 const appRoutes: Routes = [
@@ -77,6 +79,8 @@ const appRoutes: Routes = [
     LoginComponent,
     SignupComponent,
     UserComponent,
+    AddEditUserComponent,
+    MemoryGameComponent
   ],
   imports: [
     BrowserModule,
