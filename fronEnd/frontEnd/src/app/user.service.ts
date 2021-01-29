@@ -58,9 +58,10 @@ getUserById(id: string): Observable<any>{
  /** PUT: update the hero on the server */
 updateUser(user: fullplayerview): Observable<any> {
   const body = JSON.stringify(user);
-  return this.http.put(this.userUrl + "EditPlayer", user, this.httpOptions).pipe(
+  console.log("Send over server to save:  " + body);
+  return this.http.put('https://magic-match-api.azurewebsites.net/api/player/CreatePlayer/EditPlayer', body, this.httpOptions).pipe(
     //tap(_ => this.log(`updated user id=${user.id}`)),
-    catchError(this.handleError<any>('updateHero'))
+    catchError(this.handleError<any>('updateUser'))
   );
 }
 /** POST: add a new hero to the server */
