@@ -22,7 +22,10 @@ namespace BackendAPI.Controllers
         {
             _businessLayer = businessLayer;
         }
-
+        /// <summary>
+        /// This is intened for an Admin to see all the players using the site.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetPlayers")]
        // [Authorize]
@@ -31,7 +34,12 @@ namespace BackendAPI.Controllers
             return await _businessLayer.GetAllPlayers();
 
         }
-
+        /// <summary>
+        /// This is a login which takes a PlayerViewModel as a patameter. Containing only
+        /// two strings inside for username and password.
+        /// </summary>
+        /// <param name="playerViewModel"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("Login")]
         public async Task<ActionResult<Player>> Login(PlayerViewModel playerViewModel)
@@ -44,7 +52,11 @@ namespace BackendAPI.Controllers
             return check;
 
         }
-
+        /// <summary>
+        /// Accepts a player who wish to be loged out.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("Logout")]
         public async Task<ActionResult<Player>> Logout(Player player)
@@ -57,7 +69,12 @@ namespace BackendAPI.Controllers
             return NoContent();
         }
 
-        //todo
+        /// <summary>
+        /// This is function which will allow a player to edit the 
+        /// information given already.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("EditPlayer")]
         public async Task<ActionResult<Player>> EditPlayer(Player player)
@@ -66,7 +83,11 @@ namespace BackendAPI.Controllers
 
             return temp;
         }
-
+        /// <summary>
+        /// Using a playerviewmodel to makde a new user.
+        /// </summary>
+        /// <param name="playerViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("CreatePlayer")]
         public async Task<ActionResult<Player>> CreatePlayer(PlayerViewModel playerViewModel)
@@ -76,7 +97,11 @@ namespace BackendAPI.Controllers
             return CreatedAtAction("Login", new { username = playerViewModel.userName, pass = playerViewModel.password },temp2);
         }
 
-
+        /// <summary>
+        /// Delete you profile by the id of the profile.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("DeletePlayer")]
         public async Task<IActionResult> DeletePlayer(Player id)

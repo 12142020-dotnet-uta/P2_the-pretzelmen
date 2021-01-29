@@ -36,24 +36,43 @@ namespace BusinessLayer
         {
             return await _gameRepositoryLayer.GetAllPlayers();
         }
-
+        /// <summary>
+        /// using two strings to login a player.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<Player>> LoginPlayer(string username, string password)
         {
             return await _gameRepositoryLayer.LoginPlayer(username, password);
         }
-
+        /// <summary>
+        /// This is where we are passing the player who wishes to be 
+        /// loged out.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ActionResult> LogoutPlayer(Guid id)
         {
             return await _gameRepositoryLayer.Logout(id);
         }
-
+        /// <summary>
+        /// This is just a middle step before the player gets created.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Player>> CreatePlayer(PlayerViewModel player)
         {
             return await _gameRepositoryLayer.CreatePlayer(player);
         }
-
+        /// <summary>
+        /// A Guid is accepted to find the player which wanting wanting or needing 
+        /// to be deleted.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> DeletePlayer(Guid id)
         {
             return await _gameRepositoryLayer.DeletePlayer(id);
@@ -70,7 +89,11 @@ namespace BusinessLayer
             return await _gameRepositoryLayer.EditPlayer(player);
         }
 
-
+        /// <summary>
+        /// Using the Muiltverse id to find a card for the magic api wrapper.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ActionResult<Card>> GetCardById(int id)
         {
             ICardService service = serviceProvider.GetCardService();
@@ -96,7 +119,12 @@ namespace BusinessLayer
                 return null;
             }
         }
-
+        /// <summary>
+        /// Getting the info we want from and storing it in a card to send back.
+        /// If nothing is found than a empty card is returned
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public async Task<ActionResult<Card>> GetCardById(string name)
         {
             ICardService service = serviceProvider.GetCardService();
@@ -114,12 +142,17 @@ namespace BusinessLayer
                     card.defenceNumber = int.Parse(i.Toughness);
                     card.imageURL = i.ImageUrl.ToString();
                 }
-                return card;
             }
 
             return card;
         }
-
+        /// <summary>
+        /// This is where get only the information we want at the moment.
+        /// We focus on getting creatures or lands only.
+        /// </summary>
+        /// <param name="pack"></param>
+        /// <param name="playerid"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Card>> GetBoosterPack(string pack,Guid playerid)
         {
             List<Card> boosterCards = new List<Card>();

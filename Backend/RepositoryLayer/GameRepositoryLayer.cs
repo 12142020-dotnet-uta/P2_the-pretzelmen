@@ -130,7 +130,7 @@ namespace RepositoryLayer
 
         /// <summary>
         /// Adds a new player to the system. They will be defaulted with a 0/0
-        ///  win/loss record, and they recieve 10000 tokens. A new collection of
+        ///  win/loss record, and they recieve 10000 tokens. A new collection for
         ///  cards is made as well.
         /// </summary>
         /// <param name="player"></param>

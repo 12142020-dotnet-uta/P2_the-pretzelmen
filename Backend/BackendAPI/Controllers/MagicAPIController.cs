@@ -22,7 +22,12 @@ namespace BackendAPI.Controllers
         {
             _businessLayer = businessLayer;
         }
-
+        /// <summary>
+        /// This will accept an int as a parameter to return a card with that id.
+        /// the ID we use is the mulitverse id because these are uqiue.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("cardById")]
         public async Task<ActionResult<Card>> GetCardById(int id)
@@ -30,13 +35,26 @@ namespace BackendAPI.Controllers
             return await _businessLayer.GetCardById(id);
         }
 
+
+        /// <summary>
+        /// Instead you can use a name of the card. this must be the exact name
+        /// of the card you want to find.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("cardByName")]
         public async Task<ActionResult<Card>> GetCardById(string name)
         {
             return await _businessLayer.GetCardById(name);
         }
-
+        /// <summary>
+        /// This take a BoostForPlayer which contains the set id and the 
+        /// player id. using these two we get a booster pack for the set and
+        /// add it to the players colleciton
+        /// </summary>
+        /// <param name="boosterForPlayer"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("BoosterPack")]
         public async Task<IEnumerable<Card>> GetBoosterPack(BoosterForPlayer boosterForPlayer)
