@@ -78,10 +78,53 @@ namespace BusinessLayer
             return await _gameRepositoryLayer.DeletePlayer(id);
         }
 
-        public async Task<IActionResult> TradeCards(TradeViewModel tradeViewModel)
+        /// <summary>
+        /// Will return a list of Trades
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Trade>> GetAllTrades()
         {
-            return await _gameRepositoryLayer.TradeCards(tradeViewModel);
+            return await _gameRepositoryLayer.GetAllTrades();
         }
+        /// <summary>
+        /// Return a list of trades by the playerid.
+        /// </summary>
+        /// <param name="playerid"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Trade>> getMyTrades(Guid playerid)
+        {
+            return await _gameRepositoryLayer.getMyTrades(playerid);
+        }
+        /// <summary>
+        /// This accepts a TradeViewModel which has the player id and 
+        /// the card the player offered up. sets active to true.
+        /// </summary>
+        /// <param name="tradeViewModel"></param>
+        /// <returns></returns>
+        public async Task<ActionResult<Trade>> setUpATrade(TradeViewModel tradeViewModel)
+        {
+            Trade trade = new Trade();
+            trade.postPlayer = tradeViewModel.playerId;
+            trade.postPlayerCardOffer = tradeViewModel.playerCardOffer;
+            trade.active = true;
+
+            return await _gameRepositoryLayer.setUpATrade(trade);
+        }
+
+        public async Task<ActionResult<Trade>> setOfferToTrade(TradeViewModel tradeView)
+        {
+            return await _gameRepositoryLayer.setOfferToTrade(tradeView);
+        }
+
+        public async Task<ActionResult> acceptOffer(TradeViewModel id)
+        {
+            return await _gameRepositoryLayer.acceptOffer(id);
+        }
+
+        //public async Task<ActionResult> TradeCards(TradeViewModel tradeViewModel)
+        //{
+        //    return await _gameRepositoryLayer.TradeCards(tradeViewModel);
+        //}
 
         //todo
         public async Task<ActionResult<Player>> EditPlayer(Player player)

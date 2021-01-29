@@ -57,6 +57,24 @@ namespace RepositoryLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "trades",
+                columns: table => new
+                {
+                    tradeId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    postPlayer = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    acceptPlayer = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    postPlayerCardOffer = table.Column<int>(type: "int", nullable: false),
+                    acceptPlayerCardOffer = table.Column<int>(type: "int", nullable: false),
+                    active = table.Column<bool>(type: "bit", nullable: false),
+                    accepted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_trades", x => x.tradeId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "players",
                 columns: table => new
                 {
@@ -129,35 +147,6 @@ namespace RepositoryLayer.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "trades",
-                columns: table => new
-                {
-                    tradeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    postPlayerplayerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    acceptPlayerplayerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    postPlayerCardOffer = table.Column<int>(type: "int", nullable: false),
-                    acceptPlayerCardOffer = table.Column<int>(type: "int", nullable: false),
-                    active = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_trades", x => x.tradeId);
-                    table.ForeignKey(
-                        name: "FK_trades_players_acceptPlayerplayerId",
-                        column: x => x.acceptPlayerplayerId,
-                        principalTable: "players",
-                        principalColumn: "playerId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_trades_players_postPlayerplayerId",
-                        column: x => x.postPlayerplayerId,
-                        principalTable: "players",
-                        principalColumn: "playerId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_matches_player1playerId",
                 table: "matches",
@@ -177,16 +166,6 @@ namespace RepositoryLayer.Migrations
                 name: "IX_players_collectionId",
                 table: "players",
                 column: "collectionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_trades_acceptPlayerplayerId",
-                table: "trades",
-                column: "acceptPlayerplayerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_trades_postPlayerplayerId",
-                table: "trades",
-                column: "postPlayerplayerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

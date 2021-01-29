@@ -10,7 +10,7 @@ using RepositoryLayer;
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(GameContext))]
-    [Migration("20210129053136_testBooster")]
+    [Migration("20210129222202_testBooster")]
     partial class testBooster
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -197,26 +197,25 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<Guid>("acceptPlayer")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("acceptPlayerCardOffer")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("acceptPlayerplayerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<bool>("accepted")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("active")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("postPlayer")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("postPlayerCardOffer")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("postPlayerplayerId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("tradeId");
-
-                    b.HasIndex("acceptPlayerplayerId");
-
-                    b.HasIndex("postPlayerplayerId");
 
                     b.ToTable("trades");
                 });
@@ -252,21 +251,6 @@ namespace RepositoryLayer.Migrations
                         .HasForeignKey("collectionId");
 
                     b.Navigation("Collection");
-                });
-
-            modelBuilder.Entity("ModelLayer.Trade", b =>
-                {
-                    b.HasOne("ModelLayer.Player", "acceptPlayer")
-                        .WithMany()
-                        .HasForeignKey("acceptPlayerplayerId");
-
-                    b.HasOne("ModelLayer.Player", "postPlayer")
-                        .WithMany()
-                        .HasForeignKey("postPlayerplayerId");
-
-                    b.Navigation("acceptPlayer");
-
-                    b.Navigation("postPlayer");
                 });
 #pragma warning restore 612, 618
         }
