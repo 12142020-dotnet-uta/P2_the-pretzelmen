@@ -3,8 +3,8 @@ WORKDIR /work
 
 COPY . .
 
-RUN npm clean-install
-RUN npm run build -- --prod
+RUN npm install
+RUN npm run build
 
 FROM nginx:alpine
 LABEL maintainer="https://github.com/synaodev"
