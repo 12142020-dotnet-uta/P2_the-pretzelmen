@@ -33,7 +33,8 @@ export class SignupComponent implements OnInit {
     console.log("email: " +this.user.email.trim());
      let aUser = {
       username: this.user.firstName,
-      password: this.user.password
+      password: this.user.password,
+      playerId: "000"
     }
     if(!this.user.firstName){ return;}
      //add user to database by calling user service

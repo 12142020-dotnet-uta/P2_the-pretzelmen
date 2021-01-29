@@ -76,6 +76,18 @@ addUser(user: PlayerViewModel): void{
 
 }
 
+  /** DELETE: delete the hero from the server */
+  deleteUser(user: PlayerViewModel): Observable<PlayerViewModel> {
+    const body = JSON.stringify(user);
+    const url = `${this.userUrl +"DeletePlayer"}/${body}`;
+    
+    return this.http.delete<PlayerViewModel>(url, this.httpOptions).pipe(
+      tap(_ => this.log(`deleted user id=${user.playerId}`)),
+      catchError(this.handleError<PlayerViewModel>('deleteHero'))
+    );
+  }
+
+
  /**
  * Handle Http operation that failed.
  * Let the app continue.
