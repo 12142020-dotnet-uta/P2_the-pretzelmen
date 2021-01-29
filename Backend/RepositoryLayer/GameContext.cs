@@ -25,7 +25,7 @@ namespace RepositoryLayer
         {
             if (!options.IsConfigured)
             {
-                options.UseSqlServer("Server=LocalHost\\SQLEXPRESS01;Database=Project_2_StoreApp;Trusted_Connection=True;");
+                options.UseSqlServer("Server=LocalHost\\SQLEXPRESS01;Database=Project_2_Magic;Trusted_Connection=True;");
             }
         }
     }

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BusinessLayer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ModelLayer;
+using ModelLayer.ModelViews;
 using MtgApiManager.Lib.Model;
 using MtgApiManager.Lib.Service;
 using System;
@@ -14,67 +16,50 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class MagicAPIController : ControllerBase
     {
+        private readonly BusinessLayerClass _businessLayer;
 
-        IMtgServiceProvider serviceProvider = new MtgServiceProvider();
-        
+        public MagicAPIController(BusinessLayerClass businessLayer)
+        {
+            _businessLayer = businessLayer;
+        }
+        /// <summary>
+        /// This will accept an int as a parameter to return a card with that id.
+        /// the ID we use is the mulitverse id because these are uqiue.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("cardById")]
         public async Task<ActionResult<Card>> GetCardById(int id)
         {
-            ICardService service = serviceProvider.GetCardService();
-            var result = await service.FindAsync(id);
-            if (result.IsSuccess)
-            {
-                var value = result.Value;
-                Card card = new Card()
-                {
-                    cardId = (int)value.MultiverseId,
-                    cardName = value.Name,
-                    cardClass = value.Type,
-                    attackNumber = int.Parse(value.Power),
-                    defenceNumber = int.Parse(value.Toughness),
-                    imageURL = value.ImageUrl.ToString()
-                };
-
-                return card;
-            }
-            else
-            {
-                var exception = result.Exception;
-                return null;
-            }
+            return await _businessLayer.GetCardById(id);
         }
 
+
+        /// <summary>
+        /// Instead you can use a name of the card. this must be the exact name
+        /// of the card you want to find.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("cardByName")]
         public async Task<ActionResult<Card>> GetCardById(string name)
         {
-            ICardService service = serviceProvider.GetCardService();
-            var result = await service.Where(x => x.Name,name).AllAsync();
-            var temp =  result.Value;
-            Card card = new Card();
-            foreach (var i in temp)
-            {
-                if (i.Name == name)
-                {
-                    card.cardId = (int)i.MultiverseId;
-                    card.cardName = i.Name;
-                    card.cardClass = i.Type;
-                    card.attackNumber = int.Parse(i.Power);
-                    card.defenceNumber = int.Parse(i.Toughness);
-                    card.imageURL = i.ImageUrl.ToString();
-                }
-                return card;
-            }
-
-            return card;
+            return await _businessLayer.GetCardById(name);
         }
-
+        /// <summary>
+        /// This take a BoostForPlayer which contains the set id and the 
+        /// player id. using these two we get a booster pack for the set and
+        /// add it to the players colleciton
+        /// </summary>
+        /// <param name="boosterForPlayer"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("BoosterPack")]
-        public async Task<ActionResult<Card>> GetBoosterPack()
+        public async Task<IEnumerable<Card>> GetBoosterPack(BoosterForPlayer boosterForPlayer)
         {
-            return null;
+            return await _businessLayer.GetBoosterPack(boosterForPlayer.setid,boosterForPlayer.playerBoughtPack);
         }
     }
 }

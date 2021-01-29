@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ModelLayer;
-using System;
+//using ModelLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using ModelLayer.ModelViews;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace RepositoryLayer
 {
@@ -17,6 +18,11 @@ namespace RepositoryLayer
     {
         private readonly GameContext _gameContext;
         private readonly ILogger<GameRepositoryLayer> _logger;
+
+        public GameRepositoryLayer(GameContext game)
+        {
+            _gameContext = game;
+        }
 
         public GameRepositoryLayer(GameContext game, ILogger<GameRepositoryLayer> logger)
         {
@@ -54,10 +60,21 @@ namespace RepositoryLayer
             return null;
         }
 
-        //todo
-        public async Task<IEnumerable<Collection>> GetCollection()
+        //parameter needs to change
+        public async Task<IEnumerable<Collection>> GetCollection(Guid id)
         {
-            return null;
+            var player = await _gameContext.players.Where(x => x.playerId == id).FirstOrDefaultAsync();
+            if(player == null)
+            {
+                _logger.LogInformation($"The requested player {id} was not found.");
+                return null;
+            }
+
+            var playerCollection = from collection in _gameContext.collections
+                                   where collection.collectionHolder == id
+                                   select collection;
+
+            return playerCollection;
         }
 
         /// <summary>
@@ -113,7 +130,7 @@ namespace RepositoryLayer
 
         /// <summary>
         /// Adds a new player to the system. They will be defaulted with a 0/0
-        ///  win/loss record, and they recieve 10000 tokens. A new collection of
+        ///  win/loss record, and they recieve 10000 tokens. A new collection for
         ///  cards is made as well.
         /// </summary>
         /// <param name="player"></param>
@@ -138,7 +155,7 @@ namespace RepositoryLayer
                 Collection collection = new Collection()
                 {
                     collectionHolder = check.playerId,
-                    quantity = 0
+                    quantity =0
                 };
                 _gameContext.collections.Add(collection);
 
@@ -196,9 +213,37 @@ namespace RepositoryLayer
             return null;
         }
 
+        //todo
+        public async Task<ActionResult<Player>> EditPlayer(Player player)
+        {
+            var temp = await _gameContext.players.Where(x => x.playerId == player.playerId).FirstOrDefaultAsync();
+
+            if(temp == null)
+            {
+                _logger.LogInformation($"There was an issue with finding player by id: {player.playerId}");
+            }
+
+            return null;
+        }
+
         private IActionResult NotFoundResult()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IActionResult> BoosterToCollection(List<Card> pack, Guid playerid)
+        {
+            Collection temp = _gameContext.collections.Where(x => x.collectionHolder == playerid).FirstOrDefault();
+            foreach(var p in pack)
+            {
+                p.CollectionID = temp.collectionId;
+                //what if the person already has the card in collection
+                p.qty += 1;
+                temp.quantity += 1;
+                _gameContext.cards.Add(p);
+            }
+            await _gameContext.SaveChangesAsync();
+            return null;
         }
     }
 }
