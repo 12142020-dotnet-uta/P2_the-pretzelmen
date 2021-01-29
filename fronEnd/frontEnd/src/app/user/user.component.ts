@@ -12,8 +12,8 @@ import {PlayerViewModel} from '../playerViewModel'
 export class UserComponent implements OnInit {
   users: any=[];
 
-  constructor(private userService: UserService) { 
-    
+  constructor(private userService: UserService) {
+
   }
 
   ngOnInit(): void  {
@@ -24,11 +24,11 @@ export class UserComponent implements OnInit {
       this.users = data;
     })
   }
- 
-  deleteClick(user: PlayerViewModel): void{
+
+  /*deleteClick(user: PlayerViewModel): void{
     console.log('call delet @ user');
     this.users = this.users.filter(u => u !== user);
     this.userService.deleteUser(user).subscribe();
-  }
+  }*/
 
 }

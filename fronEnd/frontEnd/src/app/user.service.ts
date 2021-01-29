@@ -14,17 +14,17 @@ export class UserService {
 
   playerview :fullplayerview = new fullplayerview();
   private userUrl = "https://magic-match-api.azurewebsites.net/api/player/"
-  
+
   //private userUrl = "https://magic-match-api.azurewebsites.net/api/player/";
   //private jsonUlr = "https://jsonplaceholder.typicode.com/posts";
 
   httpOptions = {
-    headers: new HttpHeaders({ 
+    headers: new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin':'*',
     'Access-Control-Allow-Methods': 'POST',
     'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
-  
+
    })
   };
   constructor( private messageService: MessageService, private http: HttpClient) {
@@ -80,9 +80,9 @@ addUser(user: PlayerViewModel): void{
   deleteUser(user: PlayerViewModel): Observable<PlayerViewModel> {
     const body = JSON.stringify(user);
     const url = `${this.userUrl +"DeletePlayer"}/${body}`;
-    
+
     return this.http.delete<PlayerViewModel>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`deleted user id=${user.playerId}`)),
+      tap(_ => this.log(`deleted user id=${user.username}`)),
       catchError(this.handleError<PlayerViewModel>('deleteHero'))
     );
   }
@@ -112,5 +112,5 @@ private handleError<T>(operation = 'operation', result?: T) {
  private log(message: string) {
   //this.messageService.add(`HeroService: ${message}`);
 }
- 
+
 }
