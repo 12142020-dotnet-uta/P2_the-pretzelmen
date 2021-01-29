@@ -49,3 +49,29 @@ stages:
             displayName: Run Code Analysis
           - task: SonarCloudPublish@1
             displayName: Publish Code Analysis
+  - stage: deploy
+    displayName: Deploy
+    jobs:
+      - job: publish
+        steps:
+          - task: Docker@2
+            displayName: Login to Container Registry
+            inputs:
+              command: login
+              containerRegistry: pretzelmen-acr
+          - script: |
+              docker image build --file fronEnd/frontEnd/Dockerfile --tag pretzelmen.azurecr.io/app:latest fronEnd/frontEnd/
+              docker image push pretzelmen.azurecr.io/app:latest
+            displayName: Build & Push Docker Image
+          - task: Docker@2
+            displayName: Logout of Container Registry
+            inputs:
+              command: logout
+              containerRegistry: pretzelmen-acr
+          - task: AzureWebAppContainer@1
+            displayName: Web App Container
+            inputs:
+              azureSubscription: azure-resource-group
+              resourceGroupName: pretzelmen-group
+              appName: magic-match
+              containers: pretzelmen.azurecr.io/app:latest
