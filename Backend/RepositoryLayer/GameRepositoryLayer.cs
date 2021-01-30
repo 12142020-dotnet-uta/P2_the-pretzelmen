@@ -74,7 +74,7 @@ namespace RepositoryLayer
                                    where collection.collectionHolder == id
                                    select collection;
 
-            return playerCollection;
+            return playerCollection.ToList();
         }
 
         /// <summary>

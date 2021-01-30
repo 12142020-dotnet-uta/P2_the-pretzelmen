@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ModelLayer;
-using ModelLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,8 +14,6 @@ namespace RepositoryLayer
         public DbSet<Match> matches { get; set; }
         public DbSet<PairMatch> pairs { get; set; }
         public DbSet<Trade> trades { get; set; }
-
-        public DbSet<TodoItem> TodoItems { get; set; }
 
         public GameContext() { }
         public GameContext(DbContextOptions options) : base(options) { }
