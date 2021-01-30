@@ -4,12 +4,18 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 
 // Read environment variables from "testenv". Override environment vars if they are already set.
-const TESTENV = path.resolve(__dirname, '..', 'testenv');
-if (fs.existsSync(TESTENV)) {
-  const envConfig = dotenv.parse(fs.readFileSync(TESTENV));
-  Object.keys(envConfig).forEach((k) => {
-    process.env[k] = envConfig[k];
-  });
+const TESTENVS = [
+  path.resolve(__dirname, 'testenv'),
+  path.resolve(__dirname, '..', 'testenv')
+];
+for (let TE of TESTENVS) {
+  if (fs.existsSync(TE)) {
+    const envConfig = dotenv.parse(fs.readFileSync(TE));
+    Object.keys(envConfig).forEach((k) => {
+      process.env[k] = envConfig[k];
+    });
+    break;
+  }
 }
 process.env.CLIENT_ID = process.env.CLIENT_ID || process.env.SPA_CLIENT_ID;
 

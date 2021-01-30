@@ -20,8 +20,8 @@ export class UserComponent implements OnInit {
 
 
   constructor(
-    private userService: UserService, 
-    private router: Router,
+    private userService: UserService,
+    //private router: Router,
     private dataService : DataService
     ) { }
 

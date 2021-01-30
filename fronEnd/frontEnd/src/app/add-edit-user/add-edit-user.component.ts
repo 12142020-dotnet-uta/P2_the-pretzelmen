@@ -3,7 +3,7 @@ import {UserService} from '../user.service'
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { User } from '../user'
-import { fullplayerview } from '../fullplayerview' 
+import { fullplayerview } from '../fullplayerview'
 import {DataService} from '../data.service'
 
 
@@ -31,16 +31,16 @@ export class AddEditUserComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private route: ActivatedRoute,
+    //private route: ActivatedRoute,
     private location: Location,
     private dataService: DataService,
     ) {}
-    
-  
+
+
   ngOnInit(): void {
     this.getUser()
-   
-    
+
+
   }
   /*//
   *
@@ -53,8 +53,10 @@ export class AddEditUserComponent implements OnInit {
    // console.log("get user data : " + history.state.data);
     //const id = +this.route.snapshot.paramMap.get('user');
    // console.log("get from snap shot : "  + id);
-    
-    this.user = this.dataService.sharedData;
+
+    /**** FIX ME! ****/
+    //this.user = this.dataService.sharedData;
+
     //console.log("data service give me : " + this.user)
     //const id = +this.route.snapshot.paramMap.get('id');
   }
@@ -70,6 +72,6 @@ export class AddEditUserComponent implements OnInit {
   goBack(): void{
     this.location.back();
   }
-  
+
 
 }
