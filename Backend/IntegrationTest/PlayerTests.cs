@@ -10,10 +10,10 @@ using IntegrationTest.Utility;
 
 namespace IntegrationTest
 {
-    public class BasicTests : IClassFixture<GameFactory<Startup>>
+    public class PlayerTests : IClassFixture<GameFactory<Startup>>
     {
         private GameFactory<Startup> Factory;
-        public BasicTests(GameFactory<Startup> factory) {
+        public PlayerTests(GameFactory<Startup> factory) {
             Factory = factory;
         }
         [Fact]
