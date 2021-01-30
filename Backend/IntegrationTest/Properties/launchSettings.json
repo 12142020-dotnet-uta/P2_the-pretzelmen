@@ -1,42 +1,16 @@
 {
   "iisSettings": {
     "windowsAuthentication": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:55173/",
-      "sslPort": 44352
-    }
-=======
     "anonymousAuthentication": true
->>>>>>> backend2
-=======
-    "anonymousAuthentication": true
->>>>>>> 9f5ef6e6707080ec90500e7afced6cad66a1ec65
   },
   "profiles": {
     "IntegrationTest": {
       "commandName": "Project",
       "launchBrowser": true,
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
-=======
-      "applicationUrl": "http://localhost:30733",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
->>>>>>> backend2
-=======
       "applicationUrl": "http://localhost:55173",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
->>>>>>> 9f5ef6e6707080ec90500e7afced6cad66a1ec65
     }
   }
 }
