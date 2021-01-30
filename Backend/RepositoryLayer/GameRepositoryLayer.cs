@@ -39,26 +39,26 @@ namespace RepositoryLayer
         /// <param name="playerGuid"></param>
         /// <param name="quantity"></param>
         /// <returns></returns>
-        public async Task<ActionResult<Collection>> AddToCollection(CollectionViewModel collection)
-        {
-            var player = await _gameContext.players.Where(x => x.playerId == collection.playerId).FirstOrDefaultAsync();
-            var card = await _gameContext.cards.Where(x => x.cardId == collection.cardId).FirstOrDefaultAsync();
+        //public async Task<ActionResult<Collection>> AddToCollection(CollectionViewModel collection)
+        //{
+        //    var player = await _gameContext.players.Where(x => x.playerId == collection.playerId).FirstOrDefaultAsync();
+        //    var card = await _gameContext.cards.Where(x => x.cardId == collection.cardId).FirstOrDefaultAsync();
 
-            if (player == null || card == null)
-            {
+        //    if (player == null || card == null)
+        //    {
 
-            }
+        //    }
 
-            Collection temp = new Collection()
-            {
-                collectionHolder = player.playerId,
-                //Get from API
-                //cards = ,
-                quantity = collection.quantity
-            };
+        //    Collection temp = new Collection()
+        //    {
+        //        collectionHolder = player.playerId,
+        //        //Get from API
+        //        //cards = ,
+        //        quantity = collection.quantity
+        //    };
 
-            return null;
-        }
+        //    return null;
+        //}
 
         //parameter needs to change
         public async Task<IEnumerable<Collection>> GetCollection(Guid id)
@@ -74,7 +74,7 @@ namespace RepositoryLayer
                                    where collection.collectionHolder == id
                                    select collection;
 
-            return playerCollection;
+            return playerCollection.ToList();
         }
 
         /// <summary>
@@ -137,14 +137,18 @@ namespace RepositoryLayer
         /// <returns></returns>
         public async Task<ActionResult<Player>> CreatePlayer(PlayerViewModel player)
         {
-            Player temp = new Player()
-            {
-                userName = player.userName,
-                password = player.password,
-                wins = 0,
-                losses = 0,
-                Tokens = 10000
-            };
+            //check if player by username already exists
+            var checkUser = await _gameContext.players.Where(x => x.userName == player.userName).FirstOrDefaultAsync();
+            if (checkUser == null)
+            { 
+                Player temp = new Player()
+                {
+                    userName = player.userName,
+                    password = player.password,
+                    wins = 0,
+                    losses = 0,
+                    Tokens = 10000
+                };
 
             _gameContext.players.Add(temp);
             await _gameContext.SaveChangesAsync();
@@ -155,7 +159,7 @@ namespace RepositoryLayer
                 Collection collection = new Collection()
                 {
                     collectionHolder = check.playerId,
-                    quantity =0
+                    quantity = 0
                 };
                 _gameContext.collections.Add(collection);
 
@@ -176,6 +180,7 @@ namespace RepositoryLayer
             {
                 _logger.LogInformation("There was an issue with adding a new player.");
             }
+        }
 
             return null;
         }
@@ -242,6 +247,66 @@ namespace RepositoryLayer
                 temp.quantity += 1;
                 _gameContext.cards.Add(p);
             }
+            await _gameContext.SaveChangesAsync();
+            return null;
+        }
+        /// <summary>
+        /// This will get all the trades offered in the database.
+        /// Will return an IEnumerable<Trade>.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Trade>> GetAllTrades()
+        {
+            return await _gameContext.trades.ToListAsync();
+        }
+        /// <summary>
+        /// Return a list of trades for a player
+        /// </summary>
+        /// <param name="playerid"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Trade>> getMyTrades(Guid playerid)
+        {
+            return await _gameContext.trades.Where(x=> x.postPlayer == playerid).ToListAsync();
+        }
+        /// <summary>
+        /// The trade is saves into the database
+        /// </summary>
+        /// <param name="trade"></param>
+        /// <returns></returns>
+        public async Task<ActionResult<Trade>> setUpATrade(Trade trade)
+        {
+            _gameContext.trades.Add(trade);
+            await _gameContext.SaveChangesAsync();
+            return null;
+        }
+
+        /// <summary>
+        /// This fills in the other information about the trade
+        /// for another play and what they offered.
+        /// </summary>
+        /// <param name="tradeView"></param>
+        /// <returns></returns>
+        public async Task<ActionResult<Trade>> setOfferToTrade(TradeViewModel tradeView)
+        {
+            Trade trade = _gameContext.trades.Where(x => x.tradeId == tradeView.tradeId).FirstOrDefault();
+            trade.acceptPlayer = tradeView.playerId;
+            trade.acceptPlayerCardOffer = tradeView.playerCardOffer;
+            trade.active = false;
+            await _gameContext.SaveChangesAsync();
+            return null;
+        }
+
+        public async Task<ActionResult> acceptOffer(TradeViewModel id)
+        {
+            Trade trade = _gameContext.trades.Where(x => x.tradeId == id.tradeId).FirstOrDefault();
+            Collection p1 = _gameContext.collections.Where(x => x.collectionHolder == trade.postPlayer).FirstOrDefault();
+            Collection p2 = _gameContext.collections.Where(x => x.collectionHolder == trade.acceptPlayer).FirstOrDefault();
+            Card p1card = _gameContext.cards.Where(x => x.Id == trade.postPlayerCardOffer).FirstOrDefault();
+            Card p2card = _gameContext.cards.Where(x => x.Id == trade.acceptPlayerCardOffer).FirstOrDefault();
+
+            p1card.CollectionID = p2.collectionId;
+            p2card.CollectionID = p1.collectionId;
+            trade.accepted = true;
             await _gameContext.SaveChangesAsync();
             return null;
         }

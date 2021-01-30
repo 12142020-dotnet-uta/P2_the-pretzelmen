@@ -12,6 +12,7 @@ namespace ModelLayer.ModelViews
         [Required]
         [Display(Name = "User Name")]
         public string userName { get; set; }
+
         [StringLength(25, ErrorMessage = "The user name must be within 3 to 25 characters", MinimumLength = 3)]
         [Required]
         [PasswordPropertyText(true)]

@@ -13,33 +13,27 @@ namespace BackendAPI.Controllers
 {
     [Route("api/collection")]
     [ApiController]
-    public class CollectionController : Controller
+    public class CollectionController : ControllerBase
     {
         private readonly BusinessLayerClass _businessLayer;
 
         public CollectionController(BusinessLayerClass businessLayer)
         {
-            businessLayer = _businessLayer;
+            _businessLayer = businessLayer;
         }
 
         [HttpGet]
-        [Route("collection")]
+        [Route("collection/{playerId}")]
         public async Task<IEnumerable<Collection>> GetCollection(Guid playerId)
         {
             return await _businessLayer.GetCollection(playerId);
         }
 
-        [HttpPost]
-        [Route("add")]
-        public async Task<ActionResult<Collection>> AddToCollection(CollectionViewModel collection)
-        {
-            return await _businessLayer.AddToCollection(collection);
-        }
-
-        // GET: /<controller>/
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //[HttpPost]
+        //[Route("add")]
+        //public async Task<ActionResult<Collection>> AddToCollection(CollectionViewModel collection)
+        //{
+        //    return await _businessLayer.AddToCollection(collection);
+        //}
     }
 }
