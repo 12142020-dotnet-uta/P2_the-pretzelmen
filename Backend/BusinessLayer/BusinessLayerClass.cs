@@ -144,13 +144,17 @@ namespace BusinessLayer
             if (result.IsSuccess)
             {
                 var value = result.Value;
+                int attack = 0;
+                int.TryParse(value.Power, out attack);
+                int defense = 0;
+                int.TryParse(value.Toughness, out defense);
                 Card card = new Card()
                 {
                     cardId = (int)value.MultiverseId,
                     cardName = value.Name,
                     cardClass = value.Type,
-                    attackNumber = int.Parse(value.Power),
-                    defenceNumber = int.Parse(value.Toughness),
+                    attackNumber = attack,
+                    defenceNumber = defense,
                     imageURL = value.ImageUrl.ToString()
                 };
 
@@ -178,11 +182,16 @@ namespace BusinessLayer
             {
                 if (i.Name == name)
                 {
+                    int attack = 0;
+                    int.TryParse(i.Power, out attack);
+                    int defense = 0;
+                    int.TryParse(i.Power, out defense);
+
                     card.cardId = (int)i.MultiverseId;
                     card.cardName = i.Name;
                     card.cardClass = i.Type;
-                    card.attackNumber = int.Parse(i.Power);
-                    card.defenceNumber = int.Parse(i.Toughness);
+                    card.attackNumber = attack;
+                    card.defenceNumber = defense;
                     card.imageURL = i.ImageUrl.ToString();
                 }
             }
@@ -209,11 +218,15 @@ namespace BusinessLayer
                     if(card.Types[i]=="Creature")
                     {
                         Card card1 = new Card();
+                        int attack = 0;
+                        int.TryParse(card.Power, out attack);
+                        int defense = 0;
+                        int.TryParse(card.Power, out defense);
                         card1.cardId = (int)card.MultiverseId;
                         card1.cardName = card.Name;
                         card1.cardClass = card.Type;
-                        card1.attackNumber = int.Parse(card.Power);
-                        card1.defenceNumber = int.Parse(card.Toughness);
+                        card1.attackNumber = attack;
+                        card1.defenceNumber = defense;
                         card1.imageURL = card.ImageUrl.ToString();
                         boosterCards.Add(card1);
                     }

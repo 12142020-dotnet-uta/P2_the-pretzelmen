@@ -29,7 +29,7 @@ namespace BackendAPI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("cardById")]
+        [Route("cardById/{id}")]
         public async Task<ActionResult<Card>> GetCardById(int id)
         {
             return await _businessLayer.GetCardById(id);
@@ -43,8 +43,8 @@ namespace BackendAPI.Controllers
         /// <param name="name"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("cardByName")]
-        public async Task<ActionResult<Card>> GetCardById(string name)
+        [Route("cardByName/{name}")]
+        public async Task<ActionResult<Card>> GetCardByName(string name)
         {
             return await _businessLayer.GetCardById(name);
         }
@@ -55,7 +55,7 @@ namespace BackendAPI.Controllers
         /// </summary>
         /// <param name="boosterForPlayer"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         [Route("BoosterPack")]
         public async Task<IEnumerable<Card>> GetBoosterPack(BoosterForPlayer boosterForPlayer)
         {

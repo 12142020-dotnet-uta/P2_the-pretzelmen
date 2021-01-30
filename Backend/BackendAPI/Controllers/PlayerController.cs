@@ -40,7 +40,7 @@ namespace BackendAPI.Controllers
         /// </summary>
         /// <param name="playerViewModel"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPut]
         [Route("Login")]
         public async Task<ActionResult<Player>> Login(PlayerViewModel playerViewModel)
         {
@@ -75,7 +75,7 @@ namespace BackendAPI.Controllers
         /// </summary>
         /// <param name="player"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPut]
         [Route("EditPlayer")]
         public async Task<ActionResult<Player>> EditPlayer(Player player)
         {
