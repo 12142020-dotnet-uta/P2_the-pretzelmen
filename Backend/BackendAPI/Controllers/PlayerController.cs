@@ -35,7 +35,7 @@ namespace BackendAPI.Controllers
 
         }
         /// <summary>
-        /// This is a login which takes a PlayerViewModel as a patameter. Containing only
+        /// This is a login which takes a PlayerViewModel as a parameter. Containing only
         /// two strings inside for username and password.
         /// </summary>
         /// <param name="playerViewModel"></param>
@@ -53,7 +53,7 @@ namespace BackendAPI.Controllers
 
         }
         /// <summary>
-        /// Accepts a player who wish to be loged out.
+        /// Accepts a player who wishes to be logged out.
         /// </summary>
         /// <param name="player"></param>
         /// <returns></returns>
@@ -70,8 +70,8 @@ namespace BackendAPI.Controllers
         }
 
         /// <summary>
-        /// This is function which will allow a player to edit the 
-        /// information given already.
+        /// This is a function which will allow a player to edit the 
+        /// information already given.
         /// </summary>
         /// <param name="player"></param>
         /// <returns></returns>
@@ -98,7 +98,7 @@ namespace BackendAPI.Controllers
         }
 
         /// <summary>
-        /// Delete you profile by the id of the profile.
+        /// Delete player profile by the id of the profile.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

@@ -212,13 +212,13 @@ namespace RepositoryLayer
 
             return null;
         }
-        //todo
-        public async Task<IActionResult> TradeCards(TradeViewModel tradeViewModel)
-        {
-            return null;
-        }
 
-        //todo
+        /// <summary>
+        /// Looks for a user with a matching id, then changes their userName
+        /// and password to that of the passed in player object.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         public async Task<ActionResult<Player>> EditPlayer(Player player)
         {
             var temp = await _gameContext.players.Where(x => x.playerId == player.playerId).FirstOrDefaultAsync();
@@ -226,6 +226,18 @@ namespace RepositoryLayer
             if(temp == null)
             {
                 _logger.LogInformation($"There was an issue with finding player by id: {player.playerId}");
+                return null;
+            }
+
+            try
+            {
+                temp.userName = player.userName;
+                temp.password = player.password;
+                await _gameContext.SaveChangesAsync();
+            }
+            catch(Exception E)
+            {
+                _logger.LogInformation($"There was an issue with updating the db, {E}");
             }
 
             return null;

@@ -22,19 +22,17 @@ namespace BackendAPI.Controllers
             businessLayer = _businessLayer;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("collection")]
         public async Task<IEnumerable<Collection>> GetCollection(Guid playerId)
         {
             return await _businessLayer.GetCollection(playerId);
         }
-
-        //[HttpPost]
-        //[Route("add")]
-        //public async Task<ActionResult<Collection>> AddToCollection(CollectionViewModel collection)
-        //{
-        //    return await _businessLayer.AddToCollection(collection);
-        //}
 
         // GET: /<controller>/
         public IActionResult Index()

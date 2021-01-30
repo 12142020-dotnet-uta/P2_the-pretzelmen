@@ -9,6 +9,5 @@ namespace ModelLayer.ModelViews
 
         public int quantity;
 
-
     }
 }
