@@ -33,8 +33,8 @@ namespace UnitTest
             List<ValidationResult> results = new List<ValidationResult>();
 
             bool valid = Validator.TryValidateObject(collection, context, results, true);
-            Assert.False(valid);
-            Assert.Equal(1, results.Count);
+            Assert.True(valid);
+            Assert.Equal(0, results.Count);
         }
         [Fact]
         public void TestValidateTradeRequired() {
@@ -43,8 +43,8 @@ namespace UnitTest
             List<ValidationResult> results = new List<ValidationResult>();
 
             bool valid = Validator.TryValidateObject(trade, context, results, true);
-            Assert.False(valid);
-            Assert.Equal(1, results.Count);
+            Assert.True(valid);
+            Assert.Equal(0, results.Count);
         }
         [Fact]
         public void TestValidatePlayerRequired()
