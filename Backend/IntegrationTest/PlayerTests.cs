@@ -40,7 +40,7 @@ namespace IntegrationTest
                 password = "revature"
             });
             var registerResponse = await client.SendAsync(registerRequest);
-            var loginRequest = new HttpRequestMessage(HttpMethod.Get, "/api/player/Login");
+            var loginRequest = new HttpRequestMessage(HttpMethod.Put, "/api/player/Login");
             loginRequest.Headers.TryAddWithoutValidation("Content-Type", "application/json");
             loginRequest.Content = JsonContent.Create(new PlayerViewModel() {
                 userName = "tylercadena",
@@ -66,7 +66,7 @@ namespace IntegrationTest
                 password = "revature"
             });
             var registerResponse = await client.SendAsync(registerRequest);
-            var loginRequest = new HttpRequestMessage(HttpMethod.Get, "/api/player/Login");
+            var loginRequest = new HttpRequestMessage(HttpMethod.Put, "/api/player/Login");
             loginRequest.Headers.TryAddWithoutValidation("Content-Type", "application/json");
             loginRequest.Content = JsonContent.Create(new PlayerViewModel() {
                 userName = "tylercadena",
