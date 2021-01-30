@@ -40,7 +40,7 @@ namespace BackendAPI.Controllers
         /// </summary>
         /// <param name="playerViewModel"></param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPost]
         [Route("Login")]
         public async Task<ActionResult<Player>> Login(PlayerViewModel playerViewModel)
         {

@@ -147,7 +147,7 @@ namespace RepositoryLayer
                     password = player.password,
                     wins = 0,
                     losses = 0,
-                    Tokens = 10000
+                    tokens = 10000
                 };
 
             _gameContext.players.Add(temp);

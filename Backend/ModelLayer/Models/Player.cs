@@ -32,9 +32,8 @@ namespace ModelLayer
 
         //public int cardsLost { get; set;}
         //public int cardsWon { get; set; }
-        public Collection Collection { get; set; }
 
-        public int Tokens { get; set; }
+        public int tokens { get; set; }
 
         public bool login { get; set; }
     }
