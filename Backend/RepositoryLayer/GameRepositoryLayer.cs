@@ -39,26 +39,26 @@ namespace RepositoryLayer
         /// <param name="playerGuid"></param>
         /// <param name="quantity"></param>
         /// <returns></returns>
-        public async Task<ActionResult<Collection>> AddToCollection(CollectionViewModel collection)
-        {
-            var player = await _gameContext.players.Where(x => x.playerId == collection.playerId).FirstOrDefaultAsync();
-            var card = await _gameContext.cards.Where(x => x.cardId == collection.cardId).FirstOrDefaultAsync();
+        //public async Task<ActionResult<Collection>> AddToCollection(CollectionViewModel collection)
+        //{
+        //    var player = await _gameContext.players.Where(x => x.playerId == collection.playerId).FirstOrDefaultAsync();
+        //    var card = await _gameContext.cards.Where(x => x.cardId == collection.cardId).FirstOrDefaultAsync();
 
-            if (player == null || card == null)
-            {
+        //    if (player == null || card == null)
+        //    {
 
-            }
+        //    }
 
-            Collection temp = new Collection()
-            {
-                collectionHolder = player.playerId,
-                //Get from API
-                //cards = ,
-                quantity = collection.quantity
-            };
+        //    Collection temp = new Collection()
+        //    {
+        //        collectionHolder = player.playerId,
+        //        //Get from API
+        //        //cards = ,
+        //        quantity = collection.quantity
+        //    };
 
-            return null;
-        }
+        //    return null;
+        //}
 
         //parameter needs to change
         public async Task<IEnumerable<Collection>> GetCollection(Guid id)
@@ -137,14 +137,18 @@ namespace RepositoryLayer
         /// <returns></returns>
         public async Task<ActionResult<Player>> CreatePlayer(PlayerViewModel player)
         {
-            Player temp = new Player()
-            {
-                userName = player.userName,
-                password = player.password,
-                wins = 0,
-                losses = 0,
-                Tokens = 10000
-            };
+            //check if player by username already exists
+            var checkUser = await _gameContext.players.Where(x => x.userName == player.userName).FirstOrDefaultAsync();
+            if (checkUser == null)
+            { 
+                Player temp = new Player()
+                {
+                    userName = player.userName,
+                    password = player.password,
+                    wins = 0,
+                    losses = 0,
+                    Tokens = 10000
+                };
 
             _gameContext.players.Add(temp);
             await _gameContext.SaveChangesAsync();
@@ -155,7 +159,7 @@ namespace RepositoryLayer
                 Collection collection = new Collection()
                 {
                     collectionHolder = check.playerId,
-                    quantity =0
+                    quantity = 0
                 };
                 _gameContext.collections.Add(collection);
 
@@ -176,6 +180,7 @@ namespace RepositoryLayer
             {
                 _logger.LogInformation("There was an issue with adding a new player.");
             }
+        }
 
             return null;
         }
