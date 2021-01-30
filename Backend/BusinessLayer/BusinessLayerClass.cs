@@ -121,12 +121,12 @@ namespace BusinessLayer
             return await _gameRepositoryLayer.acceptOffer(id);
         }
 
-        //public async Task<ActionResult> TradeCards(TradeViewModel tradeViewModel)
-        //{
-        //    return await _gameRepositoryLayer.TradeCards(tradeViewModel);
-        //}
-
-        //todo
+        /// <summary>
+        /// Calls the EditPlayer method in the repository layer. Passes a
+        ///  player object to the EditPlayer method.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         public async Task<ActionResult<Player>> EditPlayer(Player player)
         {
             return await _gameRepositoryLayer.EditPlayer(player);
