@@ -1,5 +1,7 @@
 
-
+(window as any).process = {
+  env: { DEBUG: undefined },
+};
 
 /**
  * Required to support Web Animations `@angular/platform-browser/animations`.
