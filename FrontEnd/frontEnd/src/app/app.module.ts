@@ -12,6 +12,12 @@ import { PlayersComponent } from './players/players.component';
 import { CardDetailsComponent } from './card-details/card-details.component';
 import { CardCollectionComponent } from './card-collection/card-collection.component';
 import { MemoryGameComponent } from './memory-game/memory-game.component';
+//import { BrowserModule } from '@angular/platform-browser';
+//import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { Routes, RouterModule, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { SignupComponent } from './signup/signup.component';
 //import {NbCardModule} from '@nebular/theme';
 
 @NgModule({
@@ -23,13 +29,20 @@ import { MemoryGameComponent } from './memory-game/memory-game.component';
     PlayersComponent,
     CardDetailsComponent,
     CardCollectionComponent,
-    MemoryGameComponent
+    MemoryGameComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
     NgbModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule,
+    HttpClientModule,
+    NgbModule,
+    FormsModule,
+    AppRoutingModule,
+   
     //NbCardModule,
   ],
   providers: [],
