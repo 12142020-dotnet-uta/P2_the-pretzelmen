@@ -22,11 +22,6 @@ namespace BusinessLayer
             _gameRepositoryLayer = gameRepositoryLayer;
         }
 
-        //public async Task<ActionResult<Collection>> AddToCollection(CollectionViewModel collection)
-       // {
-       //     return await _gameRepositoryLayer.AddToCollection(collection);
-       // }
-
         public async Task<IEnumerable<Collection>> GetCollection(Guid id)
         {
             return await _gameRepositoryLayer.GetCollection(id);
