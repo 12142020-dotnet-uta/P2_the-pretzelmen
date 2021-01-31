@@ -23,6 +23,9 @@
     transform: rotateY(180deg);
    
 }
+.flip-card-innerback {
+  transform: rotateY(0deg);
+}
 
   .flip-card-front, .flip-card-back {
     position: absolute;
