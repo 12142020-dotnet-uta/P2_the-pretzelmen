@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
   OnSubmit(): void {
     this.login1 = false;
-    this.userService.LoginPlayer(this.loginPlayerViewModel).subscribe(x => this.playerViewModel = x);
+   // this.userService.LoginPlayer(this.loginPlayerViewModel).subscribe(x => this.playerViewModel = x);
     console.log("Here after the call to the service.");
 
   }

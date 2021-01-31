@@ -14,11 +14,13 @@ import { CardCollectionComponent } from './card-collection/card-collection.compo
 import { MemoryGameComponent } from './memory-game/memory-game.component';
 //import { BrowserModule } from '@angular/platform-browser';
 //import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
+import { GetCardsComponent } from './get-cards/get-cards.component';
+import { MemoryActionComponent } from './memory-action/memory-action.component';
 //import {NbCardModule} from '@nebular/theme';
 
 @NgModule({
@@ -32,7 +34,9 @@ import { LoginComponent } from './login/login.component';
     CardCollectionComponent,
     MemoryGameComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    GetCardsComponent,
+    MemoryActionComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +48,7 @@ import { LoginComponent } from './login/login.component';
     NgbModule,
     FormsModule,
     AppRoutingModule,
+    HttpClientJsonpModule,
    
     //NbCardModule,
   ],

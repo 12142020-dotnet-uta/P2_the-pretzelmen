@@ -4,9 +4,14 @@ body, html{
     max-width: 100%;
     overflow-x: hidden;
     background-image: url("./assets/images/1__HhnCWCrqDSt__s5wFrKqQ.jpg");
-    background-size: auto;
+    
+    /* Full height */
+    height: 100%;
 
- 
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 /*
 #wrapper{
@@ -29,7 +34,7 @@ header{
     background-size: cover;
    
 }
-img{
+#img{
     width: auto;
     height: 130px;
     margin-left: 40%;
