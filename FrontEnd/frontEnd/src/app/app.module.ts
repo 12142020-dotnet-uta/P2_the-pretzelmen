@@ -19,6 +19,7 @@ import { Routes, RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
+import { SearchBoxComponent } from './search-box/search-box.component';
 //import {NbCardModule} from '@nebular/theme';
 
 @NgModule({
@@ -32,7 +33,8 @@ import { LoginComponent } from './login/login.component';
     CardCollectionComponent,
     MemoryGameComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    SearchBoxComponent
   ],
   imports: [
     BrowserModule,
