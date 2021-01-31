@@ -21,6 +21,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { GetCardsComponent } from './get-cards/get-cards.component';
 import { MemoryActionComponent } from './memory-action/memory-action.component';
+
 //import {NbCardModule} from '@nebular/theme';
 
 @NgModule({
@@ -36,7 +37,8 @@ import { MemoryActionComponent } from './memory-action/memory-action.component';
     SignupComponent,
     LoginComponent,
     GetCardsComponent,
-    MemoryActionComponent
+    MemoryActionComponent,
+  
   ],
   imports: [
     BrowserModule,

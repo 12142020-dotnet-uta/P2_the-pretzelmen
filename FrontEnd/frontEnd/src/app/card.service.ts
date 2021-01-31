@@ -27,6 +27,7 @@ export class CardService {
     console.log(this.url);
     return this.httpClient.get(this.jsonUlr);
   }
+  
   /*
 //To use JSONP, we have to first include the HttpClientJsonpModule in the
   getCards() : Observable <any>{

@@ -41,7 +41,7 @@ export class MemoryActionComponent implements OnInit {
     */
 
     console.log("get class is called ");
-    return this.cssString;
+    //return this.cssString;
     //'flip-card-inner';
   }
 }
