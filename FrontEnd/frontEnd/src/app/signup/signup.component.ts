@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Input } from '@angular/core';
 
 import {User} from '../user'
 import {PlayerService} from '../player.service'
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { UserService} from '../user.service';
+import { LoginPlayerViewModel } from '../login-player-view-model';
 //import { Location } from '@angular/common';
 //
 @Component({
@@ -13,13 +14,7 @@ import { UserService} from '../user.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  user: User = {
-    firstName: "jim",
-    lastName: "lake",
-    email: "t@hotmail.com",
-    password: "888888",
-  
-  }
+  @Input() loginPlayerViewModel: LoginPlayerViewModel = new LoginPlayerViewModel();
   
 
   constructor(private playerService: PlayerService, private location: Location) { }
@@ -32,14 +27,13 @@ export class SignupComponent implements OnInit {
     //console.log("last Name: " + this.user.lastName.trim());
    // console.log("Passwored: " + this.user.password.trim());
    // console.log("email: " +this.user.email.trim());
-     let aUser = {
-      userName: this.user.firstName,
-      password: this.user.password,
-      playerId: "000"
-    }
-    if(!this.user.firstName){ return;}
+     //let aUser = {
+    //  userName: this.loginPlayerViewModel.username,
+    //  password: this.loginPlayerViewModel.password,
+    //}
+    if(!this.loginPlayerViewModel.username){ return;}
      //add user to database by calling user service
-   console.log( "ADDED PLAYER:  " + this.playerService.addUser(aUser));
+   console.log( "ADDED PLAYER:  " + this.playerService.addUser(this.loginPlayerViewModel));
     this.gotBack();
 
   }

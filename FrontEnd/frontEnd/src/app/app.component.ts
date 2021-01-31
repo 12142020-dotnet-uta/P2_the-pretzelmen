@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component , Input} from '@angular/core';
+import { LoginPlayerViewModel } from './login-player-view-model';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'frontEnd';
+  loginplayerview: LoginPlayerViewModel = new LoginPlayerViewModel();
+  @Input() login1: boolean = false;
+
+  IWannaLogIn():void{
+    this.login1=true;
+    console.log("IwannaLogIn works");
+  }
 }
 
 export class CardInfoFromSearch{

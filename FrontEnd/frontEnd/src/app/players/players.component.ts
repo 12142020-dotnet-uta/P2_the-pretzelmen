@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PlayerViewModel } from '../playerViewModel';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-players',
@@ -6,11 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./players.component.css']
 })
 export class PlayersComponent implements OnInit {
-  private 
+  playerList: PlayerViewModel[]; 
+  selectedPlayer: PlayerViewModel = new PlayerViewModel();
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.PlayerList().subscribe(x => this.playerList = x);
   }
 
 }
