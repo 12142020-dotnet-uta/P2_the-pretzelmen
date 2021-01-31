@@ -9,6 +9,7 @@
   <li><a href="#contact">Contact</a></li>
   <li><a href="#about">About</a></li>
   <li style="float:right"><a routerLink="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> <!--if the user already knows they don't have and account.-->
-  <li style="float:right"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li> <!--if the think they do but dont it will create one automatily.--> 
+  <li style="float:right"  (click)="IWannaLogIn()"><a href="#"> Login</a></li> <!--if the think they do but dont it will create one automatily.--> 
 </ul>
     
+<app-login [login1]="login1"></app-login>
