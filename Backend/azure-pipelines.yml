@@ -40,7 +40,7 @@ stages:
             displayName: Publish Code Coverage
             inputs:
               codeCoverageTool: Cobertura
-              summaryFileLocation: $(Agent.TempDirectory)/*/coburtura/coverage.xml
+              summaryFileLocation: $(Agent.TempDirectory)/*/cobertura/coverage.xml
           - task: SonarCloudAnalyze@1
             displayName: Run Code Analysis
           - task: SonarCloudPublish@1

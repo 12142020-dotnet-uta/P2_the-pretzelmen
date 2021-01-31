@@ -44,7 +44,7 @@ stages:
             displayName: Publish Code Coverage
             inputs:
               codeCoverageTool: Cobertura
-              summaryFileLocation: FrontEnd/frontEnd/coverage/cobertura-coverage.xml
+              summaryFileLocation: $(Agent.TempDirectory)/*/cobertura/coverage.xml
               failIfCoverageEmpty: true
           - task: SonarCloudAnalyze@1
             displayName: Run Code Analysis
