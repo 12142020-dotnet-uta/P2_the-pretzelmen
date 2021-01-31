@@ -13,7 +13,7 @@ export class MemoryActionComponent implements OnInit {
   classExpression = 'special clearance';
   styleExpression = 'color: red';
   color = 'blue';
-  num = 1;
+  num = "";
   flipCard = true;
   cssString: string = '';
 
@@ -21,9 +21,14 @@ export class MemoryActionComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  clickedCard(num: number){
-    this.cssString = 'flip-card-inner';
-    this.num = num + 1;
+  clickedCard(num: string){
+    this.num = num;
+    console.log("class id is :  " + this.num);
+    let element = document.getElementById(num);
+    element.className = 'flip-card-inner';
+   // this.cssString = 'flip-card-inner';
+  // element.className = flip-card-inner';
+    //this.num = num + 1;
     this.flipCard = true;
     console.log("CARD ID + " + this.num)
     this.getClass();
@@ -34,7 +39,7 @@ export class MemoryActionComponent implements OnInit {
       this.cssString = '';
     }
     */
-   
+
     console.log("get class is called ");
     return this.cssString;
     //'flip-card-inner';

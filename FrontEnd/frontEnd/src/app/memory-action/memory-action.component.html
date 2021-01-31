@@ -2,9 +2,10 @@
 
 
 
-  <button *ngFor=" let card of cards; let idx = index"[attr.aria-label]="actionName" (click) ="clickedCard(idx)">
+  <button *ngFor=" let card of cards; let idx = index;" [(idx)] = "num"
+  [attr.aria-label]="actionName" (click) ="clickedCard(idx)">
     <div class="flip-card" >
-        <div [class]="getClass()">
+        <div [class]="getClass(idx)" id="index">
           <div class="flip-card-front">
             <img src="./../assets/images/magic.png" alt="Avatar" style="width:300px;height:300px;">
           </div>
