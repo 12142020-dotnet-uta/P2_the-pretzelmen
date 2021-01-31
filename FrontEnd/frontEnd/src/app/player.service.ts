@@ -6,14 +6,15 @@ import { HttpClientModule, HttpClient, HttpHeaders} from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { PlayerViewModel } from './playerViewModel';
 import { fullplayerview } from './fullplayerview';
+import { LoginPlayerViewModel } from './login-player-view-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService {
-
+  loginPlayerViewModel: LoginPlayerViewModel = new LoginPlayerViewModel();
   playerview :fullplayerview = new fullplayerview();
-  private userUrl = "https://magic-match-api.azurewebsites.net/api/player/"
+  private userUrl = "https://localhost:44301/api/player/"
 
   //private userUrl = "https://magic-match-api.azurewebsites.net/api/player/";
   //private jsonUlr = "https://jsonplaceholder.typicode.com/posts";
@@ -33,7 +34,7 @@ export class PlayerService {
  /* Get users from the server */
  getUsers(): Observable<any[]> {
    //console.log("get player:   " + this.http.get<any[]>(this.userUrl));
-   return this.http.get<any[]>(this.userUrl + "GetPlayers")
+   return this.http.get<any[]>('https://localhost:44301/api/player/getplayers')
    .pipe(
      tap(_ => this.log('get users')),
      catchError(this.handleError<any[]>('getUsers', []))
@@ -65,11 +66,11 @@ updateUser(user: fullplayerview): Observable<any> {
   );
 }
 /** POST: add a new hero to the server */
-addUser(user: PlayerViewModel): void{
+addUser(user: LoginPlayerViewModel): void{
   const headers ={ 'content-type': 'application/json'}
   const body = JSON.stringify(user);
   console.log(body);
-  this.http.post<any>('https://magic-match-api.azurewebsites.net/api/player/CreatePlayer',
+  this.http.post<any>('https://localhost:44301/api/player/CreatePlayer',
   body, this.httpOptions).subscribe(x => this.playerview= x);
   console.log(this.playerview);
     //.pipe(

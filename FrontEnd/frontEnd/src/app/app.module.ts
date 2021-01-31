@@ -18,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
 //import {NbCardModule} from '@nebular/theme';
 
 @NgModule({
@@ -30,7 +31,8 @@ import { SignupComponent } from './signup/signup.component';
     CardDetailsComponent,
     CardCollectionComponent,
     MemoryGameComponent,
-    SignupComponent
+    SignupComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
