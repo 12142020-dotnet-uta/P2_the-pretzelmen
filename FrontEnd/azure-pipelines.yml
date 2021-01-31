@@ -8,50 +8,6 @@ pool:
   vmImage: ubuntu-18.04
 
 stages:
-  - stage: build
-    displayName: Build
-    jobs:
-      - job: build
-        steps:
-          - task: Npm@1
-            displayName: Install Dependencies
-            inputs:
-              workingDir: FrontEnd/frontEnd/
-              command: install
-          - task: Npm@1
-            displayName: Build Application
-            inputs:
-              workingDir: FrontEnd/frontEnd/
-              command: custom
-              customCommand: run build
-  - stage: test
-    displayName: Test
-    jobs:
-      - job: test
-        steps:
-          - task: Npm@1
-            displayName: Install Dependencies
-            inputs:
-              workingDir: FrontEnd/frontEnd/
-              command: install
-          - task: Npm@1
-            displayName: Test
-            inputs:
-              workingDir: FrontEnd/frontEnd/
-              command: custom
-              customCommand: run test-hl
-          # - task: Npm@1
-          #   displayName: Lint
-          #   inputs:
-          #     workingDir: FrontEnd/frontEnd/
-          #     command: custom
-          #     customCommand: run lint -- --format=stylish
-          # - task: Npm@1
-          #   displayName: E2E
-          #   inputs:
-          #     workingDir: FrontEnd/frontEnd/
-          #     command: custom
-          #     customCommand: run e2e
   - stage: analyze
     displayName: Analyze
     jobs:
@@ -64,17 +20,13 @@ stages:
               command: install
           - task: SonarCloudPrepare@1
             inputs:
-              SonarCloud: sonarcloud-srv-0
+              SonarCloud: sonar-srv-0
               scannerMode: CLI
               organization: p2the-pretzelmen
               cliProjectKey: P2the-pretzelmen_frontend
               cliProjectName: P2the-pretzelmen_frontend
-              cliSources: FrontEnd/frontEnd/
+              cliSources: FrontEnd/frontEnd/src/
               extraProperties: |
-                sonar.exclusions=FrontEnd/frontEnd/node_modules/
-                sonar.sources=FrontEnd/frontEnd/src/
-                sonar.tests=FrontEnd/frontEnd/src/
-                sonar.test.inclusions=FrontEnd/frontEnd/src/**.spec.ts
                 sonar.projectKey=P2the-pretzelmen_frontend
           - task: Npm@1
             displayName: Analyze Build
@@ -92,10 +44,35 @@ stages:
             displayName: Publish Code Coverage
             inputs:
               codeCoverageTool: Cobertura
-              reportDirectory: FrontEnd/frontend/dist/reports/
-              summaryFileLocation: FrontEnd/frontEnd/dist/reports/coverage/report-cobertura/cobertura-coverage.xml
+              summaryFileLocation: FrontEnd/frontEnd/coverage/cobertura-coverage.xml
               failIfCoverageEmpty: true
           - task: SonarCloudAnalyze@1
             displayName: Run Code Analysis
           - task: SonarCloudPublish@1
             displayName: Publish Code Analysis
+  - stage: deploy
+    displayName: Deploy
+    jobs:
+      - job: publish
+        steps:
+          - task: Docker@2
+            displayName: Login to Container Registry
+            inputs:
+              command: login
+              containerRegistry: docker-srv-1
+          - script: |
+              docker image build --file FrontEnd/frontEnd/dockerfile --tag synaodev/magic-match:latest FrontEnd/frontEnd/
+              docker image push synaodev/magic-match:latest
+            displayName: Build & Push Docker Image
+          - task: Docker@2
+            displayName: Logout of Container Registry
+            inputs:
+              command: logout
+              containerRegistry: docker-srv-1
+          - task: AzureWebAppContainer@1
+            displayName: Web App Container
+            inputs:
+              azureSubscription: azure-srv-2
+              resourceGroupName: pretzelmen-group
+              appName: magic-match
+              containers: synaodev/magic-match:latest

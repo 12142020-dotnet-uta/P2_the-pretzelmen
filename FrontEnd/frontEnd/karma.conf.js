@@ -25,11 +25,12 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, 'dist', 'reports', 'coverage'),
+      dir: require('path').join(__dirname, 'coverage'),
+      subdir: '.',
       reporters: [
-        { type: 'html', subdir: 'report-html' },
-        { type: 'lcovonly', subdir: 'report-lcovonly' },
-        { type: 'cobertura', subdir: 'report-cobertura' }
+        { type: 'html'  },
+        { type: 'text-summary' },
+        { type: 'cobertura' }
       ],
       fixWebpackSourcePaths: true
     },
