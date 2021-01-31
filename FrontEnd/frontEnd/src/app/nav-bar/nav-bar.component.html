@@ -1,0 +1,15 @@
+
+
+
+
+<ul>
+  <li><a class="active" href="#home">Home</a></li>
+  <li><a routerLink="/players">Players</a></li>
+  <li> <a routerLink="/matchHistory"> Match History</a></li> <!-- link works -->
+  <li><a href="#contact">Contact</a></li>
+  <li><a href="#about">About</a></li>
+  <li style="float:right"><a routerLink="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> <!--if the user already knows they don't have and account.-->
+  <li style="float:right"  (click)="IWannaLogIn()"><a href="#"> Login</a></li> <!--if the think they do but dont it will create one automatily.--> 
+</ul>
+    
+<app-login [login1]="login1"></app-login>
