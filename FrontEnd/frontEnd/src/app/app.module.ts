@@ -19,9 +19,13 @@ import { Routes, RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
+<<<<<<< HEAD
 import { GetCardsComponent } from './get-cards/get-cards.component';
 import { MemoryActionComponent } from './memory-action/memory-action.component';
 
+=======
+import { SearchBoxComponent } from './search-box/search-box.component';
+>>>>>>> 9637ae8e9dd3337fc25924f73c667b5b88545a47
 //import {NbCardModule} from '@nebular/theme';
 
 @NgModule({
@@ -36,9 +40,13 @@ import { MemoryActionComponent } from './memory-action/memory-action.component';
     MemoryGameComponent,
     SignupComponent,
     LoginComponent,
+<<<<<<< HEAD
     GetCardsComponent,
     MemoryActionComponent,
   
+=======
+    SearchBoxComponent
+>>>>>>> 9637ae8e9dd3337fc25924f73c667b5b88545a47
   ],
   imports: [
     BrowserModule,
