@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
   OnSubmit(): void {
     this.playerservice.LoginPlayer(this.loginPlayerViewModel).subscribe(x => this.playerViewModel1
       = this.dataService.playerViewModel = x
-
       );
     this.playerevent.emit(this.loginPlayerViewModel);
     //this.dataService.playerViewModel = this.playerViewModel1;
