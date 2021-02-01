@@ -1,22 +1,20 @@
 import { Injectable } from '@angular/core';
-
 import {from, Observable, of} from 'rxjs';
-
 import { HttpClientModule, HttpClient, HttpHeaders} from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { PlayerViewModel } from './playerViewModel';
 import { fullplayerview } from './fullplayerview';
 import { LoginPlayerViewModel } from './login-player-view-model';
+import { PlayerViewModel } from './player-view-model';
+import { ColletionViewModel } from './colletion-view-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService {
+  playerViewModel: PlayerViewModel = new PlayerViewModel();
   loginPlayerViewModel: LoginPlayerViewModel = new LoginPlayerViewModel();
-  playerview :fullplayerview = new fullplayerview();
-  private userUrlLocal = "https://localhost:44301/api/player/"
-
-   private userUrlRemote = "https://magic-match-api.azurewebsites.net/api/player/";
+  playerview :fullplayerview = new fullplayerview(); 
+   private userUrlRemote = "https://magic-match-api.azurewebsites.net/api/";
   //private jsonUlr = "https://jsonplaceholder.typicode.com/posts";
 
   httpOptions = {
@@ -34,7 +32,7 @@ export class PlayerService {
  /* Get users from the server */
  getUsers(): Observable<any[]> {
    //console.log("get player:   " + this.http.get<any[]>(this.userUrl));
-   return this.http.get<any[]>(this.userUrlRemote + '/GetPlayers')
+   return this.http.get<any[]>(this.userUrlRemote + 'player/GetPlayers')
    .pipe(
      tap(_ => this.log('get users')),
      catchError(this.handleError<any[]>('getUsers', []))
@@ -48,11 +46,11 @@ export class PlayerService {
  * @param result - return a user
  */
 getUserById(id: string): Observable<any>{
-  const url = `${this.userUrlRemote}/{id}`;
+  const url = `${this.userUrlRemote}${id}`;
   return this.http.get<any>(url)
       .pipe(
         tap(_ => this.log(`etched hero id={id}`)),
-        catchError(this.handleError<any>(`getuser id ={id}` ))
+        catchError(this.handleError<any>(`getuser id =${id}` ))
       );
 }
 
@@ -60,7 +58,7 @@ getUserById(id: string): Observable<any>{
 updateUser(user: fullplayerview): Observable<any> {
   const body = JSON.stringify(user);
   console.log("Send over server to save:  " + body);
-  return this.http.put('https://magic-match-api.azurewebsites.net/api/player/EditPlayer', body, this.httpOptions).pipe(
+  return this.http.put(this.userUrlRemote+'player/EditPlayer', body, this.httpOptions).pipe(
     //tap(_ => this.log(`updated user id=${user.id}`)),
     catchError(this.handleError<any>('updateUser'))
   );
@@ -70,7 +68,7 @@ addUser(user: LoginPlayerViewModel): void{
   const headers ={ 'content-type': 'application/json'}
   const body = JSON.stringify(user);
   console.log(body);
-  this.http.post<any>(this.userUrlRemote + '/CreatePlayer',
+  this.http.post<any>(this.userUrlRemote + 'player/CreatePlayer',
   body, this.httpOptions).subscribe(x => this.playerview= x);
   console.log(this.playerview);
     //.pipe(
@@ -83,14 +81,33 @@ addUser(user: LoginPlayerViewModel): void{
   /** DELETE: delete the hero from the server */
   deleteUser(user: PlayerViewModel): Observable<PlayerViewModel> {
     const body = JSON.stringify(user);
-    const url = `${this.userUrlRemote +"DeletePlayer"}/${body}`;
+    const url = this.userUrlRemote + "DeletePlayer";
 
     return this.http.delete<PlayerViewModel>(url, this.httpOptions).pipe(
       catchError(this.handleError<PlayerViewModel>('deleteHero'))
     );
   }
 
-  
+  LoginPlayer(loginPlayerViewModel: LoginPlayerViewModel): Observable<PlayerViewModel> {
+    //use http to post the player and get back the playerviewmodel
+    //this.http.post<PlayerViewModel>(this.userUrlLocal + 'login', loginPlayerViewModel, this.httpOptions).subscribe(x=>this.playerViewModel = x);
+    return this.http.post<PlayerViewModel>(this.userUrlRemote + 'player/login', loginPlayerViewModel, this.httpOptions);
+  }
+  getPlayer():PlayerViewModel{
+    return this.playerViewModel;
+  }
+
+  GetCollection(collection: ColletionViewModel): Observable<ColletionViewModel> {
+    return this.http.post<ColletionViewModel>(this.userUrlRemote + 'collection/collections', collection, this.httpOptions);
+    //return this.http.request('get', 'https://localhost:44301/api/collection/collections', { body: collection });
+  }
+
+  PlayerList(): Observable<PlayerViewModel[]> {
+    return this.http.get<PlayerViewModel[]>(this.userUrlRemote + '/getplayers', this.httpOptions);
+  }
+
+
+
 
  /**
  * Handle Http operation that failed.

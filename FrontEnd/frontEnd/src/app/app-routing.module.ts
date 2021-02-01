@@ -7,12 +7,14 @@ import { CardDetailsComponent } from './card-details/card-details.component';
 import { CardCollectionComponent } from './card-collection/card-collection.component';
 import { MemoryGameComponent } from './memory-game/memory-game.component';
 import { MemoryActionComponent } from './memory-action/memory-action.component'
+import {LoginComponent} from './login/login.component'
 
 import {SignupComponent } from './signup/signup.component'
 
 
 
 const routes: Routes = [
+ { path: 'login', component: LoginComponent},
  { path: 'matchHistory', component: MatchHistoryComponent},
  { path: 'players', component: PlayersComponent},
  { path: 'cardDetails/:id', component: CardDetailsComponent},

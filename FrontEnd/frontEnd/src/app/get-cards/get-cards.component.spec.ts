@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { GetCardsComponent } from './get-cards.component';
 
 describe('GetCardsComponent', () => {
@@ -8,7 +8,8 @@ describe('GetCardsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GetCardsComponent ]
+      declarations: [ GetCardsComponent ],
+      imports: [HttpClientTestingModule]
     })
     .compileComponents();
   });
@@ -21,5 +22,10 @@ describe('GetCardsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should call ngOnInit() and getCards()', () => {
+    component.ngOnInit();
+    expect(component.cards).toBeTruthy();
   });
 });

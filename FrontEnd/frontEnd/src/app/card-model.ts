@@ -1,4 +1,4 @@
-export interface Card {
+export class CardModel {
     id: number;
     cardId: number;
     cardName: string;
@@ -9,4 +9,4 @@ export interface Card {
     imageURL: string;
     qty: number;
     collectionID: string;
-  }
+}
