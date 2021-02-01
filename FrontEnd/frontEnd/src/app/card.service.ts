@@ -3,12 +3,14 @@ import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable, of } from 'rxjs';
 import {catchError, map, take} from 'rxjs/operators';
 import {throwError} from 'rxjs';
+import { CardModel } from './card-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CardService {
   private url = "https://api.magicthegathering.io/v1/cards";
+  private url2 = "https://magic-match-api.azurewebsites.net/api/MagicAPI";
   private jsonUlr = "https://jsonplaceholder.typicode.com/posts";
   private cardName:string;
 
@@ -30,10 +32,10 @@ export class CardService {
   }
 
   //Gets the name Parameter from the json in the api
-  searchForCard(cardName:string){
+  searchForCard(cardName:string): Observable<any>{
     this.cardName = cardName;
-    //console.log(this.url);
-    //return this.httpClient.get(this.jsonUlr);
+    console.log(this.url);
+    return this.httpClient.get(this.url2 + "/cardByName/" + cardName);
   }
   
   /*
