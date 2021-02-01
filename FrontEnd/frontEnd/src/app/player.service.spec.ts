@@ -80,6 +80,42 @@ describe('PlayerService', () => {
     });
   });
 
+  describe('#getUserById', () => {
+    let dummyPlayers: PlayerViewModel[];
+    beforeEach(() => {
+      dummyPlayers = [
+        {
+          playerId: 'b9084d13-3a7a-4957-89bf-e7618e83e649',
+          userName: 'tylercadena',
+          password: 'revature',
+          login: false,
+          wins: 0,
+          losses: 0,
+          tokens: 0
+        },
+        {
+          playerId: 'f9be7b37-aba8-4b3d-8e8e-2f3ae26894b1',
+          userName: 'janedoe',
+          password: 'revature',
+          login: false,
+          wins: 0,
+          losses: 0,
+          tokens: 0
+        }
+      ] as PlayerViewModel[];
+    });
+
+    it('should return Observable<any>', () => {
+      service.getUserById('f9be7b37-aba8-4b3d-8e8e-2f3ae26894b1').subscribe(player =>
+        expect(player).toBeTruthy(),
+        fail
+      );
+      const req = httpTestingController.expectOne('https://magic-match-api.azurewebsites.net/api/player/f9be7b37-aba8-4b3d-8e8e-2f3ae26894b1');
+      expect(req.request.method).toEqual('GET');
+      req.flush(dummyPlayers[0]);
+    });
+  });
+
   describe('#addUser', () => {
     let dummyPlayer: LoginPlayerViewModel;
 
