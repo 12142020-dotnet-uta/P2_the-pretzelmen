@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+//import { MagicAPIController } from '../';
 
 @Component({
   selector: 'app-search-box',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-box.component.css']
 })
 export class SearchBoxComponent implements OnInit {
-
+  
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  OnSubmit(): void{
+
   }
 
 }
