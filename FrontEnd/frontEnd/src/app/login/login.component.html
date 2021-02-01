@@ -1,6 +1,6 @@
 
-<div class="container">
-    <form *ngIf="login1">
+<div class="container" *ngIf="login">
+    <form>
         <h2>Login Player</h2>
       <div class="form-group">
         <label for="Fname">Username:</label>
@@ -20,12 +20,7 @@
       <button type="button" class="btn btn-default" (click)="OnSubmit()">Submit</button>
     </form>
   </div>
-  Below is the info you are inputting<br>
-  {{loginPlayerViewModel.username}}
-  {{loginPlayerViewModel.password}}
-  <br>
-  This is the first name of the player => {{playerViewModel | json}}
+  
   
   <!-- to display the player details, nest another "playerDetails" component here  and pass the returned player to it
   using one-way binding '[child object]="parent object"' -->
-  

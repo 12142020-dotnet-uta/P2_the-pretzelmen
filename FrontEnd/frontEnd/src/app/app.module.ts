@@ -22,7 +22,7 @@ import { LoginComponent } from './login/login.component';
 import { GetCardsComponent } from './get-cards/get-cards.component';
 import { MemoryActionComponent } from './memory-action/memory-action.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
-//import {NbCardModule} from '@nebular/theme';
+
 
 @NgModule({
   declarations: [
@@ -36,13 +36,9 @@ import { SearchBoxComponent } from './search-box/search-box.component';
     MemoryGameComponent,
     SignupComponent,
     LoginComponent,
-
     GetCardsComponent,
     MemoryActionComponent,
-  
-
     SearchBoxComponent
-
   ],
   imports: [
     BrowserModule,
