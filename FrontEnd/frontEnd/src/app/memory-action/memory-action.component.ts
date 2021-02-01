@@ -57,13 +57,9 @@ export class MemoryActionComponent implements OnInit {
    imgUl: "./../assets/images/magic.png",
  }
  
-  
   cards: any[] = [this.card1, this.card2, this.card3, this.card4, this.card5];
   cards2: any[] = [this.card1, this.card2, this.card3, this.card4, this.card5];
   
-  
-  
-  //cards: any[] = [this.imgUrl, this.imgUrl2, this.imgUrl3, this.imgUrl4, this.imgUrl5];
   constructor() { 
    
   }
@@ -71,15 +67,25 @@ export class MemoryActionComponent implements OnInit {
   ngOnInit(): void {
     this.cards = this.cards.concat(this.cards2);
   }
-  clickedCard(card: string, cardId: string, index: number){
-    console.log(card);
+  /*
+   Method Name: clickedCard
+   param: 
+  */
+  clickedCard(matched: boolean, cardId: string, index: number){
+    console.log("matched " + matched);
     console.log("and the id is " + cardId);
-    this.flippedCard(String(index));
+    this.flippedCard(String(index), cardId, matched);
   }
   
-  flippedCard(num: string){
-    this.num = num;
-    console.log("index number ===> " + num);
+  /*
+    Method Name: flippedCard
+    param: 
+    Definition: flip card which was cliked.
+  */
+  flippedCard(cardIndex: string, cardId: string, matched: boolean){
+    this.num = cardIndex;
+
+    console.log("index number ===> " + cardIndex);
     if(this.numberFlip == 2){
       
       let element = document.getElementById(this.cardOne);
@@ -88,18 +94,35 @@ export class MemoryActionComponent implements OnInit {
       element.className = 'none';
       this.numberFlip = 0;
     }
-    if(this.numberFlip == 0){ this.cardOne = num};
-    if(this.numberFlip == 1) { this.cardTwo = num};
+    if(this.numberFlip == 0){ this.cardOne = cardIndex};
+    if(this.numberFlip == 1) { this.cardTwo = cardIndex};
   
     //console.log("class id is :  " + this.num);
-    let element = document.getElementById(num);
+    let element = document.getElementById(cardIndex);
     element.className = 'flip-card-inner';
-
     this.numberFlip++;
-    console.log("number of flip===> " + this.numberFlip);
+    /*
+      check if two card id is match
+
+    */
+   if(this.numberFlip == 2){
+
+   }
+
 
   }
-  
+  /*
+    Method Name: checkForMatched
+    param: two card id
+    return: true or false
+  */
+
+  checkForMatched(cardOneId: string, cardTwoId: string): boolean{
+
+
+    return false;
+  }
+
 
    /*
     Method Name: randomArrayShuffle
