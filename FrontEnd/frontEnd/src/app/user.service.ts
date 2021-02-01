@@ -14,6 +14,9 @@ import { LoginPlayerViewModel } from './login-player-view-model';
 export class UserService {
 
   //private userUrl = "https://magic-match-api.azurewebsites.net/api/player/"
+  private userUrlLocal = "https://localhost:44301/api/player/"
+
+  private userUrlRemote = "https://magic-match-api.azurewebsites.net/api/player/";
 
     httpOptions = {
     headers: new HttpHeaders({
@@ -30,7 +33,7 @@ export class UserService {
   LoginPlayer(loginPlayerViewModel: LoginPlayerViewModel): Observable<PlayerViewModel> {
     //use http to post the player and get back the playerviewmodel
     console.log(loginPlayerViewModel);
-    return this.http.post<PlayerViewModel>('https://localhost:44301/api/player/login', loginPlayerViewModel, this.httpOptions);
+    return this.http.post<PlayerViewModel>(this.userUrlRemote + '/login', loginPlayerViewModel, this.httpOptions);
   }
 
   PlayerList(): Observable<PlayerViewModel[]> {
