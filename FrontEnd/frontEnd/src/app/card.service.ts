@@ -10,6 +10,7 @@ import {throwError} from 'rxjs';
 export class CardService {
   private url = "https://api.magicthegathering.io/v1/cards";
   private jsonUlr = "https://jsonplaceholder.typicode.com/posts";
+  private cardName:string;
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -26,6 +27,13 @@ export class CardService {
   getCards() {
     console.log(this.url);
     return this.httpClient.get(this.jsonUlr);
+  }
+
+  //Gets the name Parameter from the json in the api
+  searchForCard(cardName:string){
+    this.cardName = cardName;
+    //console.log(this.url);
+    //return this.httpClient.get(this.jsonUlr);
   }
   
   /*
