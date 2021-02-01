@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { LoginPlayerViewModel } from '../login-player-view-model';
 //import { Location } from '@angular/common';
-//
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',

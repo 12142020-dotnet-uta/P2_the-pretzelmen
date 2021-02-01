@@ -91,7 +91,7 @@ addUser(user: LoginPlayerViewModel): void{
   LoginPlayer(loginPlayerViewModel: LoginPlayerViewModel): Observable<PlayerViewModel> {
     //use http to post the player and get back the playerviewmodel
     //this.http.post<PlayerViewModel>(this.userUrlLocal + 'login', loginPlayerViewModel, this.httpOptions).subscribe(x=>this.playerViewModel = x);
-    return this.http.post<PlayerViewModel>(this.userUrlRemote + 'player/login', loginPlayerViewModel, this.httpOptions);
+    return this.http.put<PlayerViewModel>(this.userUrlRemote + 'player/login', loginPlayerViewModel, this.httpOptions);
   }
   getPlayer():PlayerViewModel{
     return this.playerViewModel;
@@ -103,7 +103,7 @@ addUser(user: LoginPlayerViewModel): void{
   }
 
   PlayerList(): Observable<PlayerViewModel[]> {
-    return this.http.get<PlayerViewModel[]>(this.userUrlRemote + '/getplayers', this.httpOptions);
+    return this.http.get<PlayerViewModel[]>(this.userUrlRemote + 'player/getplayers', this.httpOptions);
   }
 
 
