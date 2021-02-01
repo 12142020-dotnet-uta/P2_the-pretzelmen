@@ -2,7 +2,7 @@
 
 
 
-  <button *ngFor=" let card of cards; let idx = index; "
+  <button *ngFor=" let card of cards; let idx = index; " [disabled]="false" id="b+{{idx}}"
   [attr.aria-label]="actionName" (click) ="clickedCard(card.matched, card.cardId, idx)">
     <div class="flip-card" >
         <div id="{{idx}}">

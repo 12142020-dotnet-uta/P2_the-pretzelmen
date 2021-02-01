@@ -15,6 +15,8 @@ export class MemoryActionComponent implements OnInit {
   cardOne: string = '0';
   cardTwo: string = '0';
   numberFlip = 0;
+  cardOneId = '0';
+  cardTwoId = '0';
  
 /*
   imgUrl = "./../assets/images/Image-1.jpg";
@@ -94,8 +96,14 @@ export class MemoryActionComponent implements OnInit {
       element.className = 'none';
       this.numberFlip = 0;
     }
-    if(this.numberFlip == 0){ this.cardOne = cardIndex};
-    if(this.numberFlip == 1) { this.cardTwo = cardIndex};
+    if(this.numberFlip == 0){ 
+      this.cardOne = cardIndex;
+      this.cardOneId = cardId;
+    }
+    if(this.numberFlip == 1) { 
+      this.cardTwo = cardId;
+      this.cardTwoId = cardId
+    }
   
     //console.log("class id is :  " + this.num);
     let element = document.getElementById(cardIndex);
@@ -106,6 +114,7 @@ export class MemoryActionComponent implements OnInit {
 
     */
    if(this.numberFlip == 2){
+     this.checkForMatched(this.cardOne, this.cardTwo)
 
    }
 
@@ -118,7 +127,9 @@ export class MemoryActionComponent implements OnInit {
   */
 
   checkForMatched(cardOneId: string, cardTwoId: string): boolean{
+    console.log("card 1 " +  this.cardOneId + " card2 " + this.cardTwoId);
 
+    if(cardOneId == cardTwoId) {console.log("they are equal");}
 
     return false;
   }
