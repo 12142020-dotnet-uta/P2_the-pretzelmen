@@ -39,9 +39,9 @@ export class UserService {
     return this.playerViewModel;
   }
 
-  GetCollection(collection: LoginPlayerViewModel): Observable<ColletionViewModel> {
-    return this.http.get('https://localhost:44301/api/collection/collections', collection,this.httpOptions);
-  }
+  //GetCollection(collection: LoginPlayerViewModel): Observable<ColletionViewModel> {
+  //  return this.http.get('https://localhost:44301/api/collection/collections', collection,this.httpOptions);
+ // }
 
   sendtoRoot(player: PlayerViewModel)
   {
@@ -49,7 +49,7 @@ export class UserService {
   }
 
   PlayerList(): Observable<PlayerViewModel[]> {
-    return this.http.get<PlayerViewModel[]>('https://localhost:44301/api/player/getplayers');
+    return this.http.get<PlayerViewModel[]>(this.userUrlRemote + '/getplayers', this.httpOptions);
   }
 
 

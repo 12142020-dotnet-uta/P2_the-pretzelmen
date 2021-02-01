@@ -16,7 +16,7 @@ describe('SignupComponent', () => {
       declarations: [SignupComponent],
       providers: [
         PlayerService,
-        { provider: Location, useValue: mockLocation }
+        { provide: Location, useValue: mockLocation }
       ]
     })
     .compileComponents();
@@ -30,5 +30,10 @@ describe('SignupComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should call gotBack()', () => {
+    component.gotBack();
+    expect(component.loginPlayerViewModel).toBeTruthy();
   });
 });

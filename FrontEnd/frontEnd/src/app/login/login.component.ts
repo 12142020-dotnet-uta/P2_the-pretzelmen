@@ -1,4 +1,5 @@
 
+
 import { Component, OnInit ,Input,Output, EventEmitter} from '@angular/core';
 import { PlayerViewModel } from '../player-view-model';
 import { LoginPlayerViewModel } from '../login-player-view-model';

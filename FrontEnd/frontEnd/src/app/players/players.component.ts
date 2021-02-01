@@ -8,7 +8,7 @@ import { UserService } from '../user.service';
   styleUrls: ['./players.component.css']
 })
 export class PlayersComponent implements OnInit {
-  playerList: PlayerViewModel[]; 
+  playerList: PlayerViewModel[];
   selectedPlayer: PlayerViewModel = new PlayerViewModel();
 
   constructor(private userService: UserService) { }
