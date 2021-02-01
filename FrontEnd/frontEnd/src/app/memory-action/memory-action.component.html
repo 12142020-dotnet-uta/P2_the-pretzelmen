@@ -3,14 +3,14 @@
 
 
   <button *ngFor=" let card of cards; let idx = index; "
-  [attr.aria-label]="actionName" (click) ="clickedCard(card.matched, card.cardId)">
+  [attr.aria-label]="actionName" (click) ="clickedCard(card.matched, card.cardId, idx)">
     <div class="flip-card" >
         <div id="{{idx}}">
           <div class="flip-card-front">
             <img src="./../assets/images/backOfMagicCard.png" alt="Avatar" style="width:300px;height:300px;">
           </div>
           <div id={{idx}}+f>
-            <img src="{{card.imgUrl}}" alt="Avatar" style="width:300px;height:300px;">
+            <img src="{{card.imgUl}}" alt="Avatar" style="width:300px;height:300px;">
     
           </div>
         </div>
