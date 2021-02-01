@@ -7,14 +7,17 @@ import {Card } from '../card';
   styleUrls: ['./cards.component.css']
 })
 export class CardsComponent implements OnInit {
- card: Card = {
+  card: Card = {
   id: 1,
-  attactStat: 2,
-  defenseStat: 3,
+  cardId: 12,
+  imageURL:"",
+  qty: 1,
+  attackNumber: 2,
+  defenseNumber: 3,
   inDeck: true,
   cardClass: "yes",
-  cardName: 'Magic card'
-
+  cardName: 'Magic card',
+  collectionID: '123456789'
  };
 
  cards: Card[];

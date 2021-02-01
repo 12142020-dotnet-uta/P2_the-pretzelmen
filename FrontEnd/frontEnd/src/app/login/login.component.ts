@@ -5,7 +5,7 @@ import { PlayerViewModel } from '../player-view-model';
 import { LoginPlayerViewModel } from '../login-player-view-model';
 
 import { NgModule } from '@angular/core';
-import { UserService } from '../user.service';
+import { PlayerService } from '../player.service';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   @Output() playerevent = new EventEmitter<LoginPlayerViewModel>();
 
   //used mainly for DI
-  constructor(private userService: UserService) { }
+  constructor(private playerservice: PlayerService) { }
 
   // Used to initiate the component and it's variables, lists, observables, etc.
   // Best Practice is to do this here..NOT in the constructor
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   OnSubmit(): void {
-    this.userService.LoginPlayer(this.loginPlayerViewModel).subscribe(x => this.playerViewModel1 = x);
+    this.playerservice.LoginPlayer(this.loginPlayerViewModel).subscribe(x => this.playerViewModel1 = x);
     this.playerevent.emit(this.loginPlayerViewModel);
     this.login = false;
   }
