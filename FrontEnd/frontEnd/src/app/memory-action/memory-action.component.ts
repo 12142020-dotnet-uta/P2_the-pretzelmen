@@ -10,10 +10,9 @@ import { Card } from '../card';
 export class MemoryActionComponent implements OnInit {
   
   
-  num = "";
-  flipCard = true;
-  cssString: string = '';
-  
+ 
+
+  score = 0;
   numberFlip = 0;
   CardOne= {
     matched: false,
@@ -159,6 +158,7 @@ export class MemoryActionComponent implements OnInit {
           this.CardOne.matched = true;
           //reset
           this.numberFlip = 0;
+          this.score++;
         }else{ //
 
           console.log("They are not matched ");
