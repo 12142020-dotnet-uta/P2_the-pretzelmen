@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Card } from '../card';
 
 @Component({
   selector: 'app-memory-action',
@@ -6,30 +7,44 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./memory-action.component.css']
 })
 export class MemoryActionComponent implements OnInit {
-  cards: any[] = [1,2,3,4,5,6];
-  actionName = 'Go for it';
-  isSpecial = true;
-  canSave = true;
-  classExpression = 'special clearance';
-  styleExpression = 'color: red';
-  color = 'blue';
+  
+  
   num = "";
   flipCard = true;
   cssString: string = '';
   cardOne: string = '0';
   cardTwo: string = '0';
   numberFlip = 0;
+ 
 
+  imgUrl = "./../assets/images/Image-1.jpg";
+  imgUrl2 = "./../assets/images/Image-2.jpg";
+  imgUrl3 = "./../assets/images/Image-3.jpg";
+  imgUrl4 = "./../assets/images/Image-4.jpg";
+  imgUrl5 = "./../assets/images/magic.png";
+  card = {
+    matched: false,
+    cardId: '1',
+
+  }
+  
+  cards: any[] = [this.card, this.card, this.card, this.card, this.card];
+
+  //cards: any[] = [this.imgUrl, this.imgUrl2, this.imgUrl3, this.imgUrl4, this.imgUrl5];
   constructor() { }
 
   ngOnInit(): void {
   }
+  clickedCard(card: string, cardId: string){
+    console.log(card);
+    console.log("and the id is " + cardId);
+  }
+  /*
   clickedCard(num: string){
     this.num = num;
-    
+    console.log("index number ===> " + num);
     if(this.numberFlip == 2){
-      //console.log("previous clicked id ==> " + this.cardOne);
-     // console.log("previous clicked id ==> " + this.cardTwo);
+      
       let element = document.getElementById(this.cardOne);
       element.className = 'none';
       element = document.getElementById(this.cardTwo);
@@ -46,23 +61,24 @@ export class MemoryActionComponent implements OnInit {
     this.numberFlip++;
     console.log("number of flip===> " + this.numberFlip);
 
+  }
+  */
+
+   /*
+    Method Name: randomArrayShuffle
+    Return: Shuffled array
+  */
+ 
+ randomArrayShuffle(array: string[]){
+  var currentIndex = array.length, temporaryValue, randomIndex;
+  randomIndex = Math.floor(Math.random() * currentIndex);
+  currentIndex -= 1;
+  temporaryValue = array[currentIndex];
+  array[currentIndex] = array[randomIndex];
+  array[randomIndex] = temporaryValue;
+
+
+  return array;
+ }
   
-   // this.cssString = 'flip-card-inner';
-  // element.className = flip-card-inner';
-    //this.num = num + 1;
-
-   
-    //this.getClass();
-  }
-  getClass(){
-    /*
-    if(this.cssString.length > 3){
-      this.cssString = '';
-    }
-    */
-
-    
-    //return this.cssString;
-    //'flip-card-inner';
-  }
 }
