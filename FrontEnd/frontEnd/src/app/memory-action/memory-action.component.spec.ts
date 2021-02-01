@@ -23,6 +23,11 @@ describe('MemoryActionComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should call clickedCard()', () => {
+    component.clickedCard('sfdsdf', 'fsdfhsdfs');
+    expect(component.cards.length).toBeGreaterThan(0);
+  });
+
   it('should shuffle array', () => {
     //http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
     let str0: string[] = [];
