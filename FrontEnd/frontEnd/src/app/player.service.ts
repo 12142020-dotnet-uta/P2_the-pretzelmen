@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-
 import {from, Observable, of} from 'rxjs';
-
 import { HttpClientModule, HttpClient, HttpHeaders} from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { PlayerViewModel } from './player-view-model';
 import { fullplayerview } from './fullplayerview';
 import { LoginPlayerViewModel } from './login-player-view-model';
+import { PlayerViewModel } from './player-view-model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,4 +1,6 @@
-import { Component, OnInit ,Input} from '@angular/core';
+
+
+import { Component, OnInit ,Input,Output, EventEmitter} from '@angular/core';
 import { PlayerViewModel } from '../player-view-model';
 import { LoginPlayerViewModel } from '../login-player-view-model';
 
@@ -13,8 +15,9 @@ import { UserService } from '../user.service';
 })
 export class LoginComponent implements OnInit {
   loginPlayerViewModel: LoginPlayerViewModel = new LoginPlayerViewModel();// = new LoginPlayerViewModel();
-  playerViewModel: PlayerViewModel = new PlayerViewModel();
-  @Input() login1: boolean = false;
+  playerViewModel1: PlayerViewModel = new PlayerViewModel();
+  @Input() login: boolean;
+  @Output() playerevent = new EventEmitter<LoginPlayerViewModel>();
 
   //used mainly for DI
   constructor(private userService: UserService) { }
@@ -25,9 +28,10 @@ export class LoginComponent implements OnInit {
   }
 
   OnSubmit(): void {
-    this.login1 = false;
-    this.userService.LoginPlayer(this.loginPlayerViewModel).subscribe(x => this.playerViewModel = x);
-    console.log("Here after the call to the service.");
-
+    this.userService.LoginPlayer(this.loginPlayerViewModel).subscribe(x => this.playerViewModel1 = x);
+    this.playerevent.emit(this.loginPlayerViewModel);
+    this.login = false;
   }
+  
 }
+

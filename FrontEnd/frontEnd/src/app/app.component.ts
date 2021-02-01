@@ -1,22 +1,34 @@
-import { Component , Input} from '@angular/core';
+import { Component , Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { LoginPlayerViewModel } from './login-player-view-model';
+import { PlayerViewModel } from './player-view-model';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'frontEnd';
+  login = false;
+  playerViewModel: PlayerViewModel = new PlayerViewModel();
   loginplayerview: LoginPlayerViewModel = new LoginPlayerViewModel();
-  @Input() login1: boolean = false;
-
-  IWannaLogIn():void{
-    this.login1=true;
-    console.log("IwannaLogIn works");
+  
+ // @Input('Inplayer') viewModel: PlayerViewModel;
+ constructor(private userService: UserService) { }
+  ngOnInit(): void {
+    
+  }
+  LoginPlease()
+  {
+    this.login = true;
+  }
+  setPlayer(newItem: LoginPlayerViewModel) {
+    this.userService.LoginPlayer(newItem).subscribe(x => this.playerViewModel = x);
+    console.log("app compo "); 
   }
 }
 
 export class CardInfoFromSearch{
-  url = 'https://localhost:44301/api/MagicAPI/cardById?${search2}'
+  url = 'https://localhost:44301/api/MagicAPI/cardById/${search2}'
 }
