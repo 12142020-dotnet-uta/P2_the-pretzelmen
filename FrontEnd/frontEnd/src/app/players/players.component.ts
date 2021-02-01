@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerViewModel } from '../player-view-model';
-import { UserService } from '../user.service';
+import { PlayerService } from '../player.service';
 
 @Component({
   selector: 'app-players',
@@ -11,7 +11,7 @@ export class PlayersComponent implements OnInit {
   playerList: PlayerViewModel[];
   selectedPlayer: PlayerViewModel = new PlayerViewModel();
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: PlayerService) { }
 
   ngOnInit(): void {
     this.userService.PlayerList().subscribe(x => this.playerList = x);
