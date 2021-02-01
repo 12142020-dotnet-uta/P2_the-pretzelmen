@@ -16,7 +16,7 @@ export class MemoryActionComponent implements OnInit {
   cardTwo: string = '0';
   numberFlip = 0;
  
-
+/*
   imgUrl = "./../assets/images/Image-1.jpg";
   imgUrl2 = "./../assets/images/Image-2.jpg";
   imgUrl3 = "./../assets/images/Image-3.jpg";
@@ -27,8 +27,40 @@ export class MemoryActionComponent implements OnInit {
     cardId: '1',
 
   }
+  */
+ imgUrl4 = "./../assets/images/Image-4.jpg";
+ imgUrl5 = "./../assets/images/magic.png";
+ card1 = {
+   matched: false,
+   cardId: '1',
+   imgUl: "./../assets/images/Image-1.jpg",
+ }
+ card2 = {
+   matched: false,
+   cardId: '2',
+   imgUl: "./../assets/images/Image-2.jpg",
+ }
+ card3 = {
+   matched: false,
+   cardId: '3',
+   imgUl: "./../assets/images/Image-3.jpg",
+ }
+ card4 = {
+   matched: false,
+   cardId: '4',
+   imgUl: "./../assets/images/Image-4.jpg",
+ }
+
+ card5 = {
+   matched: false,
+   cardId: '5',
+   imgUl: "./../assets/images/magic.png",
+ }
+ 
+
+
   
-  cards: any[] = [this.card, this.card, this.card, this.card, this.card];
+  cards: any[] = [this.card1, this.card2, this.card3, this.card4, this.card5];
 
   //cards: any[] = [this.imgUrl, this.imgUrl2, this.imgUrl3, this.imgUrl4, this.imgUrl5];
   constructor() { }
