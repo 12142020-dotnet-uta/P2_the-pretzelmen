@@ -104,13 +104,20 @@ export class MemoryActionComponent implements OnInit {
    param: 
   */
   clickedCard(card: any, index: number){
-    console.log("current clicked " + this.numberFlip);
-    // if two card already flipped, set back to default
+   
+  
     if (this.numberFlip == 2){
-      let element = document.getElementById(String(this.CardOne.cardIndex));
-      element.className = 'default';
-      element = document.getElementById(String(this.CardTwo.cardIndex));
-      element.className = 'default';
+
+      console.log("comming card : " + card.matched);
+      console.log("existing card : " + this.CardOne.matched);
+      //flip card back if they were not matched
+      if(this.CardOne.matched == false){
+        let element = document.getElementById(String(this.CardOne.cardIndex));
+        element.className = 'default';
+        element = document.getElementById(String(this.CardTwo.cardIndex));
+        element.className = 'default';
+      }
+ 
        this.numberFlip = 0;
     }
     //check card state: 
@@ -120,6 +127,7 @@ export class MemoryActionComponent implements OnInit {
       element.className = 'flip-card-inner';
       this.CardOne.cardIndex = index;
       this.CardOne.cardId = card.cardId;
+      this.CardOne.matched = false;
       this.CardOne.state = 'flipped';
       //console.log("new card Id " + this.CardOne.cardId);
       //console.log("new card state " + this.CardOne.state);
@@ -128,12 +136,13 @@ export class MemoryActionComponent implements OnInit {
     }
     //check if not the same card
     if(this.numberFlip >= 1){
-      console.log(" incoming cardindex " + index + " and card previous card index is " + this.CardOne.cardIndex);
+     // console.log(" incoming cardindex " + index + " and card previous card index is " + this.CardOne.cardIndex);
       if((index) != this.CardOne.cardIndex){
         //flip the second card
         let element = document.getElementById(String(index));
         element.className = 'flip-card-inner';
         this.numberFlip++;
+        this.CardTwo.matched = false;
         this.CardTwo.cardIndex = index;
         this.CardTwo.cardId = card.cardId;
         this.CardTwo.state = 'flipped';
@@ -146,6 +155,8 @@ export class MemoryActionComponent implements OnInit {
     if(this.numberFlip == 2){// check if they matched
         if(this.CardOne.cardId == this.CardTwo.cardId){
           console.log("They are matched");
+          this.CardOne.matched = true;
+          this.CardOne.matched = true;
           //reset
           this.numberFlip = 0;
         }else{ //
@@ -155,6 +166,7 @@ export class MemoryActionComponent implements OnInit {
         }
 
     }
+    console.log("current clicked " + this.numberFlip);
     
   }
   

@@ -1,6 +1,7 @@
 
 
-
+<div>
+  
 
   <button *ngFor=" let card of cards; let idx = index; " [disabled]="false" id="b+{{idx}}"
   [attr.aria-label]="actionName" (click) ="clickedCard(card, idx)">
@@ -15,7 +16,10 @@
           </div>
         </div>
     </div>
- </button>
+  </button>
+
+
+</div>
 
  
 
