@@ -22,9 +22,14 @@ namespace BusinessLayer
             _gameRepositoryLayer = gameRepositoryLayer;
         }
 
-        public async Task<IEnumerable<Collection>> GetCollection(Guid id)
+        public async Task<ActionResult<Collection>> GetCollection(string id)
         {
             return await _gameRepositoryLayer.GetCollection(id);
+        }
+
+        public async Task<IEnumerable<Card>> GetCards(string id)
+        {
+            return await _gameRepositoryLayer.GetCards(id);
         }
 
         public async Task<IEnumerable<Player>> GetAllPlayers()

@@ -61,20 +61,29 @@ namespace RepositoryLayer
         //}
 
         //parameter needs to change
-        public async Task<IEnumerable<Collection>> GetCollection(Guid id)
+        public async Task<ActionResult<Collection>> GetCollection(string id)
         {
-            var player = await _gameContext.players.Where(x => x.playerId == id).FirstOrDefaultAsync();
+            var player = await _gameContext.collections.Where(x => x.collectionHolder.ToString() == id).FirstOrDefaultAsync();
             if(player == null)
             {
-                _logger.LogInformation($"The requested player {id} was not found.");
+                _logger.LogInformation($"The requested collection based on player id on {id} was not found.");
                 return null;
             }
-
-            var playerCollection = from collection in _gameContext.collections
-                                   where collection.collectionHolder == id
-                                   select collection;
-
-            return playerCollection.ToList();
+            else
+            {
+                Collection temp = player;
+                return temp;
+            }
+        }
+        public async Task<IEnumerable<Card>> GetCards(string id)
+        {
+            var resutls = await _gameContext.cards.Where(x => x.CollectionID.ToString() == id).ToListAsync();
+            if(resutls == null)
+            {
+                _logger.LogInformation($"found not cards");
+                return null;
+            }
+            return resutls;
         }
 
         /// <summary>

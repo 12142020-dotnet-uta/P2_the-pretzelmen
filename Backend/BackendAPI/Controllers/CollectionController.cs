@@ -24,10 +24,17 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet]
-        [Route("collection/{playerId}")]
-        public async Task<IEnumerable<Collection>> GetCollection(Guid playerId)
+        [Route("collections")]
+        public async Task<ActionResult<Collection>> GetCollection(Collection id)
         {
-            return await _businessLayer.GetCollection(playerId);
+            return await _businessLayer.GetCollection(id.collectionHolder.ToString());
+        }
+
+        [HttpGet]
+        [Route("GetCardsInCollection")]
+        public async Task<IEnumerable<Card>> GetCards(Collection id)
+        {
+            return await _businessLayer.GetCards(id.collectionId.ToString());
         }
 
         //[HttpPost]
