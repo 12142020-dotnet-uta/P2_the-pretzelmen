@@ -4,7 +4,7 @@ import {from, Observable, of} from 'rxjs';
 
 import { HttpClientModule, HttpClient, HttpHeaders} from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { PlayerViewModel } from './playerViewModel';
+import { PlayerViewModel } from './player-view-model';
 import { fullplayerview } from './fullplayerview';
 import { LoginPlayerViewModel } from './login-player-view-model';
 
@@ -14,6 +14,9 @@ import { LoginPlayerViewModel } from './login-player-view-model';
 export class UserService {
 
   //private userUrl = "https://magic-match-api.azurewebsites.net/api/player/"
+  private userUrlLocal = "https://localhost:44301/api/player/"
+
+  private userUrlRemote = "https://magic-match-api.azurewebsites.net/api/player/";
 
     httpOptions = {
     headers: new HttpHeaders({
@@ -30,11 +33,11 @@ export class UserService {
   LoginPlayer(loginPlayerViewModel: LoginPlayerViewModel): Observable<PlayerViewModel> {
     //use http to post the player and get back the playerviewmodel
     console.log(loginPlayerViewModel);
-    return this.http.post<PlayerViewModel>('https://localhost:44301/api/player/login', loginPlayerViewModel, this.httpOptions);
+    return this.http.post<PlayerViewModel>(this.userUrlRemote + '/login', loginPlayerViewModel, this.httpOptions);
   }
 
   PlayerList(): Observable<PlayerViewModel[]> {
-    return this.http.get<PlayerViewModel[]>('https://localhost:44301/api/player/getplayers');
+    return this.http.get<PlayerViewModel[]>(this.userUrlRemote + '/getplayers', this.httpOptions);
   }
 
 

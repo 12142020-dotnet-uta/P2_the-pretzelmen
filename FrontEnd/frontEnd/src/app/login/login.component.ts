@@ -1,5 +1,5 @@
 import { Component, OnInit ,Input} from '@angular/core';
-import { PlayerViewModel } from 'src/app/playerViewModel';
+import { PlayerViewModel } from '../player-view-model';
 import { LoginPlayerViewModel } from '../login-player-view-model';
 
 import { NgModule } from '@angular/core';
