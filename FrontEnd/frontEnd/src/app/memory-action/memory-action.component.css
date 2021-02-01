@@ -1,4 +1,15 @@
+h1, h2{
+  margin-left: 40%;
+  margin-bottom: 10px;
+}
 
+.game{
+  max-width: 90%;
+  margin: auto;
+}
+img{
+  margin: 5px;
+}
 .flip-card {
     background-color: transparent;
     width: 300px;
