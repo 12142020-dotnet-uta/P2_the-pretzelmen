@@ -16,7 +16,7 @@ export class MemoryActionComponent implements OnInit {
   cardTwo: string = '0';
   numberFlip = 0;
  
-
+/*
   imgUrl = "./../assets/images/Image-1.jpg";
   imgUrl2 = "./../assets/images/Image-2.jpg";
   imgUrl3 = "./../assets/images/Image-3.jpg";
@@ -27,20 +27,57 @@ export class MemoryActionComponent implements OnInit {
     cardId: '1',
 
   }
-  
-  cards: any[] = [this.card, this.card, this.card, this.card, this.card];
+  */
+ imgUrl4 = "./../assets/images/Image-4.jpg";
+ imgUrl5 = "./../assets/images/magic.png";
+ card1 = {
+   matched: false,
+   cardId: '1',
+   imgUl: "./../assets/images/Image-1.jpg",
+ }
+ card2 = {
+   matched: false,
+   cardId: '2',
+   imgUl: "./../assets/images/Image-2.jpg",
+ }
+ card3 = {
+   matched: false,
+   cardId: '3',
+   imgUl: "./../assets/images/Image-3.jpg",
+ }
+ card4 = {
+   matched: false,
+   cardId: '4',
+   imgUl: "./../assets/images/Image-4.jpg",
+ }
 
+ card5 = {
+   matched: false,
+   cardId: '5',
+   imgUl: "./../assets/images/magic.png",
+ }
+ 
+  
+  cards: any[] = [this.card1, this.card2, this.card3, this.card4, this.card5];
+  cards2: any[] = [this.card1, this.card2, this.card3, this.card4, this.card5];
+  
+  
+  
   //cards: any[] = [this.imgUrl, this.imgUrl2, this.imgUrl3, this.imgUrl4, this.imgUrl5];
-  constructor() { }
+  constructor() { 
+   
+  }
 
   ngOnInit(): void {
+    this.cards = this.cards.concat(this.cards2);
   }
-  clickedCard(card: string, cardId: string){
+  clickedCard(card: string, cardId: string, index: number){
     console.log(card);
     console.log("and the id is " + cardId);
+    this.flippedCard(String(index));
   }
-  /*
-  clickedCard(num: string){
+  
+  flippedCard(num: string){
     this.num = num;
     console.log("index number ===> " + num);
     if(this.numberFlip == 2){
@@ -62,7 +99,7 @@ export class MemoryActionComponent implements OnInit {
     console.log("number of flip===> " + this.numberFlip);
 
   }
-  */
+  
 
    /*
     Method Name: randomArrayShuffle

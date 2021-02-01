@@ -45,7 +45,7 @@ describe('LoginComponent', () => {
     component.loginPlayerViewModel.username = 'tylercadena';
     component.loginPlayerViewModel.password = 'revature';
     component.OnSubmit();
-    expect(component.playerViewModel.playerId).toBe('b9084d13-3a7a-4957-89bf-e7618e83e649');
+    expect(component.playerViewModel1.playerId).toBe('b9084d13-3a7a-4957-89bf-e7618e83e649');
     expect(mockLoggedPlayer.calls.any()).toBe(true);
   });
 });

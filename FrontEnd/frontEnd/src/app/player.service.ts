@@ -46,11 +46,11 @@ export class PlayerService {
  * @param result - return a user
  */
 getUserById(id: string): Observable<any>{
-  const url = `${this.userUrlRemote}/{id}`;
+  const url = `${this.userUrlRemote}${id}`;
   return this.http.get<any>(url)
       .pipe(
         tap(_ => this.log(`etched hero id={id}`)),
-        catchError(this.handleError<any>(`getuser id ={id}` ))
+        catchError(this.handleError<any>(`getuser id =${id}` ))
       );
 }
 

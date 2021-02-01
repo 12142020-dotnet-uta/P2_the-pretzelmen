@@ -9,15 +9,16 @@ import {Card } from '../card';
 export class CardsComponent implements OnInit {
   card: Card = {
   id: 1,
-  cardId: 12,
-  imageURL:"",
-  qty: 1,
   attackNumber: 2,
   defenseNumber: 3,
   inDeck: true,
   cardClass: "yes",
   cardName: 'Magic card',
-  collectionID: '123456789'
+  cardId: 8,
+  collectionID: 'sdfsdf',
+  qty: 5,
+  imageURL: 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png'
+
  };
 
  cards: Card[];
