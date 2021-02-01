@@ -1,5 +1,4 @@
 export class PlayerViewModel {
-
   playerId: string
   userName: string
   password: string

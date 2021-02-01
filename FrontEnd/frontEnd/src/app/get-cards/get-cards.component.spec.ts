@@ -24,8 +24,8 @@ describe('GetCardsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call getCards()', () => {
-    component.getCards();
+  it('should call ngOnInit() and getCards()', () => {
+    component.ngOnInit();
     expect(component.cards).toBeTruthy();
   });
 });
