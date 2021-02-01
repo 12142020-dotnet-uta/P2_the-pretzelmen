@@ -281,7 +281,7 @@ namespace RepositoryLayer
             return await _gameContext.trades.Where(x=> x.postPlayer == playerid).ToListAsync();
         }
         /// <summary>
-        /// The trade is saves into the database
+        /// The trade is saved into the database
         /// </summary>
         /// <param name="trade"></param>
         /// <returns></returns>
@@ -294,13 +294,18 @@ namespace RepositoryLayer
 
         /// <summary>
         /// This fills in the other information about the trade
-        /// for another play and what they offered.
+        /// for another player and what they offered.
         /// </summary>
         /// <param name="tradeView"></param>
         /// <returns></returns>
         public async Task<ActionResult<Trade>> setOfferToTrade(TradeViewModel tradeView)
         {
             Trade trade = _gameContext.trades.Where(x => x.tradeId == tradeView.tradeId).FirstOrDefault();
+            if (trade == null)
+            {
+                _logger.LogInformation($"There was an issue with finding trade by id: {tradeView.tradeId}");
+                //return null;
+            }
             trade.acceptPlayer = tradeView.playerId;
             trade.acceptPlayerCardOffer = tradeView.playerCardOffer;
             trade.active = false;
@@ -308,9 +313,20 @@ namespace RepositoryLayer
             return null;
         }
 
+        /// <summary>
+        /// Executes the trade between two users. The agreed upon cards in each
+        ///  of their collections will swap owners in te database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ActionResult> acceptOffer(TradeViewModel id)
         {
             Trade trade = _gameContext.trades.Where(x => x.tradeId == id.tradeId).FirstOrDefault();
+            if(trade == null)
+            {
+                _logger.LogInformation($"There was an issue with finding trade by id: {id.tradeId}");
+                //return null;
+            }
             Collection p1 = _gameContext.collections.Where(x => x.collectionHolder == trade.postPlayer).FirstOrDefault();
             Collection p2 = _gameContext.collections.Where(x => x.collectionHolder == trade.acceptPlayer).FirstOrDefault();
             Card p1card = _gameContext.cards.Where(x => x.Id == trade.postPlayerCardOffer).FirstOrDefault();
@@ -319,6 +335,7 @@ namespace RepositoryLayer
             p1card.CollectionID = p2.collectionId;
             p2card.CollectionID = p1.collectionId;
             trade.accepted = true;
+            //trade.active = false;
             await _gameContext.SaveChangesAsync();
             return null;
         }

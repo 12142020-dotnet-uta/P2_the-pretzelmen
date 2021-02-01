@@ -81,7 +81,14 @@ namespace BackendAPI.Controllers
         {
             var temp = await _businessLayer.EditPlayer(player);
 
-            return temp;
+            if (temp == null)
+            {
+                return Ok();
+            }
+            else
+            {
+                return NoContent();
+            }
         }
         /// <summary>
         /// Using a playerviewmodel to makde a new user.
