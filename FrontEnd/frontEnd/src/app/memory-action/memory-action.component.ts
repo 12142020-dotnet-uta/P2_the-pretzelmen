@@ -57,15 +57,19 @@ export class MemoryActionComponent implements OnInit {
    imgUl: "./../assets/images/magic.png",
  }
  
-
-
   
   cards: any[] = [this.card1, this.card2, this.card3, this.card4, this.card5];
-
+  cards2: any[] = [this.card1, this.card2, this.card3, this.card4, this.card5];
+  
+  
+  
   //cards: any[] = [this.imgUrl, this.imgUrl2, this.imgUrl3, this.imgUrl4, this.imgUrl5];
-  constructor() { }
+  constructor() { 
+   
+  }
 
   ngOnInit(): void {
+    this.cards = this.cards.concat(this.cards2);
   }
   clickedCard(card: string, cardId: string, index: number){
     console.log(card);
