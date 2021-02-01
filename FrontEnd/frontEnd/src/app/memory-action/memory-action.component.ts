@@ -67,12 +67,13 @@ export class MemoryActionComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  clickedCard(card: string, cardId: string){
+  clickedCard(card: string, cardId: string, index: number){
     console.log(card);
     console.log("and the id is " + cardId);
+    this.flippedCard(String(index));
   }
-  /*
-  clickedCard(num: string){
+  
+  flippedCard(num: string){
     this.num = num;
     console.log("index number ===> " + num);
     if(this.numberFlip == 2){
@@ -94,7 +95,7 @@ export class MemoryActionComponent implements OnInit {
     console.log("number of flip===> " + this.numberFlip);
 
   }
-  */
+  
 
    /*
     Method Name: randomArrayShuffle
