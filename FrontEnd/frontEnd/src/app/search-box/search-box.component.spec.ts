@@ -22,4 +22,9 @@ describe('SearchBoxComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call OnSubmit()', () => {
+    component.OnSubmit();
+    expect(component).toBeTruthy();
+  });
 });

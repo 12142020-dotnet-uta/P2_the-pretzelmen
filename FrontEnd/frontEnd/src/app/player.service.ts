@@ -4,7 +4,7 @@ import {from, Observable, of} from 'rxjs';
 
 import { HttpClientModule, HttpClient, HttpHeaders} from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { PlayerViewModel } from './playerViewModel';
+import { PlayerViewModel } from './player-view-model';
 import { fullplayerview } from './fullplayerview';
 import { LoginPlayerViewModel } from './login-player-view-model';
 
@@ -34,7 +34,7 @@ export class PlayerService {
  /* Get users from the server */
  getUsers(): Observable<any[]> {
    //console.log("get player:   " + this.http.get<any[]>(this.userUrl));
-   return this.http.get<any[]>(this.userUrlRemote + '/GetPlayers')
+   return this.http.get<any[]>(this.userUrlRemote + 'GetPlayers')
    .pipe(
      tap(_ => this.log('get users')),
      catchError(this.handleError<any[]>('getUsers', []))
@@ -70,7 +70,7 @@ addUser(user: LoginPlayerViewModel): void{
   const headers ={ 'content-type': 'application/json'}
   const body = JSON.stringify(user);
   console.log(body);
-  this.http.post<any>(this.userUrlRemote + '/CreatePlayer',
+  this.http.post<any>(this.userUrlRemote + 'CreatePlayer',
   body, this.httpOptions).subscribe(x => this.playerview= x);
   console.log(this.playerview);
     //.pipe(
@@ -83,14 +83,14 @@ addUser(user: LoginPlayerViewModel): void{
   /** DELETE: delete the hero from the server */
   deleteUser(user: PlayerViewModel): Observable<PlayerViewModel> {
     const body = JSON.stringify(user);
-    const url = `${this.userUrlRemote +"DeletePlayer"}/${body}`;
+    const url = this.userUrlRemote + "DeletePlayer";
 
     return this.http.delete<PlayerViewModel>(url, this.httpOptions).pipe(
       catchError(this.handleError<PlayerViewModel>('deleteHero'))
     );
   }
 
-  
+
 
  /**
  * Handle Http operation that failed.

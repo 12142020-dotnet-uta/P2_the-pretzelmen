@@ -22,4 +22,14 @@ describe('NavBarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call IWannaLogIn()', () => {
+    let closure: boolean = true;
+    component.login.on('true', () => {
+      closure = false;
+    });
+    component.IWannaLogIn();
+    expect(component.login1).toBe(true);
+    expect(closure).toBe(false);
+  });
 });

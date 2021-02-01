@@ -4,7 +4,7 @@ import {from, Observable, of} from 'rxjs';
 
 import { HttpClientModule, HttpClient, HttpHeaders} from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { PlayerViewModel } from './playerViewModel';
+import { PlayerViewModel } from './player-view-model';
 import { fullplayerview } from './fullplayerview';
 import { LoginPlayerViewModel } from './login-player-view-model';
 
@@ -37,7 +37,7 @@ export class UserService {
   }
 
   PlayerList(): Observable<PlayerViewModel[]> {
-    return this.http.get<PlayerViewModel[]>('https://localhost:44301/api/player/getplayers');
+    return this.http.get<PlayerViewModel[]>(this.userUrlRemote + '/getplayers', this.httpOptions);
   }
 
 

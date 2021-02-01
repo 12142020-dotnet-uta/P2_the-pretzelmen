@@ -22,4 +22,9 @@ describe('MemoryGameComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call onSelectCard()', () => {
+    component.onSelectCard();
+    expect(component.cards.length).toBeGreaterThan(0);
+  });
 });

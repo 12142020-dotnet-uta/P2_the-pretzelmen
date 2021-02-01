@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PlayerViewModel } from '../playerViewModel';
+import { PlayerViewModel } from '../player-view-model';
 import { UserService } from '../user.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { UserService } from '../user.service';
   styleUrls: ['./players.component.css']
 })
 export class PlayersComponent implements OnInit {
-  playerList: PlayerViewModel[]; 
+  playerList: PlayerViewModel[];
   selectedPlayer: PlayerViewModel = new PlayerViewModel();
 
   constructor(private userService: UserService) { }
