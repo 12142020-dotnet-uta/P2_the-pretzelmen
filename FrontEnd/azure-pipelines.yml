@@ -23,19 +23,7 @@ stages:
               SonarCloud: sonar-srv-0
               scannerMode: CLI
               organization: p2the-pretzelmen
-              cliProjectKey: P2the-pretzelmen_frontend
-              cliProjectName: P2the-pretzelmen_frontend
-              cliSources: FrontEnd/frontEnd/src/
-              extraProperties: |
-                sonar.projectKey=P2the-pretzelmen_frontend
-                sonar.projectName=P2the-pretzelmen_frontend
-                sonar.projectVersion=0.0.0
-                sonar.sources=FrontEnd/frontEnd/src
-                sonar.exclusions=**/node_modules/**,**/*.spec.ts
-                sonar.coverage.exclusions=**/*.environment*.ts,**/*.module.ts,FrontEnd/frontEnd/src/main.ts,FrontEnd/frontEnd/src/polyfills.ts
-                sonar.tests=FrontEnd/frontEnd/src
-                sonar.test.inclusions=**/*.spec.ts
-                sonar.typescript.tsconfigPath=FrontEnd/frontEnd/tsconfig.json
+              configFile: FrontEnd/frontEnd/sonar-project.properties
           - task: Npm@1
             displayName: Analyze Build
             inputs:
