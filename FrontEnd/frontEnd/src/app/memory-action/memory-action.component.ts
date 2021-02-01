@@ -1,3 +1,4 @@
+import { isFormattedError } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Card } from '../card';
 
@@ -12,11 +13,28 @@ export class MemoryActionComponent implements OnInit {
   num = "";
   flipCard = true;
   cssString: string = '';
-  cardOne: string = '0';
-  cardTwo: string = '0';
+  
   numberFlip = 0;
-  cardOneId = '0';
-  cardTwoId = '0';
+  CardOne= {
+    matched: false,
+    cardId: '1',
+    cardIndex: 0,
+    state: 'defualt',
+    imgUl: "./../assets/images/Image-1.jpg",
+
+  };
+
+  CardTwo= {
+    matched: false,
+    cardId: '1',
+    cardIndex: 0,
+    state: 'defualt',
+    imgUl: "./../assets/images/Image-1.jpg",
+
+  };
+  
+  // cardOneId = '0';
+  // cardTwoId = '0';
  
 /*
   imgUrl = "./../assets/images/Image-1.jpg";
@@ -30,37 +48,47 @@ export class MemoryActionComponent implements OnInit {
 
   }
   */
- imgUrl4 = "./../assets/images/Image-4.jpg";
- imgUrl5 = "./../assets/images/magic.png";
+ 
  card1 = {
    matched: false,
    cardId: '1',
+   cardIndex: 0,
+   state: 'defualt',
    imgUl: "./../assets/images/Image-1.jpg",
  }
  card2 = {
    matched: false,
    cardId: '2',
+   cardIndex: 0,
+   state: 'defualt',
    imgUl: "./../assets/images/Image-2.jpg",
  }
  card3 = {
    matched: false,
    cardId: '3',
+   cardIndex: 0,
+   state: 'defualt',
    imgUl: "./../assets/images/Image-3.jpg",
  }
  card4 = {
    matched: false,
    cardId: '4',
+   cardIndex: 0,
+   state: 'defualt',
    imgUl: "./../assets/images/Image-4.jpg",
  }
 
  card5 = {
    matched: false,
    cardId: '5',
+   cardIndex: 0,
+   state: 'defualt',
    imgUl: "./../assets/images/magic.png",
  }
  
   cards: any[] = [this.card1, this.card2, this.card3, this.card4, this.card5];
   cards2: any[] = [this.card1, this.card2, this.card3, this.card4, this.card5];
+  
   
   constructor() { 
    
@@ -69,14 +97,65 @@ export class MemoryActionComponent implements OnInit {
   ngOnInit(): void {
     this.cards = this.cards.concat(this.cards2);
   }
+
+
   /*
    Method Name: clickedCard
    param: 
   */
-  clickedCard(matched: boolean, cardId: string, index: number){
-    console.log("matched " + matched);
-    console.log("and the id is " + cardId);
-    this.flippedCard(String(index), cardId, matched);
+  clickedCard(card: any, index: number){
+    console.log("current clicked " + this.numberFlip);
+    // if two card already flipped, set back to default
+    if (this.numberFlip == 2){
+      let element = document.getElementById(String(this.CardOne.cardIndex));
+      element.className = 'default';
+      element = document.getElementById(String(this.CardTwo.cardIndex));
+      element.className = 'default';
+       this.numberFlip = 0;
+    }
+    //check card state: 
+    //flipp the first card
+    if(this.numberFlip == 0){
+      let element = document.getElementById(String(index));
+      element.className = 'flip-card-inner';
+      this.CardOne.cardIndex = index;
+      this.CardOne.cardId = card.cardId;
+      this.CardOne.state = 'flipped';
+      //console.log("new card Id " + this.CardOne.cardId);
+      //console.log("new card state " + this.CardOne.state);
+      //console.log("new card  cardIndex " + this.CardOne.cardIndex);
+      this.numberFlip++;
+    }
+    //check if not the same card
+    if(this.numberFlip >= 1){
+      console.log(" incoming cardindex " + index + " and card previous card index is " + this.CardOne.cardIndex);
+      if((index) != this.CardOne.cardIndex){
+        //flip the second card
+        let element = document.getElementById(String(index));
+        element.className = 'flip-card-inner';
+        this.numberFlip++;
+        this.CardTwo.cardIndex = index;
+        this.CardTwo.cardId = card.cardId;
+        this.CardTwo.state = 'flipped';
+
+        //check if match
+  
+      }
+      
+    }
+    if(this.numberFlip == 2){// check if they matched
+        if(this.CardOne.cardId == this.CardTwo.cardId){
+          console.log("They are matched");
+          //reset
+          this.numberFlip = 0;
+        }else{ //
+
+          console.log("They are not matched ");
+        
+        }
+
+    }
+    
   }
   
   /*
@@ -84,6 +163,21 @@ export class MemoryActionComponent implements OnInit {
     param: 
     Definition: flip card which was cliked.
   */
+
+  flippedCardBack(){
+
+  }
+
+  /*
+    Method Name: checkCard
+  */
+  checkCard(){
+    if(this.CardTwo.cardId == this.CardOne.cardId){
+      console.log(" they are matched");
+      // modified card
+    }
+  }
+ /*
   flippedCard(cardIndex: string, cardId: string, matched: boolean){
     this.num = cardIndex;
 
@@ -113,13 +207,13 @@ export class MemoryActionComponent implements OnInit {
       check if two card id is match
 
     */
-   if(this.numberFlip == 2){
-     this.checkForMatched(this.cardOne, this.cardTwo)
+  //  if(this.numberFlip == 2){
+  //    this.checkForMatched(this.cardOne, this.cardTwo)
 
-   }
+  //  }
 
 
-  }
+  // }
   /*
     Method Name: checkForMatched
     param: two card id
@@ -127,7 +221,7 @@ export class MemoryActionComponent implements OnInit {
   */
 
   checkForMatched(cardOneId: string, cardTwoId: string): boolean{
-    console.log("card 1 " +  this.cardOneId + " card2 " + this.cardTwoId);
+   // console.log("card 1 " +  this.cardOneId + " card2 " + this.cardTwoId);
 
     if(cardOneId == cardTwoId) {console.log("they are equal");}
 
