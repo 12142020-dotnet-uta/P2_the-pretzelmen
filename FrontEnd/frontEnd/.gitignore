@@ -44,3 +44,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# This was causing problems on the pipeline
+package-lock.json
