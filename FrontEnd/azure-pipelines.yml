@@ -28,6 +28,14 @@ stages:
               cliSources: FrontEnd/frontEnd/src/
               extraProperties: |
                 sonar.projectKey=P2the-pretzelmen_frontend
+                sonar.projectName=P2the-pretzelmen_frontend
+                sonar.projectVersion=0.0.0
+                sonar.sources=FrontEnd/frontEnd/src
+                sonar.exclusions=**/node_modules/**,**/*.spec.ts
+                sonar.coverage.exclusions=**/*.environment*.ts,**/*.module.ts,FrontEnd/frontEnd/src/main.ts,FrontEnd/frontEnd/src/polyfills.ts
+                sonar.tests=FrontEnd/frontEnd/src
+                sonar.test.inclusions=**/*.spec.ts
+                sonar.typescript.tsconfigPath=FrontEnd/frontEnd/tsconfig.json
           - task: Npm@1
             displayName: Analyze Build
             inputs:
