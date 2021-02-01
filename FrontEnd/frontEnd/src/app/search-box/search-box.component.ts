@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-//import { MagicAPIController } from '../';
+import { Subscription } from 'rxjs';
+import { CardService } from '../card.service'
 
 @Component({
   selector: 'app-search-box',
@@ -7,14 +8,17 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./search-box.component.css']
 })
 export class SearchBoxComponent implements OnInit {
+  @Input() cardNumber: string = "";
   
-  constructor() { }
+  constructor(private cardService: CardService) { }
 
   ngOnInit(): void {
   }
 
   OnSubmit(): void{
-
+    console.log("searchForCard is called");
+    // this.cardService.searchForCard().subscribe(data => 
+    //   this.card = data);
   }
 
 }

@@ -14,7 +14,7 @@ export class GetCardsComponent implements OnInit {
   constructor(private cardService: CardService) { }
 
   ngOnInit(): void {
-   
+    
     this.getCards();
   }
   /*
