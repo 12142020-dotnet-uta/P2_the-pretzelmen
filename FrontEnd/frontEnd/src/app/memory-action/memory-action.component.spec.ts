@@ -24,8 +24,27 @@ describe('MemoryActionComponent', () => {
   });
 
   it('should call clickedCard()', () => {
-    component.clickedCard('sfdsdf', 'fsdfhsdfs');
+    component.clickedCard('sfdsdf', 0);
     expect(component.cards.length).toBeGreaterThan(0);
+  });
+
+  it('should call checkCard()', () => {
+    component.CardOne = {
+      cardId: 'sdfd',
+      cardIndex: 0,
+      imgUl: "./../assets/images/Image-2.jpg",
+      matched: false,
+      state: 'blah'
+    };
+    component.CardTwo = (x => x)(component.CardOne);
+    component.checkCard();
+    expect(component).toBeTruthy();
+  });
+
+  it('should call checkIfAlreadyMatched()', () => {
+    expect(component.checkIfAlreadyMatched(
+      { cardId: '' }
+    )).toBe(false);
   });
 
   it('should shuffle array', () => {
@@ -38,7 +57,21 @@ describe('MemoryActionComponent', () => {
       str0.push(s);
       str1.push(s);
     }
-    str0 = component.randomArrayShuffle(str0);
-    expect(str0).not.toEqual(str1);
+    let comparisonAttempts = 10;
+    while (comparisonAttempts > 0) {
+      str0 = component.randomArrayShuffle(str0);
+      if (str0 !== str1) {
+        break;
+      }
+      --comparisonAttempts;
+    }
+    if (comparisonAttempts <= 0) {
+      expect(true).toBe(
+        false,
+        'The chances of this failing are ridiculous. Run one more time before coming to any conclusions'
+      );
+    } else {
+      expect(str0).not.toEqual(str1);
+    }
   });
 });

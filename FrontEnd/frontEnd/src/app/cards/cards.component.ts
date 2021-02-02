@@ -7,7 +7,7 @@ import {Card } from '../card';
   styleUrls: ['./cards.component.css']
 })
 export class CardsComponent implements OnInit {
- card: Card = {
+  card: Card = {
   id: 1,
   attackNumber: 2,
   defenseNumber: 3,
@@ -18,6 +18,7 @@ export class CardsComponent implements OnInit {
   collectionID: 'sdfsdf',
   qty: 5,
   imageURL: 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png'
+
  };
 
  cards: Card[];

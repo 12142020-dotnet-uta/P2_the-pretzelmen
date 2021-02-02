@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { PlayersComponent } from './players.component';
-import { UserService } from '../user.service';
+import { PlayerService } from '../player.service';
 import { PlayerViewModel } from '../player-view-model';
 import { Observable, of } from 'rxjs';
 
 describe('PlayersComponent', () => {
   let component: PlayersComponent;
   let fixture: ComponentFixture<PlayersComponent>;
-  let mockUserService;
+  let mockPlayerService;
   let mockPlayerList;
 
   let players = [
@@ -33,12 +33,12 @@ describe('PlayersComponent', () => {
   ] as PlayerViewModel[];
 
   beforeEach(async () => {
-    mockUserService = jasmine.createSpyObj('UserService', ['PlayerList']);
-    mockPlayerList = mockUserService.PlayerList.and.returnValue(of(players));
+    mockPlayerService = jasmine.createSpyObj('PlayerService', ['PlayerList']);
+    mockPlayerList = mockPlayerService.PlayerList.and.returnValue(of(players));
     await TestBed.configureTestingModule({
       declarations: [PlayersComponent],
       imports: [HttpClientTestingModule],
-      providers: [{ provide: UserService, useValue: mockUserService }]
+      providers: [{ provide: PlayerService, useValue: mockPlayerService }]
     })
     .compileComponents();
   });

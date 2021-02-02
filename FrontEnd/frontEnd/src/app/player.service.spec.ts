@@ -110,7 +110,7 @@ describe('PlayerService', () => {
         expect(player).toBeTruthy(),
         fail
       );
-      const req = httpTestingController.expectOne('https://magic-match-api.azurewebsites.net/api/player/f9be7b37-aba8-4b3d-8e8e-2f3ae26894b1');
+      const req = httpTestingController.expectOne('https://magic-match-api.azurewebsites.net/api/f9be7b37-aba8-4b3d-8e8e-2f3ae26894b1');
       expect(req.request.method).toEqual('GET');
       req.flush(dummyPlayers[0]);
     });
@@ -186,12 +186,12 @@ describe('PlayerService', () => {
       } as PlayerViewModel;
     });
 
-    it('should return an Observable<Duration>', () => {
+    it('should return an Observable<any>', () => {
       service.deleteUser(dummyPlayer).subscribe(player =>
         expect(player.userName).toEqual(testName),
         fail
       );
-      const url = 'https://magic-match-api.azurewebsites.net/api/player/DeletePlayer';
+      const url = 'https://magic-match-api.azurewebsites.net/api/DeletePlayer';
       const req = httpTestingController.expectOne(url);
       expect(req.request.method).toEqual('DELETE');
       req.flush(dummyPlayer);

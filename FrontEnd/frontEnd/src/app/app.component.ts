@@ -1,7 +1,8 @@
 import { Component , Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { LoginPlayerViewModel } from './login-player-view-model';
 import { PlayerViewModel } from './player-view-model';
-import { UserService } from './user.service';
+import { PlayerService } from './player.service';
+import { DataService } from './data.service'
 
 @Component({
   selector: 'app-root',
@@ -15,16 +16,18 @@ export class AppComponent implements OnInit{
   loginplayerview: LoginPlayerViewModel = new LoginPlayerViewModel();
   
  // @Input('Inplayer') viewModel: PlayerViewModel;
- constructor(private userService: UserService) { }
+ constructor(private playerservice: PlayerService, private dataService: DataService) { }
   ngOnInit(): void {
+   
     
   }
   LoginPlease()
   {
     this.login = true;
+    this.dataService.playerViewModel = this.playerViewModel;
   }
   setPlayer(newItem: LoginPlayerViewModel) {
-    this.userService.LoginPlayer(newItem).subscribe(x => this.playerViewModel = x);
+    this.playerservice.LoginPlayer(newItem).subscribe(x => this.playerViewModel = x);
     console.log("app compo "); 
   }
 }

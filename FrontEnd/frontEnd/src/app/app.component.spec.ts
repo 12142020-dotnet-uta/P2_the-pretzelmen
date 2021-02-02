@@ -13,13 +13,13 @@ import { CardCollectionComponent } from './card-collection/card-collection.compo
 import { MemoryGameComponent } from './memory-game/memory-game.component';
 import { LoginPlayerViewModel } from './login-player-view-model';
 import { PlayerViewModel } from './player-view-model';
-import { UserService } from './user.service';
+import { PlayerService } from './player.service';
 import { of } from 'rxjs';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let mockUserService;
+  let mockPlayerService;
   let mockPlayerViewModel;
 
   let playerList = [
@@ -35,8 +35,8 @@ describe('AppComponent', () => {
   ] as PlayerViewModel[];
 
   beforeEach(async () => {
-    mockUserService = jasmine.createSpyObj('UserService', ['LoginPlayer']);
-    mockPlayerViewModel = mockUserService.LoginPlayer.and.returnValue(of(playerList[0]));
+    mockPlayerService = jasmine.createSpyObj('PlayerService', ['LoginPlayer']);
+    mockPlayerViewModel = mockPlayerService.LoginPlayer.and.returnValue(of(playerList[0]));
     await TestBed.configureTestingModule({
       declarations: [
         AppComponent,
@@ -54,7 +54,7 @@ describe('AppComponent', () => {
         AppRoutingModule,
         BrowserAnimationsModule
       ],
-      providers: [{ provide: UserService, useValue: mockUserService }]
+      providers: [{ provide: PlayerService, useValue: mockPlayerService }]
     }).compileComponents();
   });
 

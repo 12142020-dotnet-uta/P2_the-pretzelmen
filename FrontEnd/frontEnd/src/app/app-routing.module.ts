@@ -10,6 +10,7 @@ import { MemoryActionComponent } from './memory-action/memory-action.component'
 import {LoginComponent} from './login/login.component'
 
 import {SignupComponent } from './signup/signup.component'
+import { SearchBoxComponent } from './search-box/search-box.component';
 
 
 
@@ -21,7 +22,8 @@ const routes: Routes = [
  { path: 'cardCollection', component: CardCollectionComponent},
  { path: 'memoryGame', component: MemoryGameComponent},
  { path: 'signup', component: SignupComponent},
- { path: 'memoryAction', component: MemoryActionComponent}
+ { path: 'memoryAction', component: MemoryActionComponent},
+ { path: 'searchByCardName', component: SearchBoxComponent}
  
 ];
 
