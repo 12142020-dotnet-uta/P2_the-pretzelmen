@@ -50,6 +50,7 @@ describe('SearchBoxComponent', () => {
   it('should call OnSubmit()', () => {
     component.OnSubmit();
     expect(component.card.cardName).toBe('Magic card');
+    expect(component.submitted).toBe(true);
     expect(mockCard.calls.any()).toBe(true);
   });
 });
