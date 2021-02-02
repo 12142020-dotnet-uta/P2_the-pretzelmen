@@ -95,6 +95,7 @@ export class MemoryActionComponent implements OnInit {
 
   ngOnInit(): void {
     this.cards = this.cards.concat(this.cards2);
+    this.cards = this.randomArrayShuffle(this.cards);
   }
 
 
