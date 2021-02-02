@@ -51,6 +51,11 @@ stages:
       - job: Deploy
         steps:
           - task: DotNetCoreCLI@2
+            displayName: Restore
+            inputs:
+              command: restore
+              projects: Backend/**/*.csproj
+          - task: DotNetCoreCLI@2
             displayName: Publish
             inputs:
               command: publish
