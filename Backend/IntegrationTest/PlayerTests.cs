@@ -56,6 +56,33 @@ namespace IntegrationTest
             Assert.True(logoutResponse.IsSuccessStatusCode);
         }
         [Fact]
+        public async void TestClientEditPlayer()
+        {
+            var client = Factory.CreateClient();
+            var registerRequest = new HttpRequestMessage(HttpMethod.Post, "/api/player/CreatePlayer");
+            registerRequest.Headers.TryAddWithoutValidation("Content-Type", "application/json");
+            registerRequest.Content = JsonContent.Create(new PlayerViewModel() {
+                userName = "johnnybgoode",
+                password = "revature"
+            });
+            var registerResponse = await client.SendAsync(registerRequest);
+            var loginRequest = new HttpRequestMessage(HttpMethod.Post, "/api/player/Login");
+            loginRequest.Headers.TryAddWithoutValidation("Content-Type", "application/json");
+            loginRequest.Content = JsonContent.Create(new PlayerViewModel() {
+                userName = "johnnybgoode",
+                password = "revature"
+            });
+            var loginResponse = await client.SendAsync(loginRequest);
+            Assert.True(loginResponse.IsSuccessStatusCode);
+            var thePlayer = await loginResponse.Content.ReadFromJsonAsync<Player>();
+            thePlayer.password = "erutaver";
+            var editRequest = new HttpRequestMessage(HttpMethod.Put, "/api/player/EditPlayer");
+            editRequest.Headers.TryAddWithoutValidation("Content-Type", "application/json");
+            editRequest.Content = JsonContent.Create(thePlayer);
+            var editResponse = await client.SendAsync(editRequest);
+            Assert.True(editResponse.IsSuccessStatusCode);
+        }
+        [Fact]
         public async void TestClientDeletePlayer()
         {
             var client = Factory.CreateClient();

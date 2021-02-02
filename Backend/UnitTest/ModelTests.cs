@@ -102,6 +102,5 @@ namespace UnitTest
             Assert.Equal("The user name must be within 3 to 25 characters", results[0].ErrorMessage);
             Assert.Equal("The user name must be within 3 to 25 characters", results[1].ErrorMessage);
         }
-
     }
 }
