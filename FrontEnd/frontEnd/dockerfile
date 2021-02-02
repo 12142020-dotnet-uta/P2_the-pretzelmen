@@ -12,5 +12,6 @@ COPY --from=base /work/nginx.conf /etc/nginx/ngnix.conf
 COPY --from=base /work/dist/frontEnd/ /usr/share/nginx/html/
 
 EXPOSE 80
+EXPOSE 443
 
 CMD ["nginx", "-g", "daemon off;"]
