@@ -30,15 +30,21 @@ namespace BackenAPI
         public void ConfigureServices(IServiceCollection services)
         {
             //Uncomment this ou to use in-memory
-            //services.AddDbContext<GameContext>(opt =>
-                                               //opt.UseInMemoryDatabase("TodoList"));
+            services.AddDbContext<GameContext>(
+                opt => opt.UseInMemoryDatabase("TodoList")
+            );
             //Add cors with any origin
             services.AddCors(options =>
             {
                 options.AddPolicy("policy1",
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200", "http://localhost:8080")
+                        builder.WithOrigins(
+                            "http://localhost:4200",
+                            "https://localhost:4200",
+                            "http://magic-match.azurewebsites.net",
+                            "https://magic-match.azurewebsites.net"
+                        )
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                     });
