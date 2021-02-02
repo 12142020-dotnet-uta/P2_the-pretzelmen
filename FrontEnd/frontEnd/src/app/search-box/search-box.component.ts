@@ -10,8 +10,9 @@ import { Card } from '../card'
   styleUrls: ['./search-box.component.css']
 })
 export class SearchBoxComponent implements OnInit {
-  @Input() cardName: string = "";
   card : CardModel = new CardModel();
+  submitted : boolean = false;
+  @Input() cardName: string = "";
   
   constructor(private cardService: CardService) { }
 
@@ -20,8 +21,11 @@ export class SearchBoxComponent implements OnInit {
 
   OnSubmit(): void{
     console.log("searchForCard is called");
-    this.cardService.searchForCard(this.cardName).subscribe(data => 
+    this.cardService.searchForCard(this.card.cardName).subscribe(data => 
       this.card = data);
+
+    this.submitted = true;
+   
   }
 
 }

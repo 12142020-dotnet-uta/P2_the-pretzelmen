@@ -10,15 +10,14 @@ import { CardModel } from './card-model';
 })
 export class CardService {
   private url = "https://api.magicthegathering.io/v1/cards";
-  private url2 = "https://magic-match-api.azurewebsites.net/api/MagicAPI";
+  private url2 = "https://magic-match-api.azurewebsites.net/api/MagicAPI/";
   private jsonUlr = "https://jsonplaceholder.typicode.com/posts";
-  private cardName:string;
 
   httpOptions = {
     headers: new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin':'*',
-    'Access-Control-Allow-Methods': 'POST',
+    'Access-Control-Allow-Methods': 'POST, GET',
     'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
 
    })
@@ -33,9 +32,7 @@ export class CardService {
 
   //Gets the name Parameter from the json in the api
   searchForCard(cardName:string): Observable<any>{
-    this.cardName = cardName;
-    console.log(this.url);
-    return this.httpClient.get(this.url2 + "/cardByName/" + cardName);
+    return this.httpClient.get(this.url2 + "cardByName/" + cardName, this.httpOptions);
   }
   
   /*
