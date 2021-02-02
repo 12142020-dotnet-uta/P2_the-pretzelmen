@@ -52,36 +52,24 @@ stages:
     jobs:
       - job: publish
         steps:
-          - task: Npm@1
-            displayName: Install Dependencies
+          - task: Docker@2
+            displayName: Login
             inputs:
-              workingDir: FrontEnd/frontEnd/
-              command: install
-          - task: Npm@1
-            displayName: Build Application
+              command: login
+              containerRegistry: docker-srv-1
+          - script: |
+              docker image build -f FrontEnd/frontEnd/dockerfile -t synaodev/magic-match:latest FrontEnd/frontEnd/
+              docker image push synaodev/magic-match:latest
+            displayName: Build & Push Image
+          - task: Docker@2
+            displayName: Logour
             inputs:
-              workingDir: FrontEnd/frontEnd/
-              command: custom
-              customCommand: run build -- --prod
-          - task: ArchiveFiles@2
-            displayName: Archive Build
+              command: logout
+              containerRegistry: docker-srv-1
+          - task: AzureWebAppContainer@1
+            displayName: Deploy
             inputs:
-              rootFolderOrFile: FrontEnd/frontEnd/dist/frontEnd/
-              includeRootFolder: true
-              archiveType: zip
-              archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-              replaceExistingArchive: true
-          - task: PublishBuildArtifacts@1
-            displayName: Publish Artifacts
-            inputs:
-              PathtoPublish: $(Build.ArtifactStagingDirectory)
-              ArtifactName: frontEnd
-              publishLocation: Container
-          - task: AzureRmWebAppDeployment@4
-            displayName: Deploy to App Service
-            inputs:
-              ConnectionType: AzureRM
               azureSubscription: azure-srv-2
-              appType: webApp
-              WebAppName: magic-match
-              packageForLinux: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+              resourceGroupName: pretzelmen-group
+              appName: magic-match
+              containers: synaodev/magic-match:latest
