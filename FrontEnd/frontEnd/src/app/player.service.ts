@@ -93,8 +93,8 @@ addUser(user: LoginPlayerViewModel): void{
     //this.http.post<PlayerViewModel>(this.userUrlLocal + 'login', loginPlayerViewModel, this.httpOptions).subscribe(x=>this.playerViewModel = x);
     return this.http.put<PlayerViewModel>(this.userUrlRemote + 'player/login', loginPlayerViewModel, this.httpOptions);
   }
-  getPlayer():PlayerViewModel{
-    return this.playerViewModel;
+  getPlayer():any{
+    return this.playerViewModel.playerId;
   }
 
   GetCollection(collection: ColletionViewModel): Observable<ColletionViewModel> {
