@@ -1,6 +1,8 @@
 import { Component, OnInit ,Input} from '@angular/core';
+import { flattenDiagnosticMessageText } from 'typescript';
 import { CardModel } from '../card-model';
 import { ColletionViewModel } from '../colletion-view-model';
+import { DataService } from '../data.service';
 import { PlayerService } from '../player.service';
 
 @Component({
@@ -17,7 +19,7 @@ export class CardCollectionComponent implements OnInit {
   heroes: any[] = [1,2,3,4,5,5,5,5,5,5,5,5,5,5];
 
 
-  constructor(private playerservice: PlayerService) { }
+  constructor(private playerservice: PlayerService, private dataService: DataService) { }
 
   ngOnInit(): void {
     this.view = true;
@@ -26,8 +28,12 @@ export class CardCollectionComponent implements OnInit {
 
   getCollections()
   {
-    this.collection.collectionHolder= this.playerid;
+    this.collection.collectionHolder = this.dataService.playerViewModel.playerId;
     this.playerservice.GetCollection(this.collection).subscribe(x => this.collection = x);
+  }
+
+  GetCards(){
+    this.playerservice.GetCards(this.collection).subscribe(x => this.cards =x);
   }
 
 }

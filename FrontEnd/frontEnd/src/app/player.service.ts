@@ -6,6 +6,7 @@ import { fullplayerview } from './fullplayerview';
 import { LoginPlayerViewModel } from './login-player-view-model';
 import { PlayerViewModel } from './player-view-model';
 import { ColletionViewModel } from './colletion-view-model';
+import { Card } from './card';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class PlayerService {
   loginPlayerViewModel: LoginPlayerViewModel = new LoginPlayerViewModel();
   playerview :fullplayerview = new fullplayerview(); 
    private userUrlRemote = "https://magic-match-api.azurewebsites.net/api/";
+   //private userUrlRemote = "https://localhost:44301/api/";
   //private jsonUlr = "https://jsonplaceholder.typicode.com/posts";
 
   httpOptions = {
@@ -91,7 +93,7 @@ addUser(user: LoginPlayerViewModel): void{
   LoginPlayer(loginPlayerViewModel: LoginPlayerViewModel): Observable<PlayerViewModel> {
     //use http to post the player and get back the playerviewmodel
     //this.http.post<PlayerViewModel>(this.userUrlLocal + 'login', loginPlayerViewModel, this.httpOptions).subscribe(x=>this.playerViewModel = x);
-    return this.http.put<PlayerViewModel>(this.userUrlRemote + 'player/login', loginPlayerViewModel, this.httpOptions);
+    return this.http.post<PlayerViewModel>(this.userUrlRemote + 'player/login', loginPlayerViewModel, this.httpOptions);
   }
   getPlayer():PlayerViewModel{
     return this.playerViewModel;
@@ -100,6 +102,10 @@ addUser(user: LoginPlayerViewModel): void{
   GetCollection(collection: ColletionViewModel): Observable<ColletionViewModel> {
     return this.http.post<ColletionViewModel>(this.userUrlRemote + 'collection/collections', collection, this.httpOptions);
     //return this.http.request('get', 'https://localhost:44301/api/collection/collections', { body: collection });
+  }
+
+  GetCards(collection: ColletionViewModel): Observable<Card[]> {
+    return this.http.post<Card[]>(this.userUrlRemote + 'collection/GetCardsInCollection', collection, this.httpOptions);
   }
 
   PlayerList(): Observable<PlayerViewModel[]> {

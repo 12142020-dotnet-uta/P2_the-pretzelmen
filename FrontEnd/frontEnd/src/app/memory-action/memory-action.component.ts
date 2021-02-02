@@ -87,6 +87,7 @@ export class MemoryActionComponent implements OnInit {
  
   cards: any[] = [this.card1, this.card2, this.card3, this.card4, this.card5];
   cards2: any[] = [this.card1, this.card2, this.card3, this.card4, this.card5];
+
   
   
   constructor() { 
@@ -95,6 +96,7 @@ export class MemoryActionComponent implements OnInit {
 
   ngOnInit(): void {
     this.cards = this.cards.concat(this.cards2);
+    this.cards = this.randomArrayShuffle(this.cards);
   }
 
 
@@ -103,8 +105,11 @@ export class MemoryActionComponent implements OnInit {
    param: 
   */
   clickedCard(card: any, index: number){
-   
-  
+      if(this.checkIfAlreadyMatched(card)){
+        console.log("this card has been matched");
+        return;
+      }
+     
     if (this.numberFlip == 2){
 
       console.log("comming card : " + card.matched);
@@ -153,6 +158,11 @@ export class MemoryActionComponent implements OnInit {
     }
     if(this.numberFlip == 2){// check if they matched
         if(this.CardOne.cardId == this.CardTwo.cardId){
+          for(var i = 0; i < this.cards.length; i++){
+            if(card.cardId == this.cards[i].cardId){
+              this.cards[i].matched = true;
+            }
+          }
           console.log("They are matched");
           this.CardOne.matched = true;
           this.CardOne.matched = true;
@@ -232,10 +242,16 @@ export class MemoryActionComponent implements OnInit {
     return: true or false
   */
 
-  checkForMatched(cardOneId: string, cardTwoId: string): boolean{
+  checkIfAlreadyMatched(card: any): boolean{
    // console.log("card 1 " +  this.cardOneId + " card2 " + this.cardTwoId);
-
-    if(cardOneId == cardTwoId) {console.log("they are equal");}
+   for(var i = 0; i < this.cards.length; i++){
+      if(card.cardId == this.cards[i].cardId){
+        if(this.cards[i].matched == true){
+          return true;
+        }
+      }
+   }
+    
 
     return false;
   }
