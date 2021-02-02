@@ -7,15 +7,17 @@ import { SignupComponent } from './signup.component';
 describe('SignupComponent', () => {
   let component: SignupComponent;
   let fixture: ComponentFixture<SignupComponent>;
+  let mockPlayerService;
   let mockLocation;
 
   beforeEach(async () => {
+    mockPlayerService = jasmine.createSpyObj('PlayerService', ['addUser']);
     mockLocation = jasmine.createSpyObj('Location', ['back']);
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       declarations: [SignupComponent],
       providers: [
-        PlayerService,
+        { provide: PlayerService, useValue: mockPlayerService },
         { provide: Location, useValue: mockLocation }
       ]
     })
@@ -32,8 +34,10 @@ describe('SignupComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call gotBack()', () => {
-    component.gotBack();
+  it('should call onSubmit()', () => {
+    component.loginPlayerViewModel.username = 'tylercadena';
+    component.loginPlayerViewModel.password = 'revature';
+    component.onSubmit();
     expect(component.loginPlayerViewModel).toBeTruthy();
   });
 });

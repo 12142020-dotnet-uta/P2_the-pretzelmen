@@ -14,12 +14,12 @@ export class AppComponent implements OnInit{
   login = false;
   playerViewModel: PlayerViewModel = new PlayerViewModel();
   loginplayerview: LoginPlayerViewModel = new LoginPlayerViewModel();
-  
+
  // @Input('Inplayer') viewModel: PlayerViewModel;
  constructor(private playerservice: PlayerService, private dataService: DataService) { }
   ngOnInit(): void {
-   
-    
+
+
   }
   LoginPlease()
   {
@@ -28,10 +28,10 @@ export class AppComponent implements OnInit{
   }
   setPlayer(newItem: LoginPlayerViewModel) {
     this.playerservice.LoginPlayer(newItem).subscribe(x => this.playerViewModel = x);
-    console.log("app compo "); 
+    console.log("app compo ");
   }
 }
 
-export class CardInfoFromSearch{
-  url = 'https://localhost:44301/api/MagicAPI/cardById/${search2}'
-}
+// export class CardInfoFromSearch{
+//   url = 'https://localhost:44301/api/MagicAPI/cardById/${search2}'
+// }

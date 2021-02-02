@@ -24,7 +24,7 @@ export class CardService {
   };
 
   constructor( private httpClient: HttpClient) { }
-  
+
   getCards() {
     console.log(this.url);
     return this.httpClient.get(this.jsonUlr);
@@ -34,12 +34,12 @@ export class CardService {
   searchForCard(cardName:string): Observable<any>{
     return this.httpClient.get(this.url2 + "cardByName/" + cardName, this.httpOptions);
   }
-  
+
   /*
 //To use JSONP, we have to first include the HttpClientJsonpModule in the
   getCards() : Observable <any>{
     return this.httpClient.jsonp(this.url, 'callback').pipe(
-  
+
    );
 }
  */
@@ -48,13 +48,13 @@ export class CardService {
   getCards(): Observable<any[]>{
     console.log("Card service is called" +this.http.get<any>(this.url));
     return this.http.get<[any]>(this.jsonUlr);
-    
-            .pipe(map((data: any) => data.result ), 
+
+            .pipe(map((data: any) => data.result ),
                   catchError(error => { return throwError('Its a Trap!')})
             );
-            
+
   };
-  
+
   */
 
 
@@ -64,23 +64,23 @@ export class CardService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+  // private handleError<T>(operation = 'operation', result?: T) {
+  //   return (error: any): Observable<T> => {
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+  //     // TODO: send the error to remote logging infrastructure
+  //     console.error(error); // log to console instead
 
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+  //     // TODO: better job of transforming error for user consumption
+  //     this.log(`${operation} failed: ${error.message}`);
 
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-    
-  }
-  /** Log a HeroService message with the MessageService */
-  private log(message: string) {
-    console.log(message);
-  }
-  
+  //     // Let the app keep running by returning an empty result.
+  //     return of(result as T);
+  //   };
+
+  // }
+  // /** Log a HeroService message with the MessageService */
+  // private log(message: string) {
+  //   console.log(message);
+  // }
+
 }
