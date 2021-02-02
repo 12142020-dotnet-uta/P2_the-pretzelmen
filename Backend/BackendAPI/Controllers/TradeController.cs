@@ -27,26 +27,46 @@ namespace BackendAPI.Controllers
         {
             return await _businessLayer.GetAllTrades();
         }
-
+        /// <summary>
+        /// Returns the trades from a specified playerid.
+        /// </summary>
+        /// <param name="playerid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("MyTrades")]
         public async Task<IEnumerable<Trade>> getMyTrades(Guid playerid)
         {
             return await _businessLayer.getMyTrades(playerid);
         }
-
+        /// <summary>
+        /// Posts a trade based on a tradeViewModel.
+        /// </summary>
+        /// <param name="tradeViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("PostTrade")]
         public async Task<ActionResult<Trade>> setUpATrade(TradeViewModel tradeViewModel)
         {
+            if(tradeViewModel is null)
+            {
+                throw new ArgumentNullException(nameof(tradeViewModel));
+            }
             return await _businessLayer.setUpATrade(tradeViewModel);
         }
-
+        /// <summary>
+        /// Adds an offer to a trade that was posted based on a tradeViewModel.
+        /// </summary>
+        /// <param name="tradeViewModel"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("PostOffer")]
-        public async Task<ActionResult<Trade>> setOfferToTrade(TradeViewModel tradeView)
+        public async Task<ActionResult<Trade>> setOfferToTrade(TradeViewModel tradeViewModel)
         {
-            return await _businessLayer.setOfferToTrade(tradeView);
+            if (tradeViewModel is null)
+            {
+                throw new ArgumentNullException(nameof(tradeViewModel));
+            }
+            return await _businessLayer.setOfferToTrade(tradeViewModel);
         }
 
         [HttpPut]
