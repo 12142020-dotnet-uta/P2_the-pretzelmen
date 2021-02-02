@@ -76,6 +76,44 @@ namespace UnitTest
             Assert.Equal("The user name must be within 3 to 25 characters", results[1].ErrorMessage);
         }
         [Fact]
+        public void TestValidateMatchAndPair()
+        {
+            Player player1 = new Player() {
+                userName = "Supercalifragilisticexpialidocious",
+                password = "Supercalifragilisticexpialidocious",
+                wins = 9,
+                losses = 1
+            };
+            Player player2 = new Player() {
+                userName = player1.userName.Reverse().ToString(),
+                password = player1.password.Reverse().ToString(),
+                wins = 3,
+                losses = 23
+            };
+            Match match = new Match() {
+                matchId = 2,
+                player1 = player1,
+                player1PairPicked = 2,
+                player2 = player2,
+                player2PairPicked = 4
+            };
+            ValidationContext contextMatch = new ValidationContext(match);
+            List<ValidationResult> resultsMatch = new List<ValidationResult>();
+            bool validMatch = Validator.TryValidateObject(match, contextMatch, resultsMatch, true);
+            Assert.True(validMatch);
+
+            PairMatch pair = new PairMatch() {
+                pairId = 3,
+                cardId = 46,
+                matchId = match.matchId,
+                player = player1
+            };
+            ValidationContext contextPair = new ValidationContext(pair);
+            List<ValidationResult> resultsPair = new List<ValidationResult>();
+            bool validPair = Validator.TryValidateObject(pair, contextPair, resultsPair, true);
+            Assert.True(validPair);
+        }
+        [Fact]
         public void TestValidatePlayerViewModelRequired()
         {
             PlayerViewModel pvm = new PlayerViewModel();
@@ -102,5 +140,6 @@ namespace UnitTest
             Assert.Equal("The user name must be within 3 to 25 characters", results[0].ErrorMessage);
             Assert.Equal("The user name must be within 3 to 25 characters", results[1].ErrorMessage);
         }
+        
     }
 }
