@@ -23,6 +23,12 @@ describe('MemoryActionComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should call ngOnInit()', () => {
+    let prev = component.cards.length;
+    component.ngOnInit();
+    expect(component.cards.length).toBeGreaterThan(prev);
+  });
+
   it('should call clickedCard()', () => {
     component.clickedCard('sfdsdf', 0);
     expect(component.cards.length).toBeGreaterThan(0);

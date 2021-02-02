@@ -3,7 +3,8 @@ import { HttpClientTestingModule, HttpTestingController } from "@angular/common/
 import { PlayerService } from './player.service';
 import { PlayerViewModel } from './player-view-model';
 import { LoginPlayerViewModel } from './login-player-view-model';
-import { fullplayerview } from './fullplayerview';
+import { CardModel } from './card-model';
+import { ColletionViewModel } from './colletion-view-model';
 
 describe('PlayerService', () => {
   let service: PlayerService;
@@ -23,6 +24,122 @@ describe('PlayerService', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+
+  describe('#login', () => {
+    let dummyPlayers: PlayerViewModel[];
+
+    beforeEach(() => {
+      dummyPlayers = [
+        {
+          playerId: 'b9084d13-3a7a-4957-89bf-e7618e83e649',
+          userName: 'tylercadena',
+          password: 'revature',
+          login: false,
+          wins: 0,
+          losses: 0,
+          tokens: 0
+        },
+        {
+          playerId: '51fdd656-245b-4e55-b4fd-a3a1c35a9def',
+          userName: 'billybob',
+          password: 'revature',
+          login: false,
+          wins: 0,
+          losses: 0,
+          tokens: 0
+        }
+      ] as PlayerViewModel[];
+    });
+
+    it('should call PlayerLogin()', () => {
+      service.LoginPlayer({ username: 'billybob', password: 'revature' }).subscribe(player =>
+        expect(player.playerId).not.toEqual('51fdd656-245b-4e55-b4fd-a3a1c35a9def'),
+        fail
+      );
+      const req = httpTestingController.expectOne('https://magic-match-api.azurewebsites.net/api/player/login');
+      expect(req.request.method).toEqual('POST');
+      req.flush(dummyPlayers);
+    });
+
+    it('should call getPlayer()', () => {
+      expect(service.getPlayer()).toBeTruthy();
+    });
+
+    it('should call PlayerList()', () => {
+      service.PlayerList().subscribe(list =>
+        expect(list.length).toBeGreaterThan(0),
+        fail
+      );
+      const req = httpTestingController.expectOne('https://magic-match-api.azurewebsites.net/api/player/getplayers');
+      expect(req.request.method).toEqual('GET');
+      req.flush(dummyPlayers);
+    });
+  });
+
+  describe('#cards & collections', () => {
+    let dummyCards: CardModel[];
+    let dummyCollections: ColletionViewModel[];
+    beforeEach(() => {
+      dummyCards = [
+        {
+          id: 0,
+          cardId: 898,
+          cardName: 'dfsfsdf',
+          cardClass: 'sfdsdfsf',
+          attackNumber: 0,
+          defenseNumber: 0,
+          inDeck: false,
+          imageURL: 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png',
+          qty: 1,
+          collectionID: 'b9084d13-3a7a-4957-89bf-e7618e83e649'
+        },
+        {
+          id: 332,
+          cardId: 1,
+          cardName: 'jjjjjjjjjjj',
+          cardClass: '4wrwe',
+          attackNumber: 99,
+          defenseNumber: 7,
+          inDeck: true,
+          imageURL: 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png',
+          qty: 1232,
+          collectionID: '51fdd656-245b-4e55-b4fd-a3a1c35a9def'
+        }
+      ] as CardModel[];
+      dummyCollections = [
+        {
+          collectionHolder: '51fdd656-245b-4e55-b4fd-a3a1c35a9def',
+          collectionId: 'f9be7b37-aba8-4b3d-8e8e-2f3ae26894b1',
+          quantity: 7
+        },
+        {
+          collectionHolder: 'f9be7b37-aba8-4b3d-8e8e-2f3ae26894b1',
+          collectionId: '51fdd656-245b-4e55-b4fd-a3a1c35a9def',
+          quantity: 5
+        }
+      ] as ColletionViewModel[];
+    });
+
+    it('should call GetCollection()', () => {
+      service.GetCollection(dummyCollections[0]).subscribe(collection =>
+        expect(collection).toBeTruthy(),
+        fail
+      );
+      const req = httpTestingController.expectOne('https://magic-match-api.azurewebsites.net/api/collection/collections');
+      expect(req.request.method).toEqual('POST');
+      req.flush(dummyCollections);
+    });
+
+    it('should call GetCards()', () => {
+      service.GetCards(dummyCollections[0]).subscribe(cards =>
+        expect(cards.length).toBeGreaterThan(0),
+        fail
+      );
+      const req = httpTestingController.expectOne('https://magic-match-api.azurewebsites.net/api/collection/GetCardsInCollection');
+      expect(req.request.method).toEqual('POST');
+      req.flush(dummyCards);
+    });
   });
 
   describe('#getUsers', () => {
