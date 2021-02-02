@@ -42,7 +42,7 @@ namespace IntegrationTest
                 password = "revature"
             });
             var registerResponse = await client.SendAsync(registerRequest);
-            var loginRequest = new HttpRequestMessage(HttpMethod.Put, "/api/player/Login");
+            var loginRequest = new HttpRequestMessage(HttpMethod.Post, "/api/player/Login");
             loginRequest.Headers.TryAddWithoutValidation("Content-Type", "application/json");
             loginRequest.Content = JsonContent.Create(new PlayerViewModel() {
                 userName = "tylercadena",
@@ -70,7 +70,7 @@ namespace IntegrationTest
                 password = "revature"
             });
             var registerResponse = await client.SendAsync(registerRequest);
-            var loginRequest = new HttpRequestMessage(HttpMethod.Put, "/api/player/Login");
+            var loginRequest = new HttpRequestMessage(HttpMethod.Post, "/api/player/Login");
             loginRequest.Headers.TryAddWithoutValidation("Content-Type", "application/json");
             loginRequest.Content = JsonContent.Create(new PlayerViewModel() {
                 userName = "tylercadena",
@@ -96,13 +96,15 @@ namespace IntegrationTest
             });
             var addBoosterResponse = await client.SendAsync(addBoosterRequest);
             var theBooster = await addBoosterResponse.Content.ReadFromJsonAsync<List<Card>>();
-            var getCollectionRequest = new HttpRequestMessage(HttpMethod.Get, $"/api/collection/collection/{thePlayer.playerId}");
+            var getCollectionRequest = new HttpRequestMessage(HttpMethod.Post, $"/api/collection/collections");
             getCollectionRequest.Headers.TryAddWithoutValidation("Content-Type", "application/json");
-            //getCollectionRequest.Content = JsonContent.Create(thePlayer.playerId);
+            getCollectionRequest.Content = JsonContent.Create(new Collection() {
+                collectionHolder = thePlayer.playerId
+            });
             var getCollectionResponse = await client.SendAsync(getCollectionRequest);
             Assert.True(getCollectionResponse.IsSuccessStatusCode);
-            var theCollections = await getCollectionResponse.Content.ReadFromJsonAsync<List<Collection>>();
-            Assert.True(theCollections.Exists(c => c.collectionId == theBooster[0].CollectionID));
+            var theCollection = await getCollectionResponse.Content.ReadFromJsonAsync<Collection>();
+            Assert.True(theCollection.collectionId == theBooster[0].CollectionID);
         }
     }
 }

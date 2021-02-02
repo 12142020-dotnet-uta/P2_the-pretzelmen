@@ -23,14 +23,14 @@ namespace BackendAPI.Controllers
             _businessLayer = businessLayer;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("collections")]
         public async Task<ActionResult<Collection>> GetCollection(Collection id)
         {
             return await _businessLayer.GetCollection(id.collectionHolder.ToString());
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetCardsInCollection")]
         public async Task<IEnumerable<Card>> GetCards(Collection id)
         {
