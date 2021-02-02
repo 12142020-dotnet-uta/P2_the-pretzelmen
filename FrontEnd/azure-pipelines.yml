@@ -52,24 +52,36 @@ stages:
     jobs:
       - job: publish
         steps:
-          - task: Docker@2
-            displayName: Login
+          - task: Npm@1
+            displayName: Install Dependencies
             inputs:
-              command: login
-              containerRegistry: docker-srv-1
-          - script: |
-              docker image build -f FrontEnd/frontEnd/dockerfile -t synaodev/magic-match:latest FrontEnd/frontEnd/
-              docker image push synaodev/magic-match:latest
-            displayName: Build & Push Image
-          - task: Docker@2
-            displayName: Logout
+              workingDir: FrontEnd/frontEnd/
+              command: install
+          - task: Npm@1
+            displayName: Build Application
             inputs:
-              command: logout
-              containerRegistry: docker-srv-1
-          - task: AzureWebAppContainer@1
-            displayName: Deploy Web App
+              workingDir: FrontEnd/frontEnd/
+              command: custom
+              customCommand: run build -- --prod
+          - task: ArchiveFiles@2
+            displayName: Archive Build
             inputs:
+              rootFolderOrFile: FrontEnd/frontEnd/dist/frontEnd/
+              includeRootFolder: true
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+              replaceExistingArchive: true
+          - task: PublishBuildArtifacts@1
+            displayName: Publish Artifacts
+            inputs:
+              PathtoPublish: $(Build.ArtifactStagingDirectory)
+              ArtifactName: frontEnd
+              publishLocation: Container
+          - task: AzureRmWebAppDeployment@4
+            displayName: Deploy to App Service
+            inputs:
+              ConnectionType: AzureRM
               azureSubscription: azure-srv-2
-              resourceGroupName: pretzelmen-group
-              appName: magic-match
-              containers: synaodev/magic-match:latest
+              appType: webApp
+              WebAppName: magic-match
+              packageForLinux: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip

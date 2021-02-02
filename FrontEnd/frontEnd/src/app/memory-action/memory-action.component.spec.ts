@@ -30,7 +30,14 @@ describe('MemoryActionComponent', () => {
   });
 
   it('should call clickedCard()', () => {
-    component.clickedCard('sfdsdf', 0);
+    let flips = 4;
+    while (flips >= 0) {
+      component.numberFlip = flips;
+      component.clickedCard(
+        Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15), flips
+      );
+      flips--;
+    }
     expect(component.cards.length).toBeGreaterThan(0);
   });
 
